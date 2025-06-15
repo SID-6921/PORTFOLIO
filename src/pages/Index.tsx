@@ -34,7 +34,7 @@ const Index = () => {
         <AboutSection />
         <ProjectsSection />
         <AchievementsSection />
-        <MediumFeedSection />
+        {/* <MediumFeedSection /> removed per user request */}
         <ContactSection />
         <ProfileLinks />
       </main>
