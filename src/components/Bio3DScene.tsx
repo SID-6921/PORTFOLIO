@@ -4,26 +4,32 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 // Heartbeat polyline (EKG spike)
-// Normalized, from (0, 0) to (1, 0)
 function HeartBeatLine({ color = "#20B2AA" }) {
-  // EKG-style points normalized to [0,1]
+  // Normalized heartbeat from (0,0) to (1,0)
   const points = useMemo(
-    () => [
-      [0, 0], [0.08, 0], [0.17, 0.13], [0.19, -0.11], [0.24, 0.24], [0.28, 0.6], [0.34, 0], [1, 0]
-    ].map(([x, y]) => new THREE.Vector3(x, y, 0)),
+    () =>
+      [
+        [0, 0],
+        [0.08, 0],
+        [0.17, 0.13],
+        [0.19, -0.11],
+        [0.24, 0.24],
+        [0.28, 0.6],
+        [0.34, 0],
+        [1, 0]
+      ].map(([x, y]) => new THREE.Vector3(x, y, 0)),
     []
   );
-  const geometry = useMemo(() => {
-    const geo = new THREE.BufferGeometry().setFromPoints(points);
-    return geo;
-  }, [points]);
-  const material = useMemo(() => new THREE.LineBasicMaterial({ color, linewidth: 2 }), [color]);
   const lineRef = useRef<THREE.Line>(null);
+  const colorRef = useRef(color);
 
   useFrame(({ clock }) => {
     if (lineRef.current) {
+      // Animate color for subtle pulse effect
       const pulse = 0.6 + 0.4 * Math.sin(clock.getElapsedTime() * 0.9);
-      (lineRef.current.material as THREE.LineBasicMaterial).color.setRGB(
+      // Animate slight color shift on the material
+      const mat = lineRef.current.material as THREE.LineBasicMaterial;
+      mat.color.setRGB(
         0.09 + pulse * 0.22,
         0.7 + 0.08 * pulse,
         0.92 + 0.02 * pulse
@@ -31,11 +37,16 @@ function HeartBeatLine({ color = "#20B2AA" }) {
     }
   });
 
-  return <line ref={lineRef} geometry={geometry} material={material} />;
+  return (
+    <line ref={lineRef}>
+      <bufferGeometry attach="geometry" setFromPoints={points} />
+      <lineBasicMaterial attach="material" color={colorRef.current} linewidth={2} />
+    </line>
+  );
 }
 
 function PulseDot() {
-  // Pulse sits at peak of the normalized heartbeat line (above)
+  // Pulse at the peak of the normalized beat
   const x = 0.28;
   const y = 0.6;
   const meshRef = useRef<THREE.Mesh>(null);
@@ -48,19 +59,14 @@ function PulseDot() {
   });
 
   return (
-    <mesh
-      ref={meshRef}
-      position={[x, y, 0.05]}
-      castShadow
-    >
+    <mesh ref={meshRef} position={[x, y, 0.05]} castShadow>
       <sphereGeometry args={[0.034, 32, 32]} />
-      <meshStandardMaterial color={0xff3245} emissive={0xff808a} emissiveIntensity={0.8} />
+      <meshStandardMaterial color="#ff3245" emissive="#ff808a" emissiveIntensity={0.8} />
     </mesh>
   );
 }
 
 export default function Bio3DScene() {
-  // Render in a sufficiently tall, always visible area
   return (
     <div className="w-full flex items-center justify-center" style={{ height: 128, minWidth: 320 }}>
       <Canvas
