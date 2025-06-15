@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Only animate these lines
+// Animated lines for the rotating label
 const ANIMATED_LINES = [
   { text: "Hi, I'm", icon: "👋" },
   { text: "a Biomed & IoT Enthusiast", icon: "🔬" },
@@ -28,10 +28,9 @@ export default function AnimatedLogo() {
       onMouseEnter={handleMouseEnter}
     >
       <div className="flex items-center gap-2">
-        {/* Fixed NS logo - stylish and clear */}
+        {/* Fixed NS logo without trademark */}
         <span className="font-inter font-extrabold text-xl md:text-2xl text-ultramarine dark:text-columbiablue tracking-tight relative">
           NS
-          <sup className="text-xs text-graphite/60 ml-0.5 align-super">™</sup>
         </span>
         <AnimatePresence initial={false} mode="wait">
           <motion.div
