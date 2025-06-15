@@ -1,9 +1,9 @@
 
-import { motion } from "framer-motion";
-import React, { useEffect, useRef } from "react";
+import { motion, useAnimationFrame } from "framer-motion";
+import React, { useRef } from "react";
 import { Heart } from "lucide-react";
 
-// This is the classic heartbeat SVG path.
+// Classic heartbeat SVG path.
 const HEARTBEAT_PATH = `
   M2 21
   L30 21
@@ -22,42 +22,34 @@ const HEARTBEAT_PATH = `
   L248 21
 `;
 
-function getPointAtLength(svgPath: SVGPathElement, length: number) {
-  const p = svgPath.getPointAtLength(length);
-  return { x: p.x, y: p.y };
-}
-
 export default function BioWaveSVG() {
-  const svgRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
-  const [pulseProgress, setPulseProgress] = React.useState(0);
+  const [progress, setProgress] = React.useState(0);
 
-  // Animate a value from 0 to 1 forever
-  useEffect(() => {
-    let raf: number;
-    let start = performance.now();
-    function loop(now: number) {
-      // Slower speed (2.1s per cycle)
-      const elapsed = ((now - start) / 2100) % 1;
-      setPulseProgress(elapsed);
-      raf = requestAnimationFrame(loop);
-    }
-    raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
-  }, []);
+  // Animate from 0 (start) to 1 (end) and repeat.
+  useAnimationFrame((t) => {
+    // Animation period (ms): adjust for speed
+    const duration = 2200;
+    const loop = ((t % duration) / duration);
+    setProgress(loop);
+  });
 
-  // Get pulse (glow) position along the path.
-  let pulse = { x: 0, y: 0 };
+  // Calculate the full path length for the "draw" animation.
   let totalLength = 0;
   if (typeof window !== "undefined" && pathRef.current) {
     totalLength = pathRef.current.getTotalLength();
-    pulse = getPointAtLength(pathRef.current, pulseProgress * totalLength);
   }
+
+  // The "drawn" portion of the line, from 0 (none) to totalLength (fully shown)
+  const dashArray = totalLength || 900;
+  const dashOffset = totalLength ? dashArray * (1 - progress) : 900 * (1 - progress);
 
   return (
     <div className="relative flex items-center justify-center w-[270px] mx-auto select-none">
       {/* "0" label at the start */}
-      <span className="absolute left-0 top-1/2 -translate-y-1/2 font-inter text-xs text-gray-400 select-none">0</span>
+      <span className="absolute left-0 top-1/2 -translate-y-1/2 font-inter text-xs text-gray-400 select-none">
+        0
+      </span>
       {/* "1" label and animated heart at the end */}
       <span className="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col items-center select-none">
         <span className="mb-1 font-inter text-xs text-gray-400">1</span>
@@ -65,16 +57,14 @@ export default function BioWaveSVG() {
           animate={{ scale: [1, 1.23, 1] }}
           transition={{
             repeat: Infinity,
-            duration: 2.1,
+            duration: 2.2,
             ease: "easeInOut"
           }}
         >
           <Heart className="text-ultramarine" size={20} fill="#5dade2" />
         </motion.span>
       </span>
-      {/* Heartbeat SVG with moving pulse */}
       <svg
-        ref={svgRef}
         width="250"
         height="42"
         viewBox="0 0 250 42"
@@ -83,7 +73,7 @@ export default function BioWaveSVG() {
         aria-hidden="true"
         className="mx-auto"
       >
-        {/* Glowing, fully visible heartbeat path */}
+        {/* Animate the heartbeat being drawn. */}
         <path
           ref={pathRef}
           d={HEARTBEAT_PATH}
@@ -91,30 +81,12 @@ export default function BioWaveSVG() {
           strokeWidth="2.5"
           fill="none"
           style={{
-            filter: "drop-shadow(0px 2px 12px #9BDDFF88)"
+            filter: "drop-shadow(0px 2px 12px #9BDDFF77)",
+            strokeDasharray: dashArray,
+            strokeDashoffset: dashOffset,
+            transition: "stroke-dashoffset 0.08s linear"
           }}
         />
-        {/* Moving pulse effect */}
-        {pathRef.current && (
-          <circle
-            cx={pulse.x}
-            cy={pulse.y}
-            r={6}
-            fill="#90e0ff88"
-            style={{
-              filter: "blur(2px)"
-            }}
-          />
-        )}
-        {/* Optional: brighter center pulse */}
-        {pathRef.current && (
-          <circle
-            cx={pulse.x}
-            cy={pulse.y}
-            r={2.4}
-            fill="#90e0ff"
-          />
-        )}
       </svg>
     </div>
   );
