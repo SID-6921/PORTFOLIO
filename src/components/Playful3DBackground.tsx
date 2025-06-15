@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-function WobbleSphere({
+function WobbleCell({
   color,
   position,
   scale = 1,
@@ -16,28 +16,48 @@ function WobbleSphere({
   speed?: number;
   float?: number;
 }) {
-  const mesh = useRef<THREE.Mesh>(null);
+  const group = useRef<THREE.Group>(null);
 
   useFrame(({ clock }) => {
-    if (mesh.current) {
+    if (group.current) {
       const t = clock.getElapsedTime() * speed;
-      mesh.current.position.y = position[1] + Math.sin(t) * float;
-      mesh.current.rotation.x = t * 0.5;
-      mesh.current.rotation.y = t * 0.4;
+      group.current.position.y = position[1] + Math.sin(t) * float;
+      group.current.rotation.x = t * 0.2;
+      group.current.rotation.y = t * 0.1;
     }
   });
 
   return (
-    <mesh ref={mesh} position={position} scale={scale}>
-      <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial roughness={0.6} metalness={0.18}>
-        <color attach="color" args={[color]} />
-      </meshStandardMaterial>
-    </mesh>
+    <group ref={group} position={position} scale={scale}>
+      {/* Outer membrane */}
+      <mesh>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial
+          attach="material"
+          color={color}
+          transparent
+          opacity={0.4}
+          roughness={0.2}
+          metalness={0.1}
+        />
+      </mesh>
+      {/* Nucleus */}
+      <mesh scale={0.4}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial
+          attach="material"
+          color={color}
+          roughness={0.5}
+          metalness={0.1}
+          emissive={color}
+          emissiveIntensity={0.4}
+        />
+      </mesh>
+    </group>
   );
 }
 
-function WiggleCube({
+function WiggleKnot({
   color,
   position,
   scale = 1,
@@ -63,10 +83,13 @@ function WiggleCube({
 
   return (
     <mesh ref={mesh} position={position} scale={scale}>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial roughness={0.38} metalness={0.14}>
-        <color attach="color" args={[color]} />
-      </meshStandardMaterial>
+      <torusKnotGeometry args={[0.7, 0.2, 128, 16]} />
+      <meshStandardMaterial
+        attach="material"
+        color={color}
+        roughness={0.38}
+        metalness={0.14}
+      />
     </mesh>
   );
 }
@@ -112,15 +135,14 @@ export default function Playful3DBackground() {
           intensity={0.18}
           color="#fff8ed"
         />
-        {/* Spheres (bubbles/balls) */}
-        <WobbleSphere color={pastelPalette[0]} position={[-5, 2.5, 0]} scale={1.55} speed={0.8} float={0.44} />
-        <WobbleSphere color={pastelPalette[1]} position={[2, -2.8, -1]} scale={1.2} speed={1.23} float={0.36} />
-        <WobbleSphere color={pastelPalette[2]} position={[6, 3, 0]} scale={1.34} speed={0.93} float={0.42} />
-        {/* Cubes */}
-        <WiggleCube color={pastelPalette[3]} position={[-2.7, -2, -2]} scale={1.1} speed={0.78} float={0.49} />
-        <WiggleCube color={pastelPalette[4]} position={[4.7, 0, -2]} scale={1.25} speed={1.15} float={0.37} />
+        {/* Cells */}
+        <WobbleCell color={pastelPalette[0]} position={[-5, 2.5, 0]} scale={1.55} speed={0.8} float={0.44} />
+        <WobbleCell color={pastelPalette[1]} position={[2, -2.8, -1]} scale={1.2} speed={1.23} float={0.36} />
+        <WobbleCell color={pastelPalette[2]} position={[6, 3, 0]} scale={1.34} speed={0.93} float={0.42} />
+        {/* Knots */}
+        <WiggleKnot color={pastelPalette[3]} position={[-2.7, -2, -2]} scale={1.1} speed={0.78} float={0.49} />
+        <WiggleKnot color={pastelPalette[4]} position={[4.7, 0, -2]} scale={1.25} speed={1.15} float={0.37} />
       </Canvas>
     </div>
   );
 }
-
