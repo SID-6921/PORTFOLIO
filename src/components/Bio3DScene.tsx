@@ -1,3 +1,4 @@
+
 import React, { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -32,19 +33,9 @@ function BinaryColumn({ startX = -9.5, count = 7, color = "#2176FF" }) {
               scale={isOne ? [0.6, 1.4, 0.6] : [0.6, 0.6, 0.6]}
               castShadow
               receiveShadow
-            >
-              {isOne ? (
-                <>
-                  <primitive object={boxGeometry} />
-                  <primitive object={boxMaterial} />
-                </>
-              ) : (
-                <>
-                  <primitive object={sphereGeometry} />
-                  <primitive object={sphereMaterial} />
-                </>
-              )}
-            </mesh>
+              geometry={isOne ? boxGeometry : sphereGeometry}
+              material={isOne ? boxMaterial : sphereMaterial}
+            />
           );
         })}
     </group>
@@ -124,10 +115,7 @@ function HeartBeatLine() {
   });
 
   return (
-    <line ref={lineRef}>
-      <primitive object={geometry} />
-      <primitive object={material} />
-    </line>
+    <line ref={lineRef} geometry={geometry} material={material} />
   );
 }
 
@@ -158,10 +146,7 @@ function PulseHeartDot() {
     }
   });
   return (
-    <mesh ref={meshRef} position={[baseX, baseY, 0.06]}>
-      <primitive object={geometry} />
-      <primitive object={material} />
-    </mesh>
+    <mesh ref={meshRef} position={[baseX, baseY, 0.06]} geometry={geometry} material={material} />
   );
 }
 
