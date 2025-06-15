@@ -5,23 +5,41 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import React from "react";
+import PageSplashLoader from "@/components/PageSplashLoader";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [showSplash, setShowSplash] = React.useState(true);
+
+  React.useEffect(() => {
+    // Show splash for at least 1200ms or until hydration
+    const timeout = setTimeout(() => setShowSplash(false), 1200);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return (
+    <>
+      <PageSplashLoader show={showSplash} />
+      <div className={showSplash ? "pointer-events-none select-none" : undefined}>
+        {/* Content is interactive only after splash */}
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </QueryClientProvider>
+      </div>
+    </>
+  );
+};
 
 export default App;
