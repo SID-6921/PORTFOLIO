@@ -7,6 +7,12 @@ import * as THREE from "three";
 function BinaryColumn({ startX = -9.5, count = 7, color = "#2176FF" }) {
   const group = useRef<THREE.Group>(null);
 
+  // Memoize materials to avoid recreating on each render
+  const boxMaterial = useMemo(() => new THREE.MeshStandardMaterial({ color }), [color]);
+  const sphereMaterial = useMemo(() => new THREE.MeshStandardMaterial({ color }), [color]);
+  const boxGeometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
+  const sphereGeometry = useMemo(() => new THREE.SphereGeometry(0.5, 32, 32), []);
+
   // Animate slight up/down floating for whole binary group
   useFrame(({ clock }) => {
     if (group.current) {
@@ -30,13 +36,13 @@ function BinaryColumn({ startX = -9.5, count = 7, color = "#2176FF" }) {
             >
               {isOne ? (
                 <>
-                  <boxGeometry args={[1, 1, 1]} />
-                  <meshStandardMaterial color={color} />
+                  <primitive object={boxGeometry} attach="geometry" />
+                  <primitive object={boxMaterial} attach="material" />
                 </>
               ) : (
                 <>
-                  <sphereGeometry args={[0.5, 32, 32]} />
-                  <meshStandardMaterial color={color} />
+                  <primitive object={sphereGeometry} attach="geometry" />
+                  <primitive object={sphereMaterial} attach="material" />
                 </>
               )}
             </mesh>
@@ -91,11 +97,14 @@ function HeartBeatLine() {
     []
   );
 
+  // Memoize geometry and material for the line
   const geometry = useMemo(() => {
     const geo = new THREE.BufferGeometry();
     geo.setFromPoints(points);
     return geo;
   }, [points]);
+
+  const material = useMemo(() => new THREE.LineBasicMaterial({ color: 0x2FC8A8 }), []);
 
   const lineRef = useRef<THREE.Line>(null);
 
@@ -117,8 +126,8 @@ function HeartBeatLine() {
 
   return (
     <line ref={lineRef}>
-      <bufferGeometry attach="geometry" {...geometry} />
-      <lineBasicMaterial color={"#2FC8A8"} />
+      <primitive object={geometry} attach="geometry" />
+      <primitive object={material} attach="material" />
     </line>
   );
 }
@@ -128,18 +137,31 @@ function PulseHeartDot() {
   const meshRef = useRef<THREE.Mesh>(null);
   const baseX = 3.7 * 1.7;
   const baseY = (-0.0 - 0.2) * 1.7;
+
+  // Memoize geometry/material for the heart dot
+  const geometry = useMemo(() => new THREE.SphereGeometry(0.53, 32, 32), []);
+  const material = useMemo(
+    () =>
+      new THREE.MeshStandardMaterial({
+        color: 0xff3245,
+        emissive: 0xff808a,
+        emissiveIntensity: 0.54,
+      }),
+    []
+  );
+
   useFrame(({ clock }) => {
     if (meshRef.current) {
       const t = clock.getElapsedTime();
       // Heart pulse scale
-      const s = 1 + 0.20 * Math.abs(Math.sin(t * 2.2));
+      const s = 1 + 0.2 * Math.abs(Math.sin(t * 2.2));
       meshRef.current.scale.set(s, s, s);
     }
   });
   return (
     <mesh ref={meshRef} position={[baseX, baseY, 0.06]}>
-      <sphereGeometry args={[0.53, 32, 32]} />
-      <meshStandardMaterial color={"#FF3245"} emissive={"#FF808A"} emissiveIntensity={0.54} />
+      <primitive object={geometry} attach="geometry" />
+      <primitive object={material} attach="material" />
     </mesh>
   );
 }
