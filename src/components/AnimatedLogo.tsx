@@ -14,19 +14,21 @@ export default function AnimatedLogo() {
   const [currentLine, setCurrentLine] = useState(0);
 
   useEffect(() => {
-    if (currentLine < LOGO_LINES.length - 1) {
-      const delay = currentLine === 0 ? 900 : 1200;
-      const timer = setTimeout(() => setCurrentLine(currentLine + 1), delay);
-      return () => clearTimeout(timer);
-    }
+    const timer = setTimeout(() => {
+      setCurrentLine((prev) => (prev + 1) % LOGO_LINES.length);
+    }, 3000);
+    return () => clearTimeout(timer);
   }, [currentLine]);
 
-  // Restart animation when mouse enters logo
+  // Restart animation when mouse enters logo (optional: also reset to first line)
   const handleMouseEnter = () => setCurrentLine(0);
 
   return (
-    <div className="flex flex-col items-center justify-center select-none cursor-pointer px-1 py-0.5" onMouseEnter={handleMouseEnter}>
-      <AnimatePresence initial={false}>
+    <div
+      className="flex flex-col items-center justify-center select-none cursor-pointer px-1 py-0.5"
+      onMouseEnter={handleMouseEnter}
+    >
+      <AnimatePresence initial={false} mode="wait">
         <motion.div
           key={currentLine}
           initial={{ opacity: 0, y: 6, scale: 0.98 }}
