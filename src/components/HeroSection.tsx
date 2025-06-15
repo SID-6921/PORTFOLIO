@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import GlassCard from "./GlassCard";
 import BioWaveSVG from "./BioWaveSVG";
-import { Avatar, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { Download } from "lucide-react";
 
@@ -27,6 +27,8 @@ const bgVariants = {
 };
 
 export default function HeroSection() {
+  const [imgError, setImgError] = React.useState(false);
+
   return (
     <section id="hero" className="relative flex flex-col justify-center items-center h-[90vh] min-h-[660px] mb-7">
       {/* Decorative BG Blur/Gradient effect */}
@@ -47,10 +49,17 @@ export default function HeroSection() {
       >
         <GlassCard className="p-10 shadow-glow border-2 border-columbiablue/50 flex flex-col items-center bg-white/70 backdrop-blur-xl transition-all duration-700">
           <Avatar className="h-32 w-32 mb-4 shadow-xl border-4 border-ultramarine/40 animate-scale-in">
-            <AvatarImage 
-              src="/lovable-uploads/31b97417-8931-4a4d-859c-4ba132c82167.png"
-              alt="Professional Picture"
-            />
+            {!imgError ? (
+              <AvatarImage 
+                src="/lovable-uploads/31b97417-8931-4a4d-859c-4ba132c82167.png"
+                alt="Professional Picture"
+                onError={() => setImgError(true)}
+              />
+            ) : (
+              <AvatarFallback>
+                NS
+              </AvatarFallback>
+            )}
           </Avatar>
           <motion.span
             className="text-sm font-ibm text-teal font-medium tracking-widest uppercase mb-2 letter-spacing-[0.16em]"
@@ -84,7 +93,6 @@ export default function HeroSection() {
           >
             Engineer. Innovator. Human.
           </motion.div>
-          {/* Replace 3D with animated SVG heart beat */}
           <div className="my-1 w-full flex justify-center">
             <BioWaveSVG />
           </div>
