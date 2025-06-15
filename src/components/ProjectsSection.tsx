@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import GlassCard from "./GlassCard";
@@ -44,7 +43,18 @@ const projects = [
 ];
 
 function getImageUrl(id: string) {
-  return `/lovable-uploads/${id}.jpg`;
+  // Use existing image IDs and a fallback if the file is missing
+  const availableImages = [
+    "photo-1518770660439-4636190af475",
+    "photo-1485827404703-89b55fcc595e",
+    "photo-1531297484001-80022131f5a1",
+    "photo-1487058792275-0ad4aaf24ca7"
+  ];
+  if (availableImages.includes(id)) {
+    return `/lovable-uploads/${id}.jpg`;
+  }
+  // fallback placeholder
+  return "/placeholder.svg";
 }
 
 function getProjectIcon(icon: string) {

@@ -1,4 +1,3 @@
-
 import React from "react";
 import GlassCard from "./GlassCard";
 import { motion } from "framer-motion";
@@ -57,10 +56,6 @@ export default function ContactSection() {
               className="text-teal hover:text-columbiablue font-ibm font-medium underline underline-offset-4 transition-all"
             >
               siddhardha.nanda@columbia.edu
-            </a>
-            {/* Socials */}
-            <a href="https://www.linkedin.com/in/nanda-siddhardha/" target="_blank" rel="noopener noreferrer" className="text-ultramarine hover:text-columbiablue transition-colors font-ibm font-medium underline underline-offset-4">
-              LinkedIn
             </a>
           </div>
         </GlassCard>
