@@ -1,5 +1,5 @@
 
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { motion } from "framer-motion";
 import React, { useEffect, useRef } from "react";
 import { Heart } from "lucide-react";
 
@@ -37,7 +37,8 @@ export default function BioWaveSVG() {
     let raf: number;
     let start = performance.now();
     function loop(now: number) {
-      const elapsed = ((now - start) / 1200) % 1; // 1.2s per cycle
+      // Slower speed (2.1s per cycle)
+      const elapsed = ((now - start) / 2100) % 1;
       setPulseProgress(elapsed);
       raf = requestAnimationFrame(loop);
     }
@@ -64,7 +65,7 @@ export default function BioWaveSVG() {
           animate={{ scale: [1, 1.23, 1] }}
           transition={{
             repeat: Infinity,
-            duration: 1.2,
+            duration: 2.1,
             ease: "easeInOut"
           }}
         >
