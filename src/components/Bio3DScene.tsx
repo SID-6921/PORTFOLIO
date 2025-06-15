@@ -34,7 +34,7 @@ function BinaryColumn({ startX = -9.5, count = 7, color = "#2176FF" }) {
               ) : (
                 <sphereGeometry args={[0.5, 32, 32]} />
               )}
-              <meshStandardMaterial color={color} />
+              <meshStandardMaterial color={"#2176FF"} />
             </mesh>
           );
         })}
@@ -62,7 +62,6 @@ function AnimatedBinaryStream() {
 
 // Heartbeat/EKG-like polyline
 function HeartBeatLine() {
-  const points: THREE.Vector3[] = [];
   // This starts after the binary part ends, approx x= -5 onward
   const scale = 1.7;
   const yOffset = -0.2;
@@ -83,26 +82,42 @@ function HeartBeatLine() {
     { x: 2.8, y: 0 },
     { x: 3.7, y: 0 },
   ];
-  seq.forEach(p =>
-    points.push(
-      new THREE.Vector3(p.x * scale, (p.y + yOffset) * scale, 0)
-    )
+  const points: THREE.Vector3[] = seq.map(
+    p => new THREE.Vector3(p.x * scale, (p.y + yOffset) * scale, 0)
   );
 
-  const geometry = React.useMemo(() => new THREE.BufferGeometry().setFromPoints(points), [points]);
+  const geometryRef = React.useRef<THREE.BufferGeometry>(null);
   const lineRef = React.useRef<THREE.Line>(null);
 
   // Animate the color of the line to draw attention
   useFrame(({ clock }) => {
-    if (lineRef.current && lineRef.current.material instanceof THREE.LineBasicMaterial) {
+    if (
+      lineRef.current &&
+      lineRef.current.material &&
+      (lineRef.current.material as THREE.LineBasicMaterial).color
+    ) {
       const pulse = 0.6 + 0.4 * Math.sin(clock.getElapsedTime() * 0.5);
-      lineRef.current.material.color.setRGB(0.13 + pulse * 0.5, 0.7, 1.1 - 0.2 * pulse);
+      (lineRef.current.material as THREE.LineBasicMaterial).color.setRGB(
+        0.13 + pulse * 0.5,
+        0.7,
+        1.1 - 0.2 * pulse
+      );
     }
   });
 
   return (
-    <line ref={lineRef} geometry={geometry}>
-      <lineBasicMaterial color="#2FC8A8" linewidth={2} />
+    <line ref={lineRef}>
+      <bufferGeometry
+        ref={geometryRef}
+        attach="geometry"
+        attributes-position={
+          new THREE.Float32BufferAttribute(
+            points.flatMap(p => [p.x, p.y, p.z]),
+            3
+          )
+        }
+      />
+      <lineBasicMaterial attach="material" color={"#2FC8A8"} linewidth={2} />
     </line>
   );
 }
@@ -124,7 +139,7 @@ function PulseHeartDot() {
   return (
     <mesh ref={meshRef} position={[baseX, baseY, 0.06]}>
       <sphereGeometry args={[0.53, 32, 32]} />
-      <meshStandardMaterial color="#FF3245" emissive="#FF808A" emissiveIntensity={0.54} />
+      <meshStandardMaterial color={"#FF3245"} emissive={"#FF808A"} emissiveIntensity={0.54} />
     </mesh>
   );
 }
@@ -150,3 +165,4 @@ export default function Bio3DScene() {
     </div>
   );
 }
+
