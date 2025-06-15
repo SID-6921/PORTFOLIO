@@ -1,7 +1,6 @@
 
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import Parser from "rss-parser";
 import GlassCard from "./GlassCard";
 import { Skeleton } from "./ui/skeleton";
 
@@ -13,23 +12,43 @@ type MediumPost = {
   contentSnippet?: string;
 };
 
-const MEDIUM_RSS_URL = "https://medium.com/feed/@nandasiddhardha";
+// Proxy server to fetch Medium RSS and deal with CORS
+const RSS_PROXY = "https://api.allorigins.win/get?url=";
+const MEDIUM_RSS_URL = encodeURIComponent("https://medium.com/feed/@nandasiddhardha");
 
 async function fetchMediumPosts(): Promise<MediumPost[]> {
-  const parser = new Parser();
-  const feed = await parser.parseURL(MEDIUM_RSS_URL);
-  return (feed.items || []).slice(0, 3) as MediumPost[];
+  // Fetch the RSS XML via the proxy
+  const response = await fetch(`${RSS_PROXY}https://medium.com/feed/@nandasiddhardha`);
+  if (!response.ok) throw new Error("Failed to fetch RSS feed");
+  const resJson = await response.json();
+  const domParser = new window.DOMParser();
+  const rssDoc = domParser.parseFromString(resJson.contents, "text/xml");
+  const items = rssDoc.querySelectorAll("item");
+  const posts: MediumPost[] = [];
+  for (let i = 0; i < Math.min(3, items.length); i++) {
+    const item = items[i];
+    posts.push({
+      title: item.querySelector("title")?.textContent || "",
+      link: item.querySelector("link")?.textContent || "",
+      pubDate: item.querySelector("pubDate")?.textContent || "",
+      creator: item.querySelector("creator")?.textContent || "",
+      contentSnippet: item.querySelector("description")?.textContent?.replace(/(<([^>]+)>)/gi, "") || "",
+    });
+  }
+  return posts;
 }
 
 export default function MediumFeedSection() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["medium-posts"],
     queryFn: fetchMediumPosts,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 10, // 10 min
   });
 
   return (
     <section id="medium-blogs" className="flex flex-col items-center mb-4 pt-8">
-      <GlassCard className="max-w-xl w-full p-8 mb-7 flex flex-col items-center">
+      <GlassCard className="max-w-xl w-full p-8 mb-7 flex flex-col items-center animate-fade-in">
         <h2 className="font-inter text-2xl md:text-3xl font-bold text-graphite mb-2">Latest Medium Blogs</h2>
         {isLoading ? (
           <div className="w-full flex flex-col gap-3">
@@ -44,15 +63,20 @@ export default function MediumFeedSection() {
           </div>
         ) : (
           <ul className="w-full flex flex-col gap-5 mt-3">
+            {data?.length === 0 && (
+              <div className="text-gray-500 text-center mt-3">No blogs found. <a href="https://medium.com/@nandasiddhardha" target="_blank" rel="noopener noreferrer" className="underline text-ultramarine">See on Medium</a></div>
+            )}
             {data?.map((post) => (
               <li key={post.link} className="w-full">
                 <a
                   href={post.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block hover:bg-columbiablue/10 rounded-lg px-3 py-2 transition-colors"
+                  className="block hover:bg-columbiablue/10 rounded-lg px-3 py-2 transition-colors group animate-fade-in"
                 >
-                  <div className="text-lg font-bold text-ultramarine">{post.title}</div>
+                  <div className="text-lg font-bold text-ultramarine group-hover:underline underline-offset-2 transition-all">
+                    {post.title}
+                  </div>
                   {post.contentSnippet && (
                     <div className="text-gray-700 text-sm my-1">{post.contentSnippet.slice(0, 100)}...</div>
                   )}
