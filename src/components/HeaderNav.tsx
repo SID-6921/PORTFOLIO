@@ -1,7 +1,7 @@
 
 import React from "react";
 import AnimatedLogo from "./AnimatedLogo";
-import ThemeToggle from "./ThemeToggle";
+// import ThemeToggle from "./ThemeToggle";
 import MobileNav from "./MobileNav";
 
 const navLinks = [
@@ -34,11 +34,11 @@ export default function HeaderNav() {
           ))}
         </ul>
         <div className="flex md:hidden items-center gap-2">
-          <ThemeToggle />
+          {/* ThemeToggle removed */}
           <MobileNav />
         </div>
         <div className="hidden md:block ml-4">
-          <ThemeToggle />
+          {/* ThemeToggle removed */}
         </div>
       </nav>
     </header>
