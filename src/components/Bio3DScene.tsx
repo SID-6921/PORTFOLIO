@@ -1,4 +1,3 @@
-
 import React, { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -96,6 +95,9 @@ function HeartBeatLine() {
 
   const material = useMemo(() => new THREE.LineBasicMaterial({ color: 0x2FC8A8 }), []);
 
+  // Create the THREE.Line object
+  const line = useMemo(() => new THREE.Line(geometry, material), [geometry, material]);
+
   const lineRef = useRef<THREE.Line>(null);
 
   // Animate the color of the line to draw attention
@@ -115,7 +117,7 @@ function HeartBeatLine() {
   });
 
   return (
-    <line ref={lineRef} geometry={geometry} material={material} />
+    <primitive ref={lineRef} object={line} />
   );
 }
 
