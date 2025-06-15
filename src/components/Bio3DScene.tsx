@@ -22,6 +22,7 @@ function HeartBeatLine({ color = "#20B2AA" }) {
   );
   const lineRef = useRef<THREE.Line>(null);
   const geometryRef = useRef<THREE.BufferGeometry>(null);
+  const matRef = useRef<THREE.LineBasicMaterial>(null);
 
   // Set the geometry points ONCE (after mount)
   useEffect(() => {
@@ -30,13 +31,18 @@ function HeartBeatLine({ color = "#20B2AA" }) {
     }
   }, [points]);
 
+  // update line color
+  useEffect(() => {
+    if (matRef.current) {
+      matRef.current.color = new THREE.Color(color);
+    }
+  }, [color]);
+
   useFrame(({ clock }) => {
-    if (lineRef.current) {
+    if (matRef.current) {
       // Animate color for subtle pulse effect
       const pulse = 0.6 + 0.4 * Math.sin(clock.getElapsedTime() * 0.9);
-      // Animate slight color shift on the material
-      const mat = lineRef.current.material as THREE.LineBasicMaterial;
-      mat.color.setRGB(
+      matRef.current.color.setRGB(
         0.09 + pulse * 0.22,
         0.7 + 0.08 * pulse,
         0.92 + 0.02 * pulse
@@ -47,7 +53,7 @@ function HeartBeatLine({ color = "#20B2AA" }) {
   return (
     <line ref={lineRef}>
       <bufferGeometry ref={geometryRef} />
-      <lineBasicMaterial color={color} linewidth={2} />
+      <lineBasicMaterial ref={matRef} />
     </line>
   );
 }
@@ -57,6 +63,7 @@ function PulseDot() {
   const x = 0.28;
   const y = 0.6;
   const meshRef = useRef<THREE.Mesh>(null);
+  const matRef = useRef<THREE.MeshStandardMaterial>(null);
 
   useFrame(({ clock }) => {
     if (meshRef.current) {
@@ -65,10 +72,19 @@ function PulseDot() {
     }
   });
 
+  // Set color/emissive safely
+  useEffect(() => {
+    if (matRef.current) {
+      matRef.current.color = new THREE.Color("#ff3245");
+      matRef.current.emissive = new THREE.Color("#ff808a");
+      matRef.current.emissiveIntensity = 0.8;
+    }
+  }, []);
+
   return (
     <mesh ref={meshRef} position={[x, y, 0.05]} castShadow>
       <sphereGeometry args={[0.034, 32, 32]} />
-      <meshStandardMaterial color="#ff3245" emissive="#ff808a" emissiveIntensity={0.8} />
+      <meshStandardMaterial ref={matRef} />
     </mesh>
   );
 }
@@ -88,3 +104,4 @@ export default function Bio3DScene() {
     </div>
   );
 }
+
