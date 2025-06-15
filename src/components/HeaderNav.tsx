@@ -16,7 +16,7 @@ export default function HeaderNav() {
     <header className="fixed top-0 left-0 w-full z-40 bg-white/80 backdrop-blur-lg border-b border-medicalsilver/50 shadow-none transition-all">
       <nav className="max-w-[1328px] mx-auto flex items-center justify-between px-8 py-4">
         <div className="flex items-center font-extrabold text-2xl font-inter tracking-tight text-graphite select-none italic">
-          Nanda Siddhardha
+          NS
         </div>
         <ul className="hidden md:flex gap-6 text-base font-ibm text-graphite font-medium">
           {navLinks.map(link => (
@@ -35,4 +35,3 @@ export default function HeaderNav() {
     </header>
   );
 }
-

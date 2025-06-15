@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import GlassCard from "./GlassCard";
@@ -30,7 +29,7 @@ export default function HeroSection() {
   const [imgError, setImgError] = React.useState(false);
 
   return (
-    <section id="hero" className="relative flex flex-col justify-center items-center h-[90vh] min-h-[660px] mb-7">
+    <section id="hero" className="relative flex flex-col justify-center items-center h-[90vh] min-h-[660px] mb-4">
       {/* Decorative BG Blur/Gradient effect */}
       <motion.div
         className="absolute inset-0 -z-10 animate-fade-in pointer-events-none"
@@ -75,7 +74,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.9 }}
           >
-            Nanda Siddhardha
+            Siddhardha Nanda
           </motion.h1>
           <motion.div
             className="mb-2 text-base md:text-lg font-inter font-semibold text-teal text-center tracking-tight"
