@@ -1,9 +1,7 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import GlassCard from "./GlassCard";
 import BioWaveSVG from "./BioWaveSVG";
-import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { Download } from "lucide-react";
 
@@ -27,8 +25,6 @@ const bgVariants = {
 };
 
 export default function HeroSection() {
-  const [imgError, setImgError] = React.useState(false);
-
   return (
     <section id="hero" className="relative flex flex-col justify-center items-center h-[90vh] min-h-[660px] mb-4">
       {/* Decorative BG Blur/Gradient effect */}
@@ -47,20 +43,7 @@ export default function HeroSection() {
         animate="visible"
         variants={cardVariants}
       >
-        <GlassCard className="p-10 shadow-glow border-2 border-columbiablue/50 flex flex-col items-center bg-background/80 dark:bg-popover/80 backdrop-blur-xl transition-all duration-700">
-          <Avatar className="h-32 w-32 mb-4 shadow-xl border-4 border-ultramarine/40 animate-scale-in">
-            {!imgError ? (
-              <AvatarImage 
-                src="/lovable-uploads/31b97417-8931-4a4d-859c-4ba132c82167.png"
-                alt="Professional Picture"
-                onError={() => setImgError(true)}
-              />
-            ) : (
-              <AvatarFallback>
-                NS
-              </AvatarFallback>
-            )}
-          </Avatar>
+        <GlassCard className="p-10 pt-16 shadow-glow border-2 border-columbiablue/50 flex flex-col items-center bg-background/80 dark:bg-popover/80 backdrop-blur-xl transition-all duration-700">
           <motion.span
             className="text-sm font-ibm text-teal font-medium tracking-widest uppercase mb-2 letter-spacing-[0.16em]"
             initial={{ opacity: 0 }}
