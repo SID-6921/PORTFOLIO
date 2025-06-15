@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import GlassCard from "./GlassCard";
 import BioWaveSVG from "./BioWaveSVG";
 import { Avatar, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
+import { Download } from "lucide-react";
 
 export default function HeroSection() {
   return (
@@ -15,7 +17,6 @@ export default function HeroSection() {
         transition={{ duration: 1 }}
       >
         <GlassCard className="p-10 shadow-glow border-2 border-columbiablue/50 flex flex-col items-center">
-          {/* Professional avatar added here */}
           <Avatar className="h-32 w-32 mb-4 shadow-xl border-4 border-ultramarine/40">
             <AvatarImage 
               src="/lovable-uploads/photo-1618160702438-9b02ab6515c9.jpg"
@@ -35,6 +36,17 @@ export default function HeroSection() {
           <div className="text-center font-ibm max-w-lg text-gray-700 text-base md:text-lg">
             Pioneering at the intersection of med-tech, embedded systems, and digital health. Clinical precision. Creative innovation.
           </div>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            download
+            className="mt-6"
+          >
+            <Button size="lg" variant="default">
+              <Download className="mr-2" /> Download Resume
+            </Button>
+          </a>
         </GlassCard>
         <div className="mt-4 flex flex-col items-center text-base text-gray-500 italic font-ibm">
           <motion.span
@@ -50,3 +62,4 @@ export default function HeroSection() {
     </section>
   );
 }
+
