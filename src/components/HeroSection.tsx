@@ -1,7 +1,8 @@
+
 import React from "react";
 import { motion } from "framer-motion";
 import GlassCard from "./GlassCard";
-import Bio3DScene from "./Bio3DScene";
+import BioWaveSVG from "./BioWaveSVG";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { Download } from "lucide-react";
@@ -27,7 +28,7 @@ const bgVariants = {
 
 export default function HeroSection() {
   return (
-    <section id="hero" className="relative flex flex-col justify-center items-center h-[90vh] min-h-[660px] mb-12">
+    <section id="hero" className="relative flex flex-col justify-center items-center h-[90vh] min-h-[660px] mb-7">
       {/* Decorative BG Blur/Gradient effect */}
       <motion.div
         className="absolute inset-0 -z-10 animate-fade-in pointer-events-none"
@@ -83,8 +84,9 @@ export default function HeroSection() {
           >
             Engineer. Innovator. Human.
           </motion.div>
-          <div className="my-2 mb-6 w-full flex justify-center">
-            <Bio3DScene />
+          {/* Replace 3D with animated SVG heart beat */}
+          <div className="my-1 w-full flex justify-center">
+            <BioWaveSVG />
           </div>
           <motion.div
             className="text-center font-ibm max-w-lg text-gray-700 text-base md:text-lg"
