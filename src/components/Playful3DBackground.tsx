@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -96,6 +96,64 @@ function WiggleKnot({
   );
 }
 
+function WobblyHelix({
+  color,
+  position,
+  scale = 1,
+  speed = 1,
+  float = 0.2,
+}: {
+  color: string;
+  position: [number, number, number];
+  scale?: number;
+  speed?: number;
+  float?: number;
+}) {
+  const group = useRef<THREE.Group>(null);
+
+  const curve = useMemo(() => {
+    class HelixCurve extends THREE.Curve<THREE.Vector3> {
+      getPoint(t: number) {
+        // t goes from 0 to 1
+        const angle = t * Math.PI * 8; // 4 full turns
+        const y = t * 4 - 2; // height of 4, centered
+        const x = Math.cos(angle) * 0.7; // radius
+        const z = Math.sin(angle) * 0.7; // radius
+        return new THREE.Vector3(x, y, z);
+      }
+    }
+    return new HelixCurve();
+  }, []);
+
+  useFrame(({ clock }) => {
+    if (group.current) {
+      const t = clock.getElapsedTime() * speed;
+      group.current.rotation.z = t * 0.2;
+      group.current.rotation.x = t * 0.1;
+      // Use the group for position animation to keep rotation centered
+      group.current.position.y = position[1] + Math.sin(t * 0.8) * float;
+    }
+  });
+
+  return (
+    <group ref={group} position={position} scale={scale}>
+      <mesh>
+        <tubeGeometry args={[curve, 64, 0.15, 8, false]} />
+        <meshStandardMaterial
+          args={[
+            {
+              color,
+              roughness: 0.4,
+              metalness: 0.1,
+              side: THREE.DoubleSide,
+            },
+          ]}
+        />
+      </mesh>
+    </group>
+  );
+}
+
 /**
  * Pastel playful backplane for "toddler/kid" vibe
  * Appears fixed and blurred behind all content, never blocks interactions
@@ -144,6 +202,9 @@ export default function Playful3DBackground() {
         {/* Knots */}
         <WiggleKnot color={pastelPalette[3]} position={[-2.7, -2, -2]} scale={1.1} speed={0.78} float={0.49} />
         <WiggleKnot color={pastelPalette[4]} position={[4.7, 0, -2]} scale={1.25} speed={1.15} float={0.37} />
+        {/* New Biomed Widgets */}
+        <WobblyHelix color={pastelPalette[1]} position={[8, -2, -4]} scale={0.7} speed={0.5} float={0.3} />
+        <WobblyHelix color={pastelPalette[3]} position={[-8, 0, -5]} scale={0.8} speed={0.7} float={0.2} />
       </Canvas>
     </div>
   );
