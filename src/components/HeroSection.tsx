@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import GlassCard from "./GlassCard";
@@ -68,6 +67,14 @@ export default function HeroSection() {
           >
             Nanda Siddhardha
           </motion.h1>
+          <motion.div
+            className="mb-2 text-base md:text-lg font-inter font-semibold text-teal text-center tracking-tight"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.51, duration: 0.6 }}
+          >
+            Looking for opportunities
+          </motion.div>
           <motion.div
             className="mb-4 text-xl md:text-2xl font-inter font-semibold text-ultramarine text-center tracking-tight"
             initial={{ opacity: 0, y: 10 }}
