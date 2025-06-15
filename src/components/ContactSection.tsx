@@ -1,3 +1,4 @@
+
 import React from "react";
 import GlassCard from "./GlassCard";
 import { motion } from "framer-motion";
@@ -50,10 +51,10 @@ export default function ContactSection() {
               Send
             </button>
           </form>
-          <div className="mt-6 flex gap-6 items-center justify-center">
+          <div className="mt-8 flex gap-8 items-center justify-center">
             <a
               href="mailto:siddhardha.nanda@columbia.edu"
-              className="text-teal hover:text-columbiablue font-ibm font-medium underline underline-offset-4 transition-all"
+              className="text-teal hover:text-columbiablue font-ibm font-medium underline underline-offset-4 transition-all text-base"
             >
               siddhardha.nanda@columbia.edu
             </a>

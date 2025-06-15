@@ -38,12 +38,12 @@ export default function ProfileLinks() {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 group text-ultramarine hover:text-columbiablue transition-colors font-ibm font-medium text-base"
+            className="flex flex-col items-center gap-1 group text-ultramarine hover:text-columbiablue transition-colors font-ibm font-medium text-base"
           >
             {Icon ? (
-              <Icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <Icon className="w-7 h-7 group-hover:scale-110 transition-transform drop-shadow" />
             ) : (
-              <span className="inline-block w-5 h-5 bg-columbiablue rounded-full text-xs flex items-center justify-center font-bold overflow-hidden">
+              <span className="inline-block w-8 h-8 bg-columbiablue rounded-full text-xs flex items-center justify-center font-bold overflow-hidden text-ultramarine group-hover:bg-ultramarine group-hover:text-columbiablue transition-colors">
                 {label || ""}
               </span>
             )}

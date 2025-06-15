@@ -1,7 +1,8 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
 import AnimatedLogo from "./AnimatedLogo";
+import ThemeToggle from "./ThemeToggle";
+import MobileNav from "./MobileNav";
 
 const navLinks = [
   { label: "Home", href: "#hero" },
@@ -15,9 +16,11 @@ const navLinks = [
 export default function HeaderNav() {
   return (
     <header className="fixed top-0 left-0 w-full z-40 bg-white/80 backdrop-blur-lg border-b border-medicalsilver/50 shadow-none transition-all">
-      <nav className="max-w-[1328px] mx-auto flex items-center justify-between px-8 py-4">
+      <nav className="max-w-[1328px] mx-auto flex items-center justify-between px-8 py-4 relative">
         {/* Creative animated logo */}
-        <AnimatedLogo />
+        <div className="flex items-center gap-4">
+          <AnimatedLogo />
+        </div>
         <ul className="hidden md:flex gap-6 text-base font-ibm text-graphite font-medium">
           {navLinks.map(link => (
             <li key={link.label}>
@@ -30,7 +33,13 @@ export default function HeaderNav() {
             </li>
           ))}
         </ul>
-        {/* Could add icon menu for mobile in future */}
+        <div className="flex md:hidden items-center gap-2">
+          <ThemeToggle />
+          <MobileNav />
+        </div>
+        <div className="hidden md:block ml-4">
+          <ThemeToggle />
+        </div>
       </nav>
     </header>
   );
