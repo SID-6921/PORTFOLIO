@@ -1,10 +1,10 @@
+
 import React, { Suspense, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-// Minimal glowing pulse + circuit combo
+// Glowing pulse line
 function PulseLine() {
-  // Memoize geometry and material so they're not recreated each render
   const { geometry, material } = useMemo(() => {
     const points: THREE.Vector3[] = [];
     for (let i = 0; i <= 70; i++) {
@@ -25,7 +25,6 @@ function PulseLine() {
     });
     return { geometry: geo, material: mat };
   }, []);
-
   return (
     <line>
       <primitive object={geometry} attach="geometry" />
@@ -34,15 +33,14 @@ function PulseLine() {
   );
 }
 
-// Glowing circuits "chips" - minimalist
-function CircuitNode({ pos = [0,0,0] }) {
+// Circuit node sphere
+function CircuitNode({ pos = [0, 0, 0] }: { pos?: [number, number, number] }) {
   const material = useMemo(() => {
-    const mat = new THREE.MeshStandardMaterial({
+    return new THREE.MeshStandardMaterial({
       color: "#2176FF",
       emissive: new THREE.Color("#2176FF"),
       emissiveIntensity: 0.7,
     });
-    return mat;
   }, []);
   return (
     <mesh position={pos}>
@@ -52,16 +50,15 @@ function CircuitNode({ pos = [0,0,0] }) {
   );
 }
 
-// "Heartbeat" orb following the line
+// Heartbeat pulse dot
 function PulseDot() {
   const ref = useRef<THREE.Mesh>(null);
   const material = useMemo(() => {
-    const mat = new THREE.MeshStandardMaterial({
+    return new THREE.MeshStandardMaterial({
       color: "#FF7F51",
       emissive: new THREE.Color("#FFDF00"),
       emissiveIntensity: 0.9,
     });
-    return mat;
   }, []);
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
