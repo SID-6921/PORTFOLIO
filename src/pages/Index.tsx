@@ -13,8 +13,14 @@ import ProfileLinks from "@/components/ProfileLinks";
 const Index = () => {
   return (
     <div className="relative bg-bio-gradient min-h-screen w-full font-sans transition-all duration-300">
+      {/* 3D playful background - behind all content */}
+      {/*
+        z-index: 1 on background,
+        z-index: 10+ on nav, so nav/content always above
+      */}
+      <Playful3DBackground />
       <HeaderNav />
-      <main className="mx-auto flex flex-col gap-4 pt-20">
+      <main className="mx-auto flex flex-col gap-4 pt-20 relative z-10">
         {/* Reduce gap from 8 to 4 */}
         <HeroSection />
         <AboutSection />
