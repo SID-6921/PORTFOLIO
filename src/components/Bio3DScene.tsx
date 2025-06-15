@@ -24,14 +24,14 @@ function HeartBeatLine({ color = "#20B2AA" }) {
   const geometryRef = useRef<THREE.BufferGeometry>(null);
   const matRef = useRef<THREE.LineBasicMaterial>(null);
 
-  // Set the geometry points ONCE (after mount)
+  // Set geometry points ONCE after mount
   useEffect(() => {
     if (geometryRef.current) {
       geometryRef.current.setFromPoints(points);
     }
   }, [points]);
 
-  // update line color
+  // update line color (could be animated below)
   useEffect(() => {
     if (matRef.current) {
       matRef.current.color = new THREE.Color(color);
@@ -50,16 +50,16 @@ function HeartBeatLine({ color = "#20B2AA" }) {
     }
   });
 
+  // Defensive: only render children if the refs are attached (may help avoid accidental undefined passing into r3f graph)
   return (
     <line ref={lineRef}>
-      <bufferGeometry ref={geometryRef} />
-      <lineBasicMaterial ref={matRef} />
+      <bufferGeometry ref={geometryRef} attach="geometry" />
+      <lineBasicMaterial ref={matRef} attach="material" />
     </line>
   );
 }
 
 function PulseDot() {
-  // Pulse at the peak of the normalized beat
   const x = 0.28;
   const y = 0.6;
   const meshRef = useRef<THREE.Mesh>(null);
@@ -83,8 +83,8 @@ function PulseDot() {
 
   return (
     <mesh ref={meshRef} position={[x, y, 0.05]} castShadow>
-      <sphereGeometry args={[0.034, 32, 32]} />
-      <meshStandardMaterial ref={matRef} />
+      <sphereGeometry args={[0.034, 32, 32]} attach="geometry" />
+      <meshStandardMaterial ref={matRef} attach="material" />
     </mesh>
   );
 }
@@ -104,4 +104,3 @@ export default function Bio3DScene() {
     </div>
   );
 }
-
