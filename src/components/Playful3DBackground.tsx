@@ -33,25 +33,25 @@ function WobbleCell({
       <mesh>
         <sphereGeometry args={[1, 32, 32]} />
         <meshStandardMaterial
-          attach="material"
-          color={color}
           transparent
           opacity={0.4}
           roughness={0.2}
           metalness={0.1}
-        />
+        >
+          <color attach="color" args={[color]} />
+        </meshStandardMaterial>
       </mesh>
       {/* Nucleus */}
       <mesh scale={0.4}>
         <sphereGeometry args={[1, 32, 32]} />
         <meshStandardMaterial
-          attach="material"
-          color={color}
           roughness={0.5}
           metalness={0.1}
-          emissive={color}
           emissiveIntensity={0.4}
-        />
+        >
+          <color attach="color" args={[color]} />
+          <color attach="emissive" args={[color]} />
+        </meshStandardMaterial>
       </mesh>
     </group>
   );
@@ -85,11 +85,11 @@ function WiggleKnot({
     <mesh ref={mesh} position={position} scale={scale}>
       <torusKnotGeometry args={[0.7, 0.2, 128, 16]} />
       <meshStandardMaterial
-        attach="material"
-        color={color}
         roughness={0.38}
         metalness={0.14}
-      />
+      >
+        <color attach="color" args={[color]} />
+      </meshStandardMaterial>
     </mesh>
   );
 }
