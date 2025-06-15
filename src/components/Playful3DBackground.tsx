@@ -1,4 +1,3 @@
-
 import React, { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -30,7 +29,7 @@ function WobbleSphere({
   return (
     <mesh ref={mesh} position={position} scale={scale}>
       <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial color={new THREE.Color(color)} roughness={0.6} metalness={0.18} />
+      <meshStandardMaterial color={color} roughness={0.6} metalness={0.18} />
     </mesh>
   );
 }
@@ -62,7 +61,7 @@ function WiggleCube({
   return (
     <mesh ref={mesh} position={position} scale={scale}>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={new THREE.Color(color)} roughness={0.38} metalness={0.14} />
+      <meshStandardMaterial color={color} roughness={0.38} metalness={0.14} />
     </mesh>
   );
 }
