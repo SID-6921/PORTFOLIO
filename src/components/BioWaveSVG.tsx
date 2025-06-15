@@ -23,28 +23,30 @@ const HEARTBEAT_PATH = `
 `;
 
 export default function BioWaveSVG() {
+  // progress: [0, 1]
   const [progress, setProgress] = React.useState(0);
-  const requestRef = useRef<number | null>(null);
   const [showHeart, setShowHeart] = React.useState(false);
+  const requestRef = useRef<number | null>(null);
+  const timeRef = useRef<number>(0);
 
-  // Animation timing
-  const ANIMATION_DURATION = 1.25; // seconds
-  const PAUSE_DURATION = 0.65; // seconds
+  // ANIMATION_DURATION: How long to draw the line; PAUSE_DURATION: how long to show heart before resetting
+  const ANIMATION_DURATION = 1.25;
+  const PAUSE_DURATION = 0.65;
 
   React.useEffect(() => {
     let start = performance.now();
     let pauseTimeout: number | null = null;
 
     function animate(now: number) {
-      const elapsed = (now - start) / 1000; // in seconds
-      if (elapsed < ANIMATION_DURATION) {
-        setProgress(elapsed / ANIMATION_DURATION); // from 0 to 1
+      const elapsed = (now - start) / 1000;
+      const t = Math.min(elapsed / ANIMATION_DURATION, 1);
+      setProgress(t);
+
+      if (t < 1) {
         setShowHeart(false);
         requestRef.current = requestAnimationFrame(animate);
       } else {
-        setProgress(1);
         setShowHeart(true);
-        // Pause with the full line and heart visible, then reset
         pauseTimeout = window.setTimeout(() => {
           setProgress(0);
           setShowHeart(false);
@@ -54,19 +56,21 @@ export default function BioWaveSVG() {
       }
     }
 
+    // Start animation
     setProgress(0);
     setShowHeart(false);
     requestRef.current = requestAnimationFrame(animate);
 
+    // Cleanup on unmount
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
       if (pauseTimeout) clearTimeout(pauseTimeout);
     };
-    // Do not add dependencies; run only once on mount
+    // Only run once!
     // eslint-disable-next-line
   }, []);
 
-  // Heart appears (and beats) only when the wave is finished being drawn
+  // Show heart and pulse *only* when the wave finishes
   const heartOpacity = showHeart ? 1 : 0;
 
   return (
@@ -113,7 +117,7 @@ export default function BioWaveSVG() {
           style={{
             pathLength: progress,
             filter: "drop-shadow(0px 2px 12px #9BDDFF88)",
-            transition: "pathLength 0.05s linear"
+            transition: "pathLength 0.055s linear"
           }}
         />
       </motion.svg>
