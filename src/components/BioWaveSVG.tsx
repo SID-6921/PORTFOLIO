@@ -1,8 +1,9 @@
-import { motion } from "framer-motion";
-import React, { useRef } from "react";
+
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import React, { useEffect, useRef } from "react";
 import { Heart } from "lucide-react";
 
-// Classic medical heartbeat path
+// This is the classic heartbeat SVG path.
 const HEARTBEAT_PATH = `
   M2 21
   L30 21
@@ -21,57 +22,36 @@ const HEARTBEAT_PATH = `
   L248 21
 `;
 
+function getPointAtLength(svgPath: SVGPathElement, length: number) {
+  const p = svgPath.getPointAtLength(length);
+  return { x: p.x, y: p.y };
+}
+
 export default function BioWaveSVG() {
-  // progress: [0, 1]
-  const [progress, setProgress] = React.useState(0);
-  const [showHeart, setShowHeart] = React.useState(false);
-  const requestRef = useRef<number | null>(null);
-  const timeRef = useRef<number>(0);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const pathRef = useRef<SVGPathElement>(null);
+  const [pulseProgress, setPulseProgress] = React.useState(0);
 
-  // ANIMATION_DURATION: How long to draw the line; PAUSE_DURATION: how long to show heart before resetting
-  const ANIMATION_DURATION = 1.25;
-  const PAUSE_DURATION = 0.65;
-
-  React.useEffect(() => {
+  // Animate a value from 0 to 1 forever
+  useEffect(() => {
+    let raf: number;
     let start = performance.now();
-    let pauseTimeout: number | null = null;
-
-    function animate(now: number) {
-      const elapsed = (now - start) / 1000;
-      const t = Math.min(elapsed / ANIMATION_DURATION, 1);
-      setProgress(t);
-      console.log("BioWaveSVG progress:", t);
-
-      if (t < 1) {
-        setShowHeart(false);
-        requestRef.current = requestAnimationFrame(animate);
-      } else {
-        setShowHeart(true);
-        pauseTimeout = window.setTimeout(() => {
-          setProgress(0);
-          setShowHeart(false);
-          start = performance.now();
-          requestRef.current = requestAnimationFrame(animate);
-        }, PAUSE_DURATION * 1000);
-      }
+    function loop(now: number) {
+      const elapsed = ((now - start) / 1200) % 1; // 1.2s per cycle
+      setPulseProgress(elapsed);
+      raf = requestAnimationFrame(loop);
     }
-
-    // Start animation
-    setProgress(0);
-    setShowHeart(false);
-    requestRef.current = requestAnimationFrame(animate);
-
-    // Cleanup on unmount
-    return () => {
-      if (requestRef.current) cancelAnimationFrame(requestRef.current);
-      if (pauseTimeout) clearTimeout(pauseTimeout);
-    };
-    // Only run once!
-    // eslint-disable-next-line
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
   }, []);
 
-  // Show heart and pulse *only* when the wave finishes
-  const heartOpacity = showHeart ? 1 : 0;
+  // Get pulse (glow) position along the path.
+  let pulse = { x: 0, y: 0 };
+  let totalLength = 0;
+  if (typeof window !== "undefined" && pathRef.current) {
+    totalLength = pathRef.current.getTotalLength();
+    pulse = getPointAtLength(pathRef.current, pulseProgress * totalLength);
+  }
 
   return (
     <div className="relative flex items-center justify-center w-[270px] mx-auto select-none">
@@ -81,22 +61,19 @@ export default function BioWaveSVG() {
       <span className="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col items-center select-none">
         <span className="mb-1 font-inter text-xs text-gray-400">1</span>
         <motion.span
-          style={{ opacity: heartOpacity }}
-          animate={heartOpacity === 1
-            ? { scale: [1, 1.23, 1] }
-            : { scale: 1 }
-          }
-          transition={
-            heartOpacity === 1
-              ? { repeat: Infinity, duration: 1.2, ease: "easeInOut" }
-              : {}
-          }
+          animate={{ scale: [1, 1.23, 1] }}
+          transition={{
+            repeat: Infinity,
+            duration: 1.2,
+            ease: "easeInOut"
+          }}
         >
           <Heart className="text-ultramarine" size={20} fill="#5dade2" />
         </motion.span>
       </span>
-      {/* Heartbeat SVG */}
-      <motion.svg
+      {/* Heartbeat SVG with moving pulse */}
+      <svg
+        ref={svgRef}
         width="250"
         height="42"
         viewBox="0 0 250 42"
@@ -104,23 +81,40 @@ export default function BioWaveSVG() {
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
         className="mx-auto"
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
       >
-        {/* Animate path from left to right */}
-        <motion.path
+        {/* Glowing, fully visible heartbeat path */}
+        <path
+          ref={pathRef}
           d={HEARTBEAT_PATH}
           stroke="#9BDDFF"
           strokeWidth="2.5"
           fill="none"
           style={{
-            pathLength: progress,
-            filter: "drop-shadow(0px 2px 12px #9BDDFF88)",
-            transition: "pathLength 0.055s linear"
+            filter: "drop-shadow(0px 2px 12px #9BDDFF88)"
           }}
         />
-      </motion.svg>
+        {/* Moving pulse effect */}
+        {pathRef.current && (
+          <circle
+            cx={pulse.x}
+            cy={pulse.y}
+            r={6}
+            fill="#90e0ff88"
+            style={{
+              filter: "blur(2px)"
+            }}
+          />
+        )}
+        {/* Optional: brighter center pulse */}
+        {pathRef.current && (
+          <circle
+            cx={pulse.x}
+            cy={pulse.y}
+            r={2.4}
+            fill="#90e0ff"
+          />
+        )}
+      </svg>
     </div>
   );
 }
