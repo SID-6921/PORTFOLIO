@@ -2,27 +2,28 @@
 import React, { useEffect, useState } from "react";
 import BlogCard3D from "./BlogCard3D";
 
-// Dynamically import rss-parser only on client for SSR safety
+// Fetch Medium RSS converted JSON directly from rss2json.com
 const getFeed = async () => {
-  if (typeof window === "undefined") return [];
-  const Parser = (await import("rss-parser")).default;
-  const parser = new Parser();
-  const feed = await parser.parseURL("https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@nandasiddhardha");
-  // rss-parser doesn't work with CORS when fetching directly from Medium, so using rss2json
-  if (feed && feed.items) {
-    return feed.items.map((item: any) => ({
-      title: item.title,
-      excerpt: item.description
-        ? item.description.replace(/<[^>]+>/g, "").slice(0, 140) + "..."
-        : "",
-      url: item.link,
-      image:
-        item.thumbnail ||
-        "/placeholder.svg",
-      pubDate: item.pubDate,
-    }));
+  try {
+    const res = await fetch(
+      "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@nandasiddhardha"
+    );
+    const feed = await res.json();
+    if (feed && feed.items) {
+      return feed.items.map((item: any) => ({
+        title: item.title,
+        excerpt: item.description
+          ? item.description.replace(/<[^>]+>/g, "").slice(0, 140) + "..."
+          : "",
+        url: item.link,
+        image: item.thumbnail || "/placeholder.svg",
+        pubDate: item.pubDate,
+      }));
+    }
+    return [];
+  } catch (e) {
+    return [];
   }
-  return [];
 };
 
 export default function MediumFeedSection() {

@@ -5,7 +5,7 @@ import * as THREE from "three";
 
 // Glowing pulse line
 function PulseLine() {
-  const line = useMemo(() => {
+  const { geometry, material } = useMemo(() => {
     const points: THREE.Vector3[] = [];
     for (let i = 0; i <= 70; i++) {
       let x = i * 0.1 - 3.5;
@@ -23,13 +23,14 @@ function PulseLine() {
       color: "#64DFC2",
       linewidth: 2,
     });
-    // Line2 could be used for thick lines, but stick to basic Line here
-    const lineObj = new THREE.Line(geo, mat);
-    // For debugging
-    // console.log("lineObj", lineObj, "geo", geo, "mat", mat);
-    return lineObj;
+    return { geometry: geo, material: mat };
   }, []);
-  return <primitive object={line} />;
+  return (
+    <line>
+      <primitive object={geometry} attach="geometry" />
+      <primitive object={material} attach="material" />
+    </line>
+  );
 }
 
 // Circuit node sphere
