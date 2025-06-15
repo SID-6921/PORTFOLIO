@@ -1,119 +1,50 @@
-import React, { useState } from "react";
+
+import React from "react";
 import GlassCard from "./GlassCard";
 import { motion } from "framer-motion";
 
 const achievements = [
   {
-    title: "Coursera: AI for Medicine",
-    desc: "Deep learning and medical data analysis: coursework, projects, and certification.",
-    org: "Coursera/DeepLearning.AI",
-    image: "photo-1488590528505-98d2b5aba04b",
-    detail: "Covered clinical applications of ML, medical imaging, and patient data analysis."
+    title: "Patent Holder",
+    desc: "AI-powered medical diagnostic device",
   },
   {
-    title: "DRDO Internship",
-    desc: "Research on sonar signal systems with practical deployments.",
-    org: "DRDO, India",
-    image: "photo-1498050108023-c5249f4df085",
-    detail: "Executed real-world testing, led evaluation for critical applications."
+    title: "Research Publications",
+    desc: "3+ peer-reviewed papers in biomedical engineering",
   },
   {
-    title: "Med-Tech Innovation Challenge",
-    desc: "National runner-up, designed assistive device prototype.",
-    org: "MedTech India",
-    image: "photo-1581090464777-f3220bbe1b8b",
-    detail: "Team award, recognized for creative approach to clinical usability."
+    title: "Awards",
+    desc: "Best all-rounder winner ×2 @GITAM",
   },
 ];
 
-function getImageUrl(id: string) {
-  // fallback if not available
-  const availableImages = [
-    "photo-1488590528505-98d2b5aba04b",
-    "photo-1498050108023-c5249f4df085",
-    "photo-1581090464777-f3220bbe1b8b",
-  ];
-  if (availableImages.includes(id)) {
-    return `/lovable-uploads/${id}.jpg`;
-  }
-  return "/placeholder.svg";
-}
-
 export default function AchievementsSection() {
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
-
   return (
-    <section id="achievements" className="relative py-20 min-h-[40vh] flex flex-col items-center justify-center bg-transparent">
-      <div className="max-w-5xl w-full">
-        <h2 className="font-inter text-2xl md:text-3xl font-bold mb-8 text-graphite tracking-tight text-center">Achievements</h2>
-        <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3 place-items-stretch">
-          {achievements.map((cert, idx) => (
-            <motion.div
-              key={cert.title}
-              initial={{ opacity: 0, y: 36 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, delay: idx * 0.13 }}
-            >
-              <div
-                className="group transition-all duration-300 cursor-pointer"
-                onClick={() => setOpenIdx(idx)}
-                tabIndex={0} // accessibility
-                role="button"
-                onKeyDown={e => { if (e.key === "Enter" || e.key === " ") setOpenIdx(idx); }}
-              >
-                <GlassCard className="hover:shadow-glow hover:border-columbiablue hover:scale-[1.025] p-4 flex flex-col items-center gap-2">
-                  <img
-                    src={getImageUrl(cert.image)}
-                    alt={cert.title || "Achievement image not found"}
-                    className="w-28 h-20 object-cover rounded-md shadow-lg mb-2 bg-slate-100"
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = "/placeholder.svg";
-                    }}
-                  />
-                  <div className="text-lg font-inter font-semibold text-ultramarine group-hover:text-columbiablue mb-1">{cert.title}</div>
-                  <div className="font-ibm text-gray-700 text-sm text-center mb-1">{cert.desc}</div>
-                  <div className="text-xs text-gray-500 mt-1">{cert.org}</div>
-                </GlassCard>
-              </div>
-              {openIdx === idx && (
-                <div className="fixed z-50 inset-0 flex items-center justify-center bg-graphite/60 backdrop-blur-lg">
-                  <motion.div
-                    className="max-w-md w-full"
-                    initial={{ opacity: 0, scale: 0.96, y: 12 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                  >
-                    <GlassCard className="p-8 relative shadow-glow border-2 border-columbiablue/80 flex flex-col items-center">
-                      <button
-                        onClick={e => { e.stopPropagation(); setOpenIdx(null); }}
-                        className="absolute top-3 right-3 text-xl text-columbiablue hover:text-ultramarine transition-colors"
-                        aria-label="Close"
-                      >
-                        ×
-                      </button>
-                      <img
-                        src={getImageUrl(cert.image)}
-                        alt={cert.title || "Achievement image not found"}
-                        className="w-32 h-24 object-cover rounded-lg shadow-xl mb-3 bg-slate-100"
-                        onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).src = "/placeholder.svg";
-                        }}
-                      />
-                      <h3 className="font-inter text-xl font-bold text-graphite mb-2">{cert.title}</h3>
-                      <div className="text-xs text-gray-500 mb-1">{cert.org}</div>
-                      <div className="font-ibm text-gray-800 text-base mb-3 text-center">{cert.detail}</div>
-                    </GlassCard>
-                  </motion.div>
-                  <div
-                    className="fixed inset-0 z-40"
-                    onClick={() => setOpenIdx(null)}
-                  />
-                </div>
-              )}
-            </motion.div>
-          ))}
-        </div>
-      </div>
+    <section id="achievements" className="relative py-20 min-h-[30vh] flex flex-col items-center justify-center bg-transparent">
+      <motion.div
+        className="max-w-xl w-full"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.78, delay: 0.11 }}
+      >
+        <GlassCard className="p-10 shadow-md flex flex-col items-center">
+          <h2 className="font-inter text-2xl md:text-3xl font-bold mb-6 text-graphite tracking-tight text-center">
+            Key Achievements
+          </h2>
+          <ul className="space-y-5 w-full">
+            {achievements.map((ach, i) => (
+              <li key={ach.title} className="flex flex-col items-start bg-columbiablue/15 border border-columbiablue/30 rounded-lg px-5 py-4 shadow-sm hover:shadow-glow transition">
+                <span className="font-inter font-semibold text-ultramarine text-lg mb-1">
+                  {ach.title}
+                </span>
+                <span className="font-ibm text-gray-700 text-base">{ach.desc}</span>
+              </li>
+            ))}
+          </ul>
+        </GlassCard>
+      </motion.div>
     </section>
   );
 }
+
