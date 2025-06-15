@@ -4,9 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // Only animate these lines
 const ANIMATED_LINES = [
-  { text: "Hi", icon: "👋" },
-  { text: "Biomed & IoT Enthusiast", icon: "🔬" },
-  { text: "Cyber & Tech Enthusiast", icon: "💻" },
+  { text: "Hi, I'm", icon: "👋" },
+  { text: "a Biomed & IoT Enthusiast", icon: "🔬" },
+  { text: "a Cyber & Tech Enthusiast", icon: "💻" },
 ];
 
 export default function AnimatedLogo() {
