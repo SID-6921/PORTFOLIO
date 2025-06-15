@@ -1,4 +1,3 @@
-
 import React, { Suspense, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -22,13 +21,14 @@ function PulseLine() {
     const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(160));
     const mat = new THREE.LineBasicMaterial({
       color: "#64DFC2",
-      linewidth: 2 // Note: linewidth only works in WebGL1 contexts
+      linewidth: 2
     });
     return { geometry: geo, material: mat };
   }, []);
 
   return (
-    <line geometry={geometry} >
+    <line>
+      <primitive object={geometry} attach="geometry" />
       <primitive object={material} attach="material" />
     </line>
   );
