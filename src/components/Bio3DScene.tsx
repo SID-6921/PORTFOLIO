@@ -89,12 +89,12 @@ function HeartBeatLine() {
     )
   );
 
-  const geometry = new THREE.BufferGeometry().setFromPoints(points);
+  const geometry = React.useMemo(() => new THREE.BufferGeometry().setFromPoints(points), [points]);
   const lineRef = React.useRef<THREE.Line>(null);
 
   // Animate the color of the line to draw attention
   useFrame(({ clock }) => {
-    if (lineRef.current) {
+    if (lineRef.current && lineRef.current.material instanceof THREE.LineBasicMaterial) {
       const pulse = 0.6 + 0.4 * Math.sin(clock.getElapsedTime() * 0.5);
       lineRef.current.material.color.setRGB(0.13 + pulse * 0.5, 0.7, 1.1 - 0.2 * pulse);
     }
@@ -102,7 +102,7 @@ function HeartBeatLine() {
 
   return (
     <line ref={lineRef} geometry={geometry}>
-      <lineBasicMaterial attach="material" color="#2FC8A8" linewidth={2} />
+      <lineBasicMaterial color="#2FC8A8" linewidth={2} />
     </line>
   );
 }
