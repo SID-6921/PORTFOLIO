@@ -5,7 +5,6 @@ import * as THREE from "three";
 
 // Heartbeat polyline (EKG spike)
 function HeartBeatLine({ color = "#20B2AA" }) {
-  // Normalized heartbeat from (0,0) to (1,0)
   const points = useMemo(
     () =>
       [
@@ -16,33 +15,31 @@ function HeartBeatLine({ color = "#20B2AA" }) {
         [0.24, 0.24],
         [0.28, 0.6],
         [0.34, 0],
-        [1, 0]
+        [1, 0],
       ].map(([x, y]) => new THREE.Vector3(x, y, 0)),
     []
   );
-  const lineRef = useRef<THREE.Line>(null);
-  const geometryRef = useRef<THREE.BufferGeometry>(null);
-  const matRef = useRef<THREE.LineBasicMaterial>(null);
 
-  // Set geometry points ONCE after mount
-  useEffect(() => {
-    if (geometryRef.current) {
-      geometryRef.current.setFromPoints(points);
-    }
+  // Create geometry and material once and reuse
+  const geometry = useMemo(() => {
+    const geo = new THREE.BufferGeometry();
+    geo.setFromPoints(points);
+    return geo;
   }, [points]);
 
-  // update line color (could be animated below)
+  const materialRef = useRef<THREE.LineBasicMaterial>(null);
+
   useEffect(() => {
-    if (matRef.current) {
-      matRef.current.color = new THREE.Color(color);
+    if (materialRef.current) {
+      materialRef.current.color = new THREE.Color(color);
     }
   }, [color]);
 
   useFrame(({ clock }) => {
-    if (matRef.current) {
+    if (materialRef.current) {
       // Animate color for subtle pulse effect
       const pulse = 0.6 + 0.4 * Math.sin(clock.getElapsedTime() * 0.9);
-      matRef.current.color.setRGB(
+      materialRef.current.color.setRGB(
         0.09 + pulse * 0.22,
         0.7 + 0.08 * pulse,
         0.92 + 0.02 * pulse
@@ -51,10 +48,15 @@ function HeartBeatLine({ color = "#20B2AA" }) {
   });
 
   return (
-    <line ref={lineRef}>
-      <bufferGeometry ref={geometryRef} />
-      <lineBasicMaterial ref={matRef} />
-    </line>
+    <primitive
+      object={new THREE.Line(geometry, new THREE.LineBasicMaterial())}
+      key={color}
+      renderOrder={1}
+      dispose={null}
+    >
+      <primitive object={geometry} attach="geometry" />
+      <lineBasicMaterial ref={materialRef} attach="material" />
+    </primitive>
   );
 }
 
@@ -71,7 +73,6 @@ function PulseDot() {
     }
   });
 
-  // Set color/emissive safely
   useEffect(() => {
     if (matRef.current) {
       matRef.current.color = new THREE.Color("#ff3245");
@@ -82,19 +83,19 @@ function PulseDot() {
 
   return (
     <mesh ref={meshRef} position={[x, y, 0.05]} castShadow>
-      <sphereGeometry args={[0.034, 32, 32]} />
-      <meshStandardMaterial ref={matRef} />
+      <sphereGeometry args={[0.034, 32, 32]} attach="geometry" />
+      <meshStandardMaterial ref={matRef} attach="material" />
     </mesh>
   );
 }
 
 export default function Bio3DScene() {
   return (
-    <div className="w-full flex items-center justify-center" style={{ height: 128, minWidth: 320 }}>
-      <Canvas
-        camera={{ position: [0.35, 0.2, 2], fov: 38 }}
-        gl={{ antialias: true, alpha: true }}
-      >
+    <div
+      className="w-full flex items-center justify-center"
+      style={{ height: 128, minWidth: 320 }}
+    >
+      <Canvas camera={{ position: [0.35, 0.2, 2], fov: 38 }} gl={{ antialias: true, alpha: true }}>
         <ambientLight intensity={1} />
         <pointLight position={[0.5, 1.2, 2]} intensity={0.18} />
         <HeartBeatLine />
