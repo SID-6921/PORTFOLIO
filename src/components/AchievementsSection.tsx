@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import GlassCard from "./GlassCard";
 import { motion } from "framer-motion";
@@ -28,7 +27,16 @@ const achievements = [
 ];
 
 function getImageUrl(id: string) {
-  return `/lovable-uploads/${id}.jpg`;
+  // fallback if not available
+  const availableImages = [
+    "photo-1488590528505-98d2b5aba04b",
+    "photo-1498050108023-c5249f4df085",
+    "photo-1581090464777-f3220bbe1b8b",
+  ];
+  if (availableImages.includes(id)) {
+    return `/lovable-uploads/${id}.jpg`;
+  }
+  return "/placeholder.svg";
 }
 
 export default function AchievementsSection() {
@@ -55,7 +63,14 @@ export default function AchievementsSection() {
                 onKeyDown={e => { if (e.key === "Enter" || e.key === " ") setOpenIdx(idx); }}
               >
                 <GlassCard className="hover:shadow-glow hover:border-columbiablue hover:scale-[1.025] p-4 flex flex-col items-center gap-2">
-                  <img src={getImageUrl(cert.image)} alt={cert.title} className="w-28 h-20 object-cover rounded-md shadow-lg mb-2" />
+                  <img
+                    src={getImageUrl(cert.image)}
+                    alt={cert.title || "Achievement image not found"}
+                    className="w-28 h-20 object-cover rounded-md shadow-lg mb-2 bg-slate-100"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = "/placeholder.svg";
+                    }}
+                  />
                   <div className="text-lg font-inter font-semibold text-ultramarine group-hover:text-columbiablue mb-1">{cert.title}</div>
                   <div className="font-ibm text-gray-700 text-sm text-center mb-1">{cert.desc}</div>
                   <div className="text-xs text-gray-500 mt-1">{cert.org}</div>
@@ -76,7 +91,14 @@ export default function AchievementsSection() {
                       >
                         ×
                       </button>
-                      <img src={getImageUrl(cert.image)} alt={cert.title} className="w-32 h-24 object-cover rounded-lg shadow-xl mb-3" />
+                      <img
+                        src={getImageUrl(cert.image)}
+                        alt={cert.title || "Achievement image not found"}
+                        className="w-32 h-24 object-cover rounded-lg shadow-xl mb-3 bg-slate-100"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).src = "/placeholder.svg";
+                        }}
+                      />
                       <h3 className="font-inter text-xl font-bold text-graphite mb-2">{cert.title}</h3>
                       <div className="text-xs text-gray-500 mb-1">{cert.org}</div>
                       <div className="font-ibm text-gray-800 text-base mb-3 text-center">{cert.detail}</div>

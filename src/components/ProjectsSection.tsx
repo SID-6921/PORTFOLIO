@@ -43,7 +43,7 @@ const projects = [
 ];
 
 function getImageUrl(id: string) {
-  // Use existing image IDs and a fallback if the file is missing
+  // Use provided, fallback if missing
   const availableImages = [
     "photo-1518770660439-4636190af475",
     "photo-1485827404703-89b55fcc595e",
@@ -62,8 +62,8 @@ function ProjectImage({ src, alt }: { src: string; alt: string }) {
   return (
     <img
       src={imgSrc}
-      alt={alt}
-      className="w-full aspect-[16/10] object-cover rounded-t-glass mb-3"
+      alt={alt || "Project image not available"}
+      className="w-full aspect-[16/10] object-cover rounded-t-glass mb-3 bg-slate-100"
       onError={() => setImgSrc("/placeholder.svg")}
       loading="lazy"
     />

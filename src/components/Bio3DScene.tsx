@@ -3,79 +3,46 @@ import React, { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-// Generates a single normalized heartbeat waveform
+// Heartbeat polyline (EKG spike)
+// Normalized, from (0, 0) to (1, 0)
 function HeartBeatLine({ color = "#20B2AA" }) {
-  // Polyline: [0, 0] rising to peak at [0.5, 0.5] then down to [1, 0]
+  // EKG-style points normalized to [0,1]
   const points = useMemo(
     () => [
-      new THREE.Vector3(0, 0, 0),
-      new THREE.Vector3(0.15, 0, 0),
-      new THREE.Vector3(0.22, 0.11, 0),
-      new THREE.Vector3(0.25, -0.1, 0),
-      new THREE.Vector3(0.26, 0.2, 0), // "QRS upstroke"
-      new THREE.Vector3(0.3, 0.5, 0),  // Peak
-      new THREE.Vector3(0.35, 0, 0),   // Return to baseline
-      new THREE.Vector3(1, 0, 0)
-    ],
+      [0, 0], [0.08, 0], [0.17, 0.13], [0.19, -0.11], [0.24, 0.24], [0.28, 0.6], [0.34, 0], [1, 0]
+    ].map(([x, y]) => new THREE.Vector3(x, y, 0)),
     []
   );
-
   const geometry = useMemo(() => {
-    const geo = new THREE.BufferGeometry();
-    geo.setFromPoints(points);
+    const geo = new THREE.BufferGeometry().setFromPoints(points);
     return geo;
   }, [points]);
-
-  const material = useMemo(
-    () => new THREE.LineBasicMaterial({ color, linewidth: 2 }),
-    [color]
-  );
-
-  const line = useMemo(() => new THREE.Line(geometry, material), [geometry, material]);
+  const material = useMemo(() => new THREE.LineBasicMaterial({ color, linewidth: 2 }), [color]);
   const lineRef = useRef<THREE.Line>(null);
 
-  // Animate the color a little for subtle effect
   useFrame(({ clock }) => {
-    if (
-      lineRef.current &&
-      lineRef.current.material &&
-      (lineRef.current.material as THREE.LineBasicMaterial).color
-    ) {
-      const pulse = 0.5 + 0.5 * Math.sin(clock.getElapsedTime() * 0.6);
+    if (lineRef.current) {
+      const pulse = 0.6 + 0.4 * Math.sin(clock.getElapsedTime() * 0.9);
       (lineRef.current.material as THREE.LineBasicMaterial).color.setRGB(
-        0.11 + pulse * 0.2,
-        0.75,
-        1.1 - 0.1 * pulse
+        0.09 + pulse * 0.22,
+        0.7 + 0.08 * pulse,
+        0.92 + 0.02 * pulse
       );
     }
   });
 
-  return <primitive ref={lineRef} object={line} />;
+  return <line ref={lineRef} geometry={geometry} material={material} />;
 }
 
-// Pulsing dot that sits at the "peak" of the heartbeat
 function PulseDot() {
+  // Pulse sits at peak of the normalized heartbeat line (above)
+  const x = 0.28;
+  const y = 0.6;
   const meshRef = useRef<THREE.Mesh>(null);
-  // The X and Y for the main peak point (see points above)
-  const x = 0.3;
-  const y = 0.5;
-
-  const geometry = useMemo(() => new THREE.SphereGeometry(0.025, 32, 32), []);
-  const material = useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
-        color: 0xff3245,
-        emissive: 0xff808a,
-        emissiveIntensity: 0.75
-      }),
-    []
-  );
 
   useFrame(({ clock }) => {
     if (meshRef.current) {
-      const t = clock.getElapsedTime();
-      // Animate scale for pulse
-      const s = 1 + 0.25 * Math.abs(Math.sin(t * 2));
+      const s = 1 + 0.29 * Math.abs(Math.sin(clock.getElapsedTime() * 2.2));
       meshRef.current.scale.set(s, s, s);
     }
   });
@@ -83,24 +50,25 @@ function PulseDot() {
   return (
     <mesh
       ref={meshRef}
-      position={[x, y, 0.04]}
-      geometry={geometry}
-      material={material}
+      position={[x, y, 0.05]}
       castShadow
-    />
+    >
+      <sphereGeometry args={[0.034, 32, 32]} />
+      <meshStandardMaterial color={0xff3245} emissive={0xff808a} emissiveIntensity={0.8} />
+    </mesh>
   );
 }
 
-// Main 3D scene: simple normalized heartbeat
 export default function Bio3DScene() {
+  // Render in a sufficiently tall, always visible area
   return (
-    <div className="w-full flex items-center justify-center" style={{ height: 128, minWidth: 330 }}>
+    <div className="w-full flex items-center justify-center" style={{ height: 128, minWidth: 320 }}>
       <Canvas
-        camera={{ position: [0.5, 0.16, 2], fov: 45 }}
+        camera={{ position: [0.35, 0.2, 2], fov: 38 }}
         gl={{ antialias: true, alpha: true }}
       >
-        <ambientLight intensity={0.99} />
-        <pointLight position={[0.5, 1.6, 2]} intensity={0.14} />
+        <ambientLight intensity={1} />
+        <pointLight position={[0.5, 1.2, 2]} intensity={0.18} />
         <HeartBeatLine />
         <PulseDot />
       </Canvas>
