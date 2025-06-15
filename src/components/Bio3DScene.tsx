@@ -5,7 +5,9 @@ import * as THREE from "three";
 
 // Glowing pulse line
 function PulseLine() {
-  const { geometry, material } = useMemo(() => {
+  // Memoize a single THREE.Line object
+  const line = useMemo(() => {
+    // Create the curve and geometry
     const points: THREE.Vector3[] = [];
     for (let i = 0; i <= 70; i++) {
       let x = i * 0.1 - 3.5;
@@ -23,14 +25,9 @@ function PulseLine() {
       color: "#64DFC2",
       linewidth: 2,
     });
-    return { geometry: geo, material: mat };
+    return new THREE.Line(geo, mat);
   }, []);
-  return (
-    <line>
-      <primitive object={geometry} attach="geometry" />
-      <primitive object={material} attach="material" />
-    </line>
-  );
+  return <primitive object={line} />;
 }
 
 // Circuit node sphere
@@ -103,3 +100,4 @@ export default function Bio3DScene() {
     </div>
   );
 }
+
