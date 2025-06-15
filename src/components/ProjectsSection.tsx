@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import GlassCard from "./GlassCard";
-import { Microscope, TestTube, "3d" as ThreeDIcon } from "lucide-react"; // relevant icons
+import { Microscope, TestTube, Axis3d } from "lucide-react"; // valid 3D icon from lucide-react
 
 const projects = [
   {
@@ -39,7 +39,7 @@ const projects = [
     impact: "Streamlined experimentation for peers and labs. Used in academic courses.",
     image: "photo-1487058792275-0ad4aaf24ca7",
     detail: "Built plug-n-play components for signal acquisition, filtration, and live App plotting. Published for class adoption.",
-    icon: "ThreeDIcon",
+    icon: "Axis3d", // Update icon string to match new import
   },
 ];
 
@@ -53,8 +53,8 @@ function getProjectIcon(icon: string) {
       return <Microscope className="w-7 h-7 text-ultramarine mb-2" />;
     case "TestTube":
       return <TestTube className="w-7 h-7 text-teal mb-2" />;
-    case "ThreeDIcon":
-      return <ThreeDIcon className="w-7 h-7 text-columbiablue mb-2" />;
+    case "Axis3d":
+      return <Axis3d className="w-7 h-7 text-columbiablue mb-2" />;
     default:
       return null;
   }
