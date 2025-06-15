@@ -34,16 +34,16 @@ const getFeed = async () => {
 };
 
 export default function MediumFeedSection() {
-  const [posts, setPosts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
 
-  useEffect(() => {
+  React.useEffect(() => {
     getFeed()
       .then(setPosts)
       .finally(() => setLoading(false));
   }, []);
 
-  const shownPosts = posts.slice(0, 4);
+  const shownPosts = posts.slice(0, 3); // Only 3 posts shown
 
   return (
     <section id="blog" className="relative py-24 bg-transparent flex flex-col items-center">
