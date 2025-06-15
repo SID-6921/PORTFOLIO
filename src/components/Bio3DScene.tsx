@@ -1,4 +1,3 @@
-
 import React, { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -36,13 +35,13 @@ function BinaryColumn({ startX = -9.5, count = 7, color = "#2176FF" }) {
             >
               {isOne ? (
                 <>
-                  <primitive object={boxGeometry} attach="geometry" />
-                  <primitive object={boxMaterial} attach="material" />
+                  <primitive object={boxGeometry} />
+                  <primitive object={boxMaterial} />
                 </>
               ) : (
                 <>
-                  <primitive object={sphereGeometry} attach="geometry" />
-                  <primitive object={sphereMaterial} attach="material" />
+                  <primitive object={sphereGeometry} />
+                  <primitive object={sphereMaterial} />
                 </>
               )}
             </mesh>
@@ -126,8 +125,8 @@ function HeartBeatLine() {
 
   return (
     <line ref={lineRef}>
-      <primitive object={geometry} attach="geometry" />
-      <primitive object={material} attach="material" />
+      <primitive object={geometry} />
+      <primitive object={material} />
     </line>
   );
 }
@@ -160,8 +159,8 @@ function PulseHeartDot() {
   });
   return (
     <mesh ref={meshRef} position={[baseX, baseY, 0.06]}>
-      <primitive object={geometry} attach="geometry" />
-      <primitive object={material} attach="material" />
+      <primitive object={geometry} />
+      <primitive object={material} />
     </mesh>
   );
 }
