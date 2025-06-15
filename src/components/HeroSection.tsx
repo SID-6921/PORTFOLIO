@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import GlassCard from "./GlassCard";
@@ -19,7 +18,7 @@ export default function HeroSection() {
         <GlassCard className="p-10 shadow-glow border-2 border-columbiablue/50 flex flex-col items-center">
           <Avatar className="h-32 w-32 mb-4 shadow-xl border-4 border-ultramarine/40">
             <AvatarImage 
-              src="/lovable-uploads/photo-1618160702438-9b02ab6515c9.jpg"
+              src="/lovable-uploads/31b97417-8931-4a4d-859c-4ba132c82167.png"
               alt="Professional Picture"
             />
           </Avatar>
@@ -62,4 +61,3 @@ export default function HeroSection() {
     </section>
   );
 }
-
