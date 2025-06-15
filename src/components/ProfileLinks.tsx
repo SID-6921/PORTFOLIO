@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Linkedin, Github, Medium } from "lucide-react";
+import { Linkedin, Github } from "lucide-react";
 
 const profiles = [
   {
@@ -16,12 +16,14 @@ const profiles = [
   {
     name: "Medium",
     href: "https://medium.com/@nandasiddhardha",
-    icon: Medium,
+    icon: null, // No supported icon in lucide-react
+    label: "M",
   },
   {
     name: "ResearchGate",
     href: "https://www.researchgate.net/profile/Nanda-Siddhardha",
-    icon: null, // No supported icon in lucide-react.
+    icon: null, // No supported icon in lucide-react
+    label: "RG",
   },
 ];
 
@@ -30,7 +32,7 @@ export default function ProfileLinks() {
     <div className="flex flex-col items-center my-7">
       <h3 className="font-inter font-semibold text-base text-graphite mb-2">Find me online</h3>
       <div className="flex gap-5">
-        {profiles.map(({ name, href, icon: Icon }) => (
+        {profiles.map(({ name, href, icon: Icon, label }) => (
           <a
             key={name}
             href={href}
@@ -41,7 +43,9 @@ export default function ProfileLinks() {
             {Icon ? (
               <Icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
             ) : (
-              <span className="inline-block w-5 h-5 bg-columbiablue rounded-full text-xs flex items-center justify-center font-bold overflow-hidden">RG</span>
+              <span className="inline-block w-5 h-5 bg-columbiablue rounded-full text-xs flex items-center justify-center font-bold overflow-hidden">
+                {label || ""}
+              </span>
             )}
             <span className="underline underline-offset-2">{name}</span>
           </a>
