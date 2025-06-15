@@ -1,9 +1,21 @@
 
-import React, { useRef, useMemo } from "react";
+import React, { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-function WobbleSphere({ color, position, scale = 1, speed = 1, float = 0.3 }: { color: string, position: [number, number, number], scale?: number, speed?: number, float?: number }) {
+function WobbleSphere({
+  color,
+  position,
+  scale = 1,
+  speed = 1,
+  float = 0.3,
+}: {
+  color: string;
+  position: [number, number, number];
+  scale?: number;
+  speed?: number;
+  float?: number;
+}) {
   const mesh = useRef<THREE.Mesh>(null);
 
   useFrame(({ clock }) => {
@@ -18,12 +30,24 @@ function WobbleSphere({ color, position, scale = 1, speed = 1, float = 0.3 }: { 
   return (
     <mesh ref={mesh} position={position} scale={scale}>
       <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial color={color} roughness={0.6} metalness={0.18} />
+      <meshStandardMaterial color={new THREE.Color(color)} roughness={0.6} metalness={0.18} />
     </mesh>
   );
 }
 
-function WiggleCube({ color, position, scale = 1, speed = 1, float = 0.3 }: { color: string, position: [number, number, number], scale?: number, speed?: number, float?: number }) {
+function WiggleCube({
+  color,
+  position,
+  scale = 1,
+  speed = 1,
+  float = 0.3,
+}: {
+  color: string;
+  position: [number, number, number];
+  scale?: number;
+  speed?: number;
+  float?: number;
+}) {
   const mesh = useRef<THREE.Mesh>(null);
 
   useFrame(({ clock }) => {
@@ -38,7 +62,7 @@ function WiggleCube({ color, position, scale = 1, speed = 1, float = 0.3 }: { co
   return (
     <mesh ref={mesh} position={position} scale={scale}>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={color} roughness={0.38} metalness={0.14} />
+      <meshStandardMaterial color={new THREE.Color(color)} roughness={0.38} metalness={0.14} />
     </mesh>
   );
 }
@@ -69,7 +93,7 @@ export default function Playful3DBackground() {
         overflow: "hidden",
         pointerEvents: "none",
         filter: "blur(0.5px) brightness(1.03)",
-        opacity: 0.50 // subtle!
+        opacity: 0.5, // subtle!
       }}
     >
       <Canvas

@@ -8,7 +8,7 @@ import AchievementsSection from "@/components/AchievementsSection";
 import MediumFeedSection from "@/components/MediumFeedSection";
 import ContactSection from "@/components/ContactSection";
 import ProfileLinks from "@/components/ProfileLinks";
-// OpenToWorkButton and Switch imports are no longer needed and removed
+import Playful3DBackground from "@/components/Playful3DBackground";
 
 const Index = () => {
   return (
