@@ -50,11 +50,10 @@ function HeartBeatLine({ color = "#20B2AA" }) {
     }
   });
 
-  // Defensive: only render children if the refs are attached (may help avoid accidental undefined passing into r3f graph)
   return (
     <line ref={lineRef}>
-      <bufferGeometry ref={geometryRef} attach="geometry" />
-      <lineBasicMaterial ref={matRef} attach="material" />
+      <bufferGeometry ref={geometryRef} />
+      <lineBasicMaterial ref={matRef} />
     </line>
   );
 }
@@ -83,8 +82,8 @@ function PulseDot() {
 
   return (
     <mesh ref={meshRef} position={[x, y, 0.05]} castShadow>
-      <sphereGeometry args={[0.034, 32, 32]} attach="geometry" />
-      <meshStandardMaterial ref={matRef} attach="material" />
+      <sphereGeometry args={[0.034, 32, 32]} />
+      <meshStandardMaterial ref={matRef} />
     </mesh>
   );
 }
