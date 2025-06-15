@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import GlassCard from "./GlassCard";
 import BioWaveSVG from "./BioWaveSVG";
+import { Avatar, AvatarImage } from "./ui/avatar";
 
 export default function HeroSection() {
   return (
@@ -14,6 +15,13 @@ export default function HeroSection() {
         transition={{ duration: 1 }}
       >
         <GlassCard className="p-10 shadow-glow border-2 border-columbiablue/50 flex flex-col items-center">
+          {/* Professional avatar added here */}
+          <Avatar className="h-32 w-32 mb-4 shadow-xl border-4 border-ultramarine/40">
+            <AvatarImage 
+              src="/lovable-uploads/photo-1618160702438-9b02ab6515c9.jpg"
+              alt="Professional Picture"
+            />
+          </Avatar>
           <span className="text-sm font-ibm text-teal font-medium tracking-widest uppercase mb-2 letter-spacing-[0.16em]">Columbia University — Biomedical Engineering</span>
           <h1 className="font-inter text-4xl md:text-5xl font-extrabold mb-2 text-graphite text-center tracking-tight">
             Nanda Siddhardha
