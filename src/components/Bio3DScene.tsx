@@ -29,11 +29,16 @@ function BinaryColumn({ startX = -9.5, count = 7, color = "#2176FF" }) {
               receiveShadow
             >
               {isOne ? (
-                <boxGeometry args={[1, 1, 1]} />
+                <>
+                  <boxGeometry args={[1, 1, 1]} />
+                  <meshStandardMaterial color={color} />
+                </>
               ) : (
-                <sphereGeometry args={[0.5, 32, 32]} />
+                <>
+                  <sphereGeometry args={[0.5, 32, 32]} />
+                  <meshStandardMaterial color={color} />
+                </>
               )}
-              <meshStandardMaterial color={color} />
             </mesh>
           );
         })}
@@ -72,7 +77,7 @@ function HeartBeatLine() {
     { x: -3.3, y: 0 },
     { x: -2.0, y: 0 },
     { x: 0.1, y: 0.38 },
-    { x: 0.40, y: -0.27 },
+    { x: 0.4, y: -0.27 },
     { x: 0.7, y: 0 },
     { x: 2.2, y: 0 },
     { x: 2.4, y: 0.45 },
@@ -83,7 +88,6 @@ function HeartBeatLine() {
   const points = useMemo(
     () =>
       seq.map((p) => new THREE.Vector3(p.x * scale, (p.y + yOffset) * scale, 0)),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -112,8 +116,8 @@ function HeartBeatLine() {
   });
 
   return (
-    <line ref={lineRef} geometry={geometry}>
-      {/* linewidth is only supported with special shaders; omit for broad compatibility */}
+    <line ref={lineRef}>
+      <bufferGeometry attach="geometry" {...geometry} />
       <lineBasicMaterial color={"#2FC8A8"} />
     </line>
   );
