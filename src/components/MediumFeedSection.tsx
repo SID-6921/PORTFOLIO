@@ -18,7 +18,7 @@ const MEDIUM_RSS_URL = encodeURIComponent("https://medium.com/feed/@nandasiddhar
 
 async function fetchMediumPosts(): Promise<MediumPost[]> {
   // Fetch the RSS XML via the proxy
-  const response = await fetch(`${RSS_PROXY}https://medium.com/feed/@nandasiddhardha`);
+  const response = await fetch(`https://api.allorigins.win/get?url=https://medium.com/feed/@nandasiddhardha`);
   if (!response.ok) throw new Error("Failed to fetch RSS feed");
   const resJson = await response.json();
   const domParser = new window.DOMParser();
@@ -27,12 +27,26 @@ async function fetchMediumPosts(): Promise<MediumPost[]> {
   const posts: MediumPost[] = [];
   for (let i = 0; i < Math.min(3, items.length); i++) {
     const item = items[i];
+    const descriptionHTML = item.querySelector("description")?.textContent || "";
+    // Try to extract snippet from <p class="medium-feed-snippet">...</p>
+    let snippet = "";
+    if (descriptionHTML) {
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = descriptionHTML;
+      const snippetElem = tempDiv.querySelector(".medium-feed-snippet");
+      if (snippetElem && snippetElem.textContent) {
+        snippet = snippetElem.textContent;
+      } else {
+        // Fallback: Remove all HTML tags and return the first 150 chars
+        snippet = tempDiv.textContent?.replace(/(<([^>]+)>)/gi, "").slice(0, 150) || "";
+      }
+    }
     posts.push({
       title: item.querySelector("title")?.textContent || "",
       link: item.querySelector("link")?.textContent || "",
       pubDate: item.querySelector("pubDate")?.textContent || "",
       creator: item.querySelector("creator")?.textContent || "",
-      contentSnippet: item.querySelector("description")?.textContent?.replace(/(<([^>]+)>)/gi, "") || "",
+      contentSnippet: snippet,
     });
   }
   return posts;
