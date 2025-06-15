@@ -1,4 +1,3 @@
-
 import React, { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -33,25 +32,27 @@ function WobbleCell({
       <mesh>
         <sphereGeometry args={[1, 32, 32]} />
         <meshStandardMaterial
-          transparent
-          opacity={0.4}
-          roughness={0.2}
-          metalness={0.1}
-        >
-          <color attach="color" args={[color]} />
-        </meshStandardMaterial>
+          args={[{
+            color,
+            transparent: true,
+            opacity: 0.4,
+            roughness: 0.2,
+            metalness: 0.1,
+          }]}
+        />
       </mesh>
       {/* Nucleus */}
       <mesh scale={0.4}>
         <sphereGeometry args={[1, 32, 32]} />
         <meshStandardMaterial
-          roughness={0.5}
-          metalness={0.1}
-          emissiveIntensity={0.4}
-        >
-          <color attach="color" args={[color]} />
-          <color attach="emissive" args={[color]} />
-        </meshStandardMaterial>
+          args={[{
+            color,
+            roughness: 0.5,
+            metalness: 0.1,
+            emissive: color,
+            emissiveIntensity: 0.4,
+          }]}
+        />
       </mesh>
     </group>
   );
@@ -85,11 +86,12 @@ function WiggleKnot({
     <mesh ref={mesh} position={position} scale={scale}>
       <torusKnotGeometry args={[0.7, 0.2, 128, 16]} />
       <meshStandardMaterial
-        roughness={0.38}
-        metalness={0.14}
-      >
-        <color attach="color" args={[color]} />
-      </meshStandardMaterial>
+        args={[{
+          color,
+          roughness: 0.38,
+          metalness: 0.14,
+        }]}
+      />
     </mesh>
   );
 }
