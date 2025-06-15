@@ -6,7 +6,7 @@ const navLinks = [
   { label: "Home", href: "#hero" },
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
-  { label: "UX+UI", href: "#ux-ui" },
+  // { label: "UX+UI", href: "#ux-ui" }, // Removed UX+UI section
   { label: "Achievements", href: "#achievements" },
   { label: "Contact", href: "#contact" },
 ];
@@ -35,3 +35,4 @@ export default function HeaderNav() {
     </header>
   );
 }
+
