@@ -57,6 +57,19 @@ function getImageUrl(id: string) {
   return "/placeholder.svg";
 }
 
+function ProjectImage({ src, alt }: { src: string; alt: string }) {
+  const [imgSrc, setImgSrc] = React.useState(src);
+  return (
+    <img
+      src={imgSrc}
+      alt={alt}
+      className="w-full aspect-[16/10] object-cover rounded-t-glass mb-3"
+      onError={() => setImgSrc("/placeholder.svg")}
+      loading="lazy"
+    />
+  );
+}
+
 function getProjectIcon(icon: string) {
   switch (icon) {
     case "Microscope":
@@ -135,7 +148,7 @@ export default function ProjectsSection() {
                     <div className="flex items-center justify-center mt-2">
                       {getProjectIcon(project.icon)}
                     </div>
-                    <img src={getImageUrl(project.image)} alt={project.title} className="w-full aspect-[16/10] object-cover rounded-t-glass mb-3" />
+                    <ProjectImage src={getImageUrl(project.image)} alt={project.title} />
                     <div className="p-4 flex-grow">
                       <div className="font-inter font-semibold text-lg text-ultramarine mb-2 transition-all group-hover:text-teal">
                         {project.title}
@@ -173,8 +186,8 @@ export default function ProjectsSection() {
                       <div className="flex items-center justify-center mt-2 mb-1">
                         {getProjectIcon(project.icon)}
                       </div>
+                      <ProjectImage src={getImageUrl(project.image)} alt={project.title} />
                       <h3 className="font-inter text-2xl font-bold text-graphite mb-2">{project.title}</h3>
-                      <img src={getImageUrl(project.image)} alt={project.title} className="w-full aspect-[16/10] object-cover rounded-md mb-3" />
                       <div className="font-ibm text-gray-800 text-base mb-3">{project.detail}</div>
                       <div className="flex flex-wrap gap-2 mb-2">
                         {project.tech.map(t => (

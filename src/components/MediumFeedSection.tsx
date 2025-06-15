@@ -16,7 +16,14 @@ const getFeed = async () => {
           ? item.description.replace(/<[^>]+>/g, "").slice(0, 140) + "..."
           : "",
         url: item.link,
-        image: item.thumbnail || "/placeholder.svg",
+        image:
+          // Try to get an image from the description, otherwise fallback
+          (() => {
+            const match = item.description?.match(/<img.*?src=["'](.+?)["']/);
+            if (match && match[1]) return match[1];
+            if (item.thumbnail) return item.thumbnail;
+            return "/placeholder.svg";
+          })(),
         pubDate: item.pubDate,
       }));
     }
@@ -36,6 +43,8 @@ export default function MediumFeedSection() {
       .finally(() => setLoading(false));
   }, []);
 
+  const shownPosts = posts.slice(0, 4);
+
   return (
     <section id="blog" className="relative py-24 bg-transparent flex flex-col items-center">
       <div className="max-w-6xl w-full mx-auto">
@@ -45,11 +54,11 @@ export default function MediumFeedSection() {
         {loading && (
           <div className="text-center text-gray-400 text-lg mb-8">Loading posts...</div>
         )}
-        {!loading && posts.length === 0 && (
+        {!loading && shownPosts.length === 0 && (
           <div className="text-center text-gray-500 mb-8">No articles found for @nandasiddhardha.</div>
         )}
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
-          {posts.map((post, i) => (
+          {shownPosts.map((post, i) => (
             <BlogCard3D key={post.url || post.title}>
               <a
                 href={post.url}
@@ -77,6 +86,19 @@ export default function MediumFeedSection() {
             </BlogCard3D>
           ))}
         </div>
+        {/* "Check out more" link */}
+        {!loading && posts.length > 0 && (
+          <div className="flex justify-center mt-8">
+            <a
+              href="https://medium.com/@nandasiddhardha"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-ultramarine hover:bg-columbiablue text-white px-6 py-2 rounded-lg font-ibm font-semibold transition-colors shadow hover:shadow-glow"
+            >
+              Check out more on Medium →
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );
