@@ -45,8 +45,8 @@ export default function BioWaveSVG() {
 
   // Animate from 0 (start) to 1 (end) and repeat.
   useAnimationFrame((t) => {
-    // Animation period (ms): adjust for speed (slower - 5s)
-    const duration = 5000;
+    // Animation period (ms): adjust for speed (slower - 3s)
+    const duration = 3000;
     const loop = (t % duration) / duration;
     setProgress(loop);
   });
