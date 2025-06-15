@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-// Helper: Generate a vertical column of animated "binary" digits.
+// Helper: Generate a vertical column of animated "binary" digits using shapes
 function BinaryColumn({ startX = -9.5, count = 7, color = "#2176FF" }) {
   const group = useRef<THREE.Group>(null);
 
@@ -14,23 +14,35 @@ function BinaryColumn({ startX = -9.5, count = 7, color = "#2176FF" }) {
     }
   });
 
-  // Alternate 1s and 0s for the column
   return (
     <group ref={group} position={[startX, 0, 0]}>
       {Array(count)
         .fill(0)
-        .map((_, i) => (
-          <mesh key={i} position={[0, 2.4 * (i - count/2), 0]}>
-            {/* Each bit as "1" or "0" with slightly randomized jitter */}
-            <textGeometry args={[(i % 2 === 0 ? "1" : "0"), { size: 0.98, height: 0.12, font: undefined }]} />
-            <meshStandardMaterial color={color} />
-          </mesh>
-        ))}
+        .map((_, i) => {
+          const isOne = i % 2 === 0;
+          return (
+            <mesh
+              key={i}
+              position={[0, 2.4 * (i - count / 2), 0]}
+              scale={isOne ? [0.6, 1.4, 0.6] : [0.6, 0.6, 0.6]}
+              castShadow
+              receiveShadow
+            >
+              {/* "1" as a tall box, "0" as a sphere */}
+              {isOne ? (
+                <boxGeometry args={[1, 1, 1]} />
+              ) : (
+                <sphereGeometry args={[0.5, 32, 32]} />
+              )}
+              <meshStandardMaterial color={color} />
+            </mesh>
+          );
+        })}
     </group>
   );
 }
 
-// The "flowing" binary -- 1s and 0s float in left-to-right
+// The "flowing" binary -- 1s and 0s float left-to-right
 function AnimatedBinaryStream() {
   // Multiple binary columns with a horizontal drifting motion
   const columns = [0, 1, 2];
@@ -78,19 +90,24 @@ function HeartBeatLine() {
   );
 
   const geometry = new THREE.BufferGeometry().setFromPoints(points);
-  const material = new THREE.LineBasicMaterial({ color: "#2FC8A8" });
+  const lineRef = React.useRef<THREE.Line>(null);
 
-  // Optionally animate the line color (to draw the eye)
+  // Animate the color of the line to draw attention
   useFrame(({ clock }) => {
-    // color shift, fade in and out between blue and mint
-    const pulse = 0.6 + 0.4 * Math.sin(clock.getElapsedTime() * 0.5);
-    material.color.setRGB(0.13 + pulse * 0.5, 0.7, 1.1 - 0.2 * pulse);
+    if (lineRef.current) {
+      const pulse = 0.6 + 0.4 * Math.sin(clock.getElapsedTime() * 0.5);
+      lineRef.current.material.color.setRGB(0.13 + pulse * 0.5, 0.7, 1.1 - 0.2 * pulse);
+    }
   });
 
-  return <primitive object={new THREE.Line(geometry, material)} />;
+  return (
+    <line ref={lineRef} geometry={geometry}>
+      <lineBasicMaterial attach="material" color="#2FC8A8" linewidth={2} />
+    </line>
+  );
 }
 
-// A pulsing heart/material dot at the right end of the line
+// A pulsing heart/dot at the right end of the line
 function PulseHeartDot() {
   const meshRef = useRef<THREE.Mesh>(null);
   const baseX = 3.7 * 1.7;
@@ -103,12 +120,11 @@ function PulseHeartDot() {
       meshRef.current.scale.set(s, s, s);
     }
   });
-  // Optionally use a "heart" geometry or just a prominent sphere
-  // Here, a big glowing sphere
+  // Glowing pinkish sphere as the heart/dot
   return (
     <mesh ref={meshRef} position={[baseX, baseY, 0.06]}>
       <sphereGeometry args={[0.53, 32, 32]} />
-      <meshStandardMaterial emissive="#FF808A" color="#FF3245" emissiveIntensity={0.54} />
+      <meshStandardMaterial color="#FF3245" emissive="#FF808A" emissiveIntensity={0.54} />
     </mesh>
   );
 }
@@ -124,7 +140,7 @@ export default function Bio3DScene() {
         {/* Lighting */}
         <ambientLight intensity={0.9} />
         <pointLight position={[0, 6, 16]} intensity={0.32} />
-        {/* Digital side */}
+        {/* Digital code on the left */}
         <AnimatedBinaryStream />
         {/* ECG/biomedical line */}
         <HeartBeatLine />
@@ -134,4 +150,3 @@ export default function Bio3DScene() {
     </div>
   );
 }
-
