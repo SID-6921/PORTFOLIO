@@ -3,11 +3,12 @@ import React from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import GlassCard from "./GlassCard";
 
-export default function BlogCard3D({
-  children,
-  className = "",
-  ...props
-}: React.ComponentProps<"div"> & { children: React.ReactNode }) {
+type BlogCard3DProps = {
+  children: React.ReactNode;
+  className?: string;
+};
+
+export default function BlogCard3D({ children, className = "" }: BlogCard3DProps) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useTransform(y, [-0.5, 0.5], [12, -12]);
@@ -30,7 +31,6 @@ export default function BlogCard3D({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={"transition-shadow duration-300 " + className}
-      {...props}
     >
       {children}
     </motion.div>
