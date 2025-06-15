@@ -5,6 +5,7 @@ import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import AchievementsSection from "@/components/AchievementsSection";
+import MediumFeedSection from "@/components/MediumFeedSection";
 import ContactSection from "@/components/ContactSection";
 import ProfileLinks from "@/components/ProfileLinks";
 // OpenToWorkButton and Switch imports are no longer needed and removed
@@ -18,7 +19,7 @@ const Index = () => {
         <AboutSection />
         <ProjectsSection />
         <AchievementsSection />
-        {/* <MediumFeedSection /> removed per user request */}
+        <MediumFeedSection />
         <ContactSection />
         <ProfileLinks />
       </main>
