@@ -9,10 +9,12 @@ type GlassCardProps = {
 
 export default function GlassCard({ className = "", children, as: Comp = "div" }: GlassCardProps) {
   return (
-    <Comp className={
-      "bg-white/60 backdrop-blur-glass border border-medicalsilver/50 shadow-glass rounded-glass transition-all duration-400 " +
-      className
-    }>
+    <Comp
+      className={
+        "bg-background/80 dark:bg-popover/80 backdrop-blur-glass border border-border shadow-glass rounded-glass transition-all duration-400 " +
+        className
+      }
+    >
       {children}
     </Comp>
   );

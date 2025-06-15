@@ -1,3 +1,4 @@
+
 import React from "react";
 import { motion } from "framer-motion";
 import GlassCard from "./GlassCard";
@@ -37,8 +38,8 @@ export default function HeroSection() {
         initial="hidden"
         animate="visible"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-[#9bddff33] via-[#ffffffcc] to-[#f8fbff] blur-2xl opacity-60" />
-        <div className="absolute -bottom-24 left-0 w-full h-52 bg-gradient-to-t from-columbiablue/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#9bddff33] via-[#ffffffcc] dark:via-[#222946cc] to-[#f8fbff] blur-2xl opacity-60" />
+        <div className="absolute -bottom-24 left-0 w-full h-52 bg-gradient-to-t from-columbiablue/60 dark:from-ultramarine/50 via-transparent to-transparent" />
       </motion.div>
       <motion.div
         className="max-w-2xl w-full"
@@ -46,7 +47,7 @@ export default function HeroSection() {
         animate="visible"
         variants={cardVariants}
       >
-        <GlassCard className="p-10 shadow-glow border-2 border-columbiablue/50 flex flex-col items-center bg-white/70 backdrop-blur-xl transition-all duration-700">
+        <GlassCard className="p-10 shadow-glow border-2 border-columbiablue/50 flex flex-col items-center bg-background/80 dark:bg-popover/80 backdrop-blur-xl transition-all duration-700">
           <Avatar className="h-32 w-32 mb-4 shadow-xl border-4 border-ultramarine/40 animate-scale-in">
             {!imgError ? (
               <AvatarImage 
@@ -69,7 +70,7 @@ export default function HeroSection() {
             Columbia University — Biomedical Engineering
           </motion.span>
           <motion.h1
-            className="font-inter text-4xl md:text-5xl font-extrabold mb-2 text-graphite text-center tracking-tight"
+            className="font-inter text-4xl md:text-5xl font-extrabold mb-2 text-foreground text-center tracking-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.9 }}
@@ -85,7 +86,7 @@ export default function HeroSection() {
             Looking for opportunities
           </motion.div>
           <motion.div
-            className="mb-4 text-xl md:text-2xl font-inter font-semibold text-ultramarine text-center tracking-tight"
+            className="mb-4 text-xl md:text-2xl font-inter font-semibold text-ultramarine dark:text-columbiablue text-center tracking-tight"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
@@ -96,7 +97,7 @@ export default function HeroSection() {
             <BioWaveSVG />
           </div>
           <motion.div
-            className="text-center font-ibm max-w-lg text-gray-700 text-base md:text-lg"
+            className="text-center font-ibm max-w-lg text-muted-foreground text-base md:text-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.7 }}
@@ -122,9 +123,9 @@ export default function HeroSection() {
             transition={{ delay: 1.1, duration: 1 }}
             className="flex flex-col items-center"
           >
-            <span className="text-graphite font-medium">Scroll to explore</span>
+            <span className="text-foreground font-medium">Scroll to explore</span>
             <motion.svg
-              className="inline-block w-7 h-7 animate-bounce mt-1 text-ultramarine"
+              className="inline-block w-7 h-7 animate-bounce mt-1 text-ultramarine dark:text-columbiablue"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
