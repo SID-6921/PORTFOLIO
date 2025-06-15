@@ -14,7 +14,7 @@ const cardVariants = {
     opacity: 1,
     scale: 1,
     y: 0,
-    transition: { duration: 1, ease: "easeOut" }
+    transition: { duration: 1, ease: "easeOut" as const }
   }
 };
 
@@ -22,7 +22,7 @@ const bgVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { delay: 0.2, duration: 1.3, ease: "easeOut" }
+    transition: { delay: 0.2, duration: 1.3, ease: "easeOut" as const }
   }
 };
 
