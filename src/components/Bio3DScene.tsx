@@ -22,7 +22,8 @@ function PulseDot() {
   return (
     <mesh position={[0.1, 0, 0.01]}>
       <sphereGeometry args={[0.15, 24, 24]} />
-      <meshStandardMaterial color="#FF7F51" emissive="#FFDF00" emissiveIntensity={0.8} />
+      {/* Use only color as prop, nest others as child nodes if needed */}
+      <meshStandardMaterial color="#FF7F51" />
     </mesh>
   );
 }
