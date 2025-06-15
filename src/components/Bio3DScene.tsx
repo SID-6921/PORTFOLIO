@@ -1,5 +1,5 @@
 
-import React, { useRef } from "react";
+import React, { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -28,13 +28,12 @@ function BinaryColumn({ startX = -9.5, count = 7, color = "#2176FF" }) {
               castShadow
               receiveShadow
             >
-              {/* "1" as a tall box, "0" as a sphere */}
               {isOne ? (
                 <boxGeometry args={[1, 1, 1]} />
               ) : (
                 <sphereGeometry args={[0.5, 32, 32]} />
               )}
-              <meshStandardMaterial color={"#2176FF"} />
+              <meshStandardMaterial color={color} />
             </mesh>
           );
         })}
@@ -62,7 +61,6 @@ function AnimatedBinaryStream() {
 
 // Heartbeat/EKG-like polyline
 function HeartBeatLine() {
-  // This starts after the binary part ends, approx x= -5 onward
   const scale = 1.7;
   const yOffset = -0.2;
   const seq = [
@@ -82,12 +80,20 @@ function HeartBeatLine() {
     { x: 2.8, y: 0 },
     { x: 3.7, y: 0 },
   ];
-  const points: THREE.Vector3[] = seq.map(
-    p => new THREE.Vector3(p.x * scale, (p.y + yOffset) * scale, 0)
+  const points = useMemo(
+    () =>
+      seq.map((p) => new THREE.Vector3(p.x * scale, (p.y + yOffset) * scale, 0)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
 
-  const geometryRef = React.useRef<THREE.BufferGeometry>(null);
-  const lineRef = React.useRef<THREE.Line>(null);
+  const geometry = useMemo(() => {
+    const geo = new THREE.BufferGeometry();
+    geo.setFromPoints(points);
+    return geo;
+  }, [points]);
+
+  const lineRef = useRef<THREE.Line>(null);
 
   // Animate the color of the line to draw attention
   useFrame(({ clock }) => {
@@ -106,18 +112,8 @@ function HeartBeatLine() {
   });
 
   return (
-    <line ref={lineRef}>
-      <bufferGeometry
-        ref={geometryRef}
-        attach="geometry"
-        attributes-position={
-          new THREE.Float32BufferAttribute(
-            points.flatMap(p => [p.x, p.y, p.z]),
-            3
-          )
-        }
-      />
-      <lineBasicMaterial attach="material" color={"#2FC8A8"} linewidth={2} />
+    <line ref={lineRef} geometry={geometry}>
+      <lineBasicMaterial color={"#2FC8A8"} linewidth={2} />
     </line>
   );
 }
@@ -165,4 +161,3 @@ export default function Bio3DScene() {
     </div>
   );
 }
-
