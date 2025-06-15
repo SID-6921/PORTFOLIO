@@ -24,46 +24,50 @@ const HEARTBEAT_PATH = `
 
 export default function BioWaveSVG() {
   const [progress, setProgress] = React.useState(0);
-  const [isDone, setIsDone] = React.useState(false);
   const requestRef = useRef<number | null>(null);
-  const ANIMATION_DURATION = 1.25; // how long the line takes to sweep (seconds)
-  const PAUSE_DURATION = 0.65; // how long heart is visible after complete (seconds)
+  const [showHeart, setShowHeart] = React.useState(false);
+
+  // Animation timing
+  const ANIMATION_DURATION = 1.25; // seconds
+  const PAUSE_DURATION = 0.65; // seconds
 
   React.useEffect(() => {
     let start = performance.now();
-    let doneTimeout: number | null = null;
+    let pauseTimeout: number | null = null;
 
     function animate(now: number) {
-      const elapsed = (now - start) / 1000; // seconds
+      const elapsed = (now - start) / 1000; // in seconds
       if (elapsed < ANIMATION_DURATION) {
-        setProgress(elapsed / ANIMATION_DURATION); // 0...1
+        setProgress(elapsed / ANIMATION_DURATION); // from 0 to 1
+        setShowHeart(false);
         requestRef.current = requestAnimationFrame(animate);
       } else {
         setProgress(1);
-        setIsDone(true);
-        // After the pause, reset everything
-        doneTimeout = window.setTimeout(() => {
+        setShowHeart(true);
+        // Pause with the full line and heart visible, then reset
+        pauseTimeout = window.setTimeout(() => {
           setProgress(0);
-          setIsDone(false);
+          setShowHeart(false);
           start = performance.now();
           requestRef.current = requestAnimationFrame(animate);
         }, PAUSE_DURATION * 1000);
       }
     }
+
     setProgress(0);
-    setIsDone(false);
+    setShowHeart(false);
     requestRef.current = requestAnimationFrame(animate);
 
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
-      if (doneTimeout) clearTimeout(doneTimeout);
+      if (pauseTimeout) clearTimeout(pauseTimeout);
     };
-    // No deps! Only run on mount.
+    // Do not add dependencies; run only once on mount
     // eslint-disable-next-line
   }, []);
 
-  // Heart only appears & beats when the wave is fully drawn.
-  const heartOpacity = isDone ? 1 : 0;
+  // Heart appears (and beats) only when the wave is finished being drawn
+  const heartOpacity = showHeart ? 1 : 0;
 
   return (
     <div className="relative flex items-center justify-center w-[270px] mx-auto select-none">
