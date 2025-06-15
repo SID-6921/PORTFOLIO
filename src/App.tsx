@@ -8,26 +8,16 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import React from "react";
 import PageSplashLoader from "@/components/PageSplashLoader";
-import ThemeToggle from "@/components/ThemeToggle";
+// import ThemeToggle from "@/components/ThemeToggle";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [showSplash, setShowSplash] = React.useState(true);
-
-  React.useEffect(() => {
-    // Show splash for at least 1800ms or until hydration
-    const minDelay = 1800;
-    const timeout = setTimeout(() => setShowSplash(false), minDelay);
-    return () => clearTimeout(timeout);
-  }, []);
-
+  // App no longer needs splash loader or theme toggle
+  // PageSplashLoader and ThemeToggle removed from render
   return (
     <>
-      <PageSplashLoader show={showSplash} />
-      <ThemeToggle />
-      <div className={showSplash ? "pointer-events-none select-none" : undefined}>
-        {/* Content is interactive only after splash */}
+      <div>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <Toaster />
