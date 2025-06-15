@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import React, { useRef } from "react";
 import { Heart } from "lucide-react";
@@ -41,6 +40,7 @@ export default function BioWaveSVG() {
       const elapsed = (now - start) / 1000;
       const t = Math.min(elapsed / ANIMATION_DURATION, 1);
       setProgress(t);
+      console.log("BioWaveSVG progress:", t);
 
       if (t < 1) {
         setShowHeart(false);
