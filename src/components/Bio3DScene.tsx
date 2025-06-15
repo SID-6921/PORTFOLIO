@@ -1,5 +1,5 @@
 
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -21,7 +21,14 @@ function HeartBeatLine({ color = "#20B2AA" }) {
     []
   );
   const lineRef = useRef<THREE.Line>(null);
-  const colorRef = useRef(color);
+  const geometryRef = useRef<THREE.BufferGeometry>(null);
+
+  // Set the geometry points ONCE (after mount)
+  useEffect(() => {
+    if (geometryRef.current) {
+      geometryRef.current.setFromPoints(points);
+    }
+  }, [points]);
 
   useFrame(({ clock }) => {
     if (lineRef.current) {
@@ -39,8 +46,8 @@ function HeartBeatLine({ color = "#20B2AA" }) {
 
   return (
     <line ref={lineRef}>
-      <bufferGeometry attach="geometry" setFromPoints={points} />
-      <lineBasicMaterial attach="material" color={colorRef.current} linewidth={2} />
+      <bufferGeometry ref={geometryRef} />
+      <lineBasicMaterial color={color} linewidth={2} />
     </line>
   );
 }
