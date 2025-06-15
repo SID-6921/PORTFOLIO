@@ -113,7 +113,8 @@ function HeartBeatLine() {
 
   return (
     <line ref={lineRef} geometry={geometry}>
-      <lineBasicMaterial color={"#2FC8A8"} linewidth={2} />
+      {/* linewidth is only supported with special shaders; omit for broad compatibility */}
+      <lineBasicMaterial color={"#2FC8A8"} />
     </line>
   );
 }
@@ -131,7 +132,6 @@ function PulseHeartDot() {
       meshRef.current.scale.set(s, s, s);
     }
   });
-  // Glowing pinkish sphere as the heart/dot
   return (
     <mesh ref={meshRef} position={[baseX, baseY, 0.06]}>
       <sphereGeometry args={[0.53, 32, 32]} />
@@ -141,7 +141,6 @@ function PulseHeartDot() {
 }
 
 export default function Bio3DScene() {
-  // Responsive design: adjust height, more horizontal span
   return (
     <div className="w-full flex items-center justify-center" style={{ height: 128, minWidth: 330 }}>
       <Canvas
