@@ -1,9 +1,9 @@
 
-import { motion, useAnimationFrame, useMotionValue, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import React, { useRef } from "react";
 import { Heart } from "lucide-react";
 
-// The new "neat" heart beat path, classic medical style
+// Classic medical heartbeat path
 const HEARTBEAT_PATH = `
   M2 21
   L30 21
@@ -22,42 +22,48 @@ const HEARTBEAT_PATH = `
   L248 21
 `;
 
-// For determining where the wave ends (x=248 is 100%)
-const END_X = 248;
-
 export default function BioWaveSVG() {
   const [progress, setProgress] = React.useState(0);
+  const [isDone, setIsDone] = React.useState(false);
   const requestRef = useRef<number | null>(null);
+  const ANIMATION_DURATION = 1.25; // how long the line takes to sweep (seconds)
+  const PAUSE_DURATION = 0.65; // how long heart is visible after complete (seconds)
 
-  // Animate pathLength from 0 to 1
   React.useEffect(() => {
     let start = performance.now();
+    let doneTimeout: number | null = null;
+
     function animate(now: number) {
-      const elapsed = (now - start) / 1450; // 1.45s duration for heartbeat
-      let prog = Math.min(1, elapsed);
-      setProgress(prog);
-      if (prog < 1) {
+      const elapsed = (now - start) / 1000; // seconds
+      if (elapsed < ANIMATION_DURATION) {
+        setProgress(elapsed / ANIMATION_DURATION); // 0...1
         requestRef.current = requestAnimationFrame(animate);
+      } else {
+        setProgress(1);
+        setIsDone(true);
+        // After the pause, reset everything
+        doneTimeout = window.setTimeout(() => {
+          setProgress(0);
+          setIsDone(false);
+          start = performance.now();
+          requestRef.current = requestAnimationFrame(animate);
+        }, PAUSE_DURATION * 1000);
       }
     }
     setProgress(0);
+    setIsDone(false);
     requestRef.current = requestAnimationFrame(animate);
-
-    // Loop animation
-    const interval = setInterval(() => {
-      start = performance.now();
-      setProgress(0);
-      requestRef.current = requestAnimationFrame(animate);
-    }, 1700);
 
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
-      clearInterval(interval);
+      if (doneTimeout) clearTimeout(doneTimeout);
     };
+    // No deps! Only run on mount.
+    // eslint-disable-next-line
   }, []);
 
-  // The heart only appears when progress > 0.97 (when path reaches the end)
-  const heartOpacity = progress > 0.97 ? 1 : 0;
+  // Heart only appears & beats when the wave is fully drawn.
+  const heartOpacity = isDone ? 1 : 0;
 
   return (
     <div className="relative flex items-center justify-center w-[270px] mx-auto select-none">
@@ -74,7 +80,7 @@ export default function BioWaveSVG() {
           }
           transition={
             heartOpacity === 1
-              ? { repeat: Infinity, duration: 1.5, ease: "easeInOut" }
+              ? { repeat: Infinity, duration: 1.2, ease: "easeInOut" }
               : {}
           }
         >
@@ -94,18 +100,16 @@ export default function BioWaveSVG() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        {/* Path starts at the left, animates to the right */}
+        {/* Animate path from left to right */}
         <motion.path
           d={HEARTBEAT_PATH}
           stroke="#9BDDFF"
           strokeWidth="2.5"
           fill="none"
-          initial={false}
-          animate={false}
           style={{
             pathLength: progress,
             filter: "drop-shadow(0px 2px 12px #9BDDFF88)",
-            transition: "pathLength 0.1s linear"
+            transition: "pathLength 0.05s linear"
           }}
         />
       </motion.svg>
