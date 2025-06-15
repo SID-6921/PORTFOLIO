@@ -47,15 +47,20 @@ export default function AchievementsSection() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, delay: idx * 0.13 }}
             >
-              <GlassCard
-                className="hover:shadow-glow hover:border-columbiablue hover:scale-[1.025] group transition-all duration-300 cursor-pointer p-4 flex flex-col items-center gap-2"
+              <div
+                className="group transition-all duration-300 cursor-pointer"
                 onClick={() => setOpenIdx(idx)}
+                tabIndex={0} // accessibility
+                role="button"
+                onKeyDown={e => { if (e.key === "Enter" || e.key === " ") setOpenIdx(idx); }}
               >
-                <img src={getImageUrl(cert.image)} alt={cert.title} className="w-28 h-20 object-cover rounded-md shadow-lg mb-2" />
-                <div className="text-lg font-inter font-semibold text-ultramarine group-hover:text-columbiablue mb-1">{cert.title}</div>
-                <div className="font-ibm text-gray-700 text-sm text-center mb-1">{cert.desc}</div>
-                <div className="text-xs text-gray-500 mt-1">{cert.org}</div>
-              </GlassCard>
+                <GlassCard className="hover:shadow-glow hover:border-columbiablue hover:scale-[1.025] p-4 flex flex-col items-center gap-2">
+                  <img src={getImageUrl(cert.image)} alt={cert.title} className="w-28 h-20 object-cover rounded-md shadow-lg mb-2" />
+                  <div className="text-lg font-inter font-semibold text-ultramarine group-hover:text-columbiablue mb-1">{cert.title}</div>
+                  <div className="font-ibm text-gray-700 text-sm text-center mb-1">{cert.desc}</div>
+                  <div className="text-xs text-gray-500 mt-1">{cert.org}</div>
+                </GlassCard>
+              </div>
               {openIdx === idx && (
                 <div className="fixed z-50 inset-0 flex items-center justify-center bg-graphite/60 backdrop-blur-lg">
                   <motion.div

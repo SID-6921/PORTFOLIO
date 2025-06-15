@@ -60,23 +60,29 @@ export default function ProjectsSection() {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
             >
-              <GlassCard className="hover:shadow-glow hover:border-columbiablue hover:scale-[1.025] group transition-all duration-300 cursor-pointer pb-4 flex flex-col"
+              <div
+                className="group transition-all duration-300 cursor-pointer h-full"
                 onClick={() => setOpenIdx(idx)}
+                tabIndex={0}
+                role="button"
+                onKeyDown={e => { if (e.key === "Enter" || e.key === " ") setOpenIdx(idx); }}
               >
-                <img src={getImageUrl(project.image)} alt={project.title} className="w-full aspect-[16/10] object-cover rounded-t-glass mb-3" />
-                <div className="p-4 flex-grow">
-                  <div className="font-inter font-semibold text-lg text-ultramarine mb-2 transition-all group-hover:text-teal">
-                    {project.title}
+                <GlassCard className="hover:shadow-glow hover:border-columbiablue hover:scale-[1.025] pb-4 flex flex-col">
+                  <img src={getImageUrl(project.image)} alt={project.title} className="w-full aspect-[16/10] object-cover rounded-t-glass mb-3" />
+                  <div className="p-4 flex-grow">
+                    <div className="font-inter font-semibold text-lg text-ultramarine mb-2 transition-all group-hover:text-teal">
+                      {project.title}
+                    </div>
+                    <div className="font-ibm text-gray-700 text-base mb-3">{project.desc}</div>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.map(t => (
+                        <span className="bg-ultramarine/10 text-ultramarine border border-ultramarine/20 font-ibm text-xs px-2 py-1 rounded-full" key={t}>{t}</span>
+                      ))}
+                    </div>
                   </div>
-                  <div className="font-ibm text-gray-700 text-base mb-3">{project.desc}</div>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map(t => (
-                      <span className="bg-ultramarine/10 text-ultramarine border border-ultramarine/20 font-ibm text-xs px-2 py-1 rounded-full" key={t}>{t}</span>
-                    ))}
-                  </div>
-                </div>
-                <div className="text-xs text-gray-500 px-4 pb-2 italic">{project.impact}</div>
-              </GlassCard>
+                  <div className="text-xs text-gray-500 px-4 pb-2 italic">{project.impact}</div>
+                </GlassCard>
+              </div>
 
               {/* Modal for detail view */}
               {openIdx === idx && (
