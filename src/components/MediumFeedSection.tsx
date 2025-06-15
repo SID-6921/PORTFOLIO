@@ -1,108 +1,103 @@
 
-import React from "react";
+import React, { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
+import Parser from "rss-parser";
+import BlogCard3D from "./BlogCard3D";
 import GlassCard from "./GlassCard";
-import { Skeleton } from "./ui/skeleton";
+import { Loader2 } from "lucide-react";
 
-type MediumPost = {
+const mediumRSS =
+  "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@nandasiddhardha13";
+
+type Blog = {
   title: string;
   link: string;
-  pubDate?: string;
-  creator?: string;
-  contentSnippet?: string;
+  pubDate: string;
+  thumbnail: string;
+  guid?: string;
+  categories: string[];
+  author: string;
+  description: string;
 };
 
-// Proxy server to fetch Medium RSS and deal with CORS
-const RSS_PROXY = "https://api.allorigins.win/get?url=";
-const MEDIUM_RSS_URL = encodeURIComponent("https://medium.com/feed/@nandasiddhardha");
-
-async function fetchMediumPosts(): Promise<MediumPost[]> {
-  // Fetch the RSS XML via the proxy
-  const response = await fetch(`https://api.allorigins.win/get?url=https://medium.com/feed/@nandasiddhardha`);
-  if (!response.ok) throw new Error("Failed to fetch RSS feed");
-  const resJson = await response.json();
-  const domParser = new window.DOMParser();
-  const rssDoc = domParser.parseFromString(resJson.contents, "text/xml");
-  const items = rssDoc.querySelectorAll("item");
-  const posts: MediumPost[] = [];
-  for (let i = 0; i < Math.min(3, items.length); i++) {
-    const item = items[i];
-    const descriptionHTML = item.querySelector("description")?.textContent || "";
-    // Try to extract snippet from <p class="medium-feed-snippet">...</p>
-    let snippet = "";
-    if (descriptionHTML) {
-      const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = descriptionHTML;
-      const snippetElem = tempDiv.querySelector(".medium-feed-snippet");
-      if (snippetElem && snippetElem.textContent) {
-        snippet = snippetElem.textContent;
-      } else {
-        // Fallback: Remove all HTML tags and return the first 150 chars
-        snippet = tempDiv.textContent?.replace(/(<([^>]+)>)/gi, "").slice(0, 150) || "";
-      }
-    }
-    posts.push({
-      title: item.querySelector("title")?.textContent || "",
-      link: item.querySelector("link")?.textContent || "",
-      pubDate: item.querySelector("pubDate")?.textContent || "",
-      creator: item.querySelector("creator")?.textContent || "",
-      contentSnippet: snippet,
-    });
-  }
-  return posts;
+async function fetchMediumBlogs(): Promise<Blog[]> {
+  const res = await fetch(mediumRSS);
+  const json = await res.json();
+  return json.items as Blog[];
 }
 
 export default function MediumFeedSection() {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["medium-posts"],
-    queryFn: fetchMediumPosts,
-    refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 10, // 10 min
+    queryKey: ["medium-feed"],
+    queryFn: fetchMediumBlogs,
+    staleTime: 1000 * 60 * 10,
   });
 
+  const latestBlogs = useMemo(() => (data ? data.slice(0, 6) : []), [data]);
+
+  if (error)
+    return (
+      <section className="max-w-6xl mx-auto px-4 py-12">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-graphite text-center">
+          Latest Blogs
+        </h2>
+        <div className="text-center text-red-500">Could not load Medium posts.</div>
+      </section>
+    );
+
   return (
-    <section id="medium-blogs" className="flex flex-col items-center mb-4 pt-8">
-      <GlassCard className="max-w-xl w-full p-8 mb-7 flex flex-col items-center animate-fade-in">
-        <h2 className="font-inter text-2xl md:text-3xl font-bold text-graphite mb-2">Latest Medium Blogs</h2>
+    <section id="blogs" className="w-full py-24 bg-transparent flex flex-col items-center">
+      <div className="max-w-6xl w-full">
+        <h2 className="font-inter text-2xl md:text-3xl font-bold mb-8 text-graphite tracking-tight text-center">
+          Latest Medium Blogs
+        </h2>
         {isLoading ? (
-          <div className="w-full flex flex-col gap-3">
-            <Skeleton className="h-6 w-3/4 mx-auto" />
-            <Skeleton className="h-4 w-1/2 mx-auto" />
-            <Skeleton className="h-6 w-3/4 mx-auto mt-3" />
-            <Skeleton className="h-4 w-2/3 mx-auto" />
-          </div>
-        ) : error ? (
-          <div className="text-red-500 text-center mt-4 text-base">
-            Could not load Medium posts. <a className="underline text-ultramarine" href="https://medium.com/@nandasiddhardha" target="_blank" rel="noopener noreferrer">View on Medium</a>
+          <div className="flex justify-center py-16">
+            <Loader2 className="animate-spin text-ultramarine w-10 h-10" />
           </div>
         ) : (
-          <ul className="w-full flex flex-col gap-5 mt-3">
-            {data?.length === 0 && (
-              <div className="text-gray-500 text-center mt-3">No blogs found. <a href="https://medium.com/@nandasiddhardha" target="_blank" rel="noopener noreferrer" className="underline text-ultramarine">See on Medium</a></div>
-            )}
-            {data?.map((post) => (
-              <li key={post.link} className="w-full">
+          <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {latestBlogs.map((blog) => (
+              <BlogCard3D key={blog.guid || blog.link} className="hover:shadow-glow">
                 <a
-                  href={post.link}
+                  href={blog.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block hover:bg-columbiablue/10 rounded-lg px-3 py-2 transition-colors group animate-fade-in"
+                  className="block focus:outline-none"
                 >
-                  <div className="text-lg font-bold text-ultramarine group-hover:underline underline-offset-2 transition-all">
-                    {post.title}
-                  </div>
-                  {post.contentSnippet && (
-                    <div className="text-gray-700 text-sm my-1">{post.contentSnippet.slice(0, 100)}...</div>
-                  )}
-                  <span className="text-xs text-gray-400">
-                    {post.pubDate && new Date(post.pubDate).toLocaleDateString()}
-                  </span>
+                  <GlassCard className="p-5 h-full flex flex-col hover:scale-[1.03] transition-transform duration-200 cursor-pointer group">
+                    <img
+                      src={blog.thumbnail}
+                      alt={blog.title}
+                      className="w-full aspect-[16/9] object-cover rounded-t-glass mb-3 group-hover:shadow-glow"
+                    />
+                    <div className="font-inter font-semibold text-lg text-ultramarine mb-2 group-hover:text-teal">
+                      {blog.title}
+                    </div>
+                    <div
+                      className="font-ibm text-gray-700 text-base mb-3 line-clamp-3"
+                      dangerouslySetInnerHTML={{ __html: blog.description.replace(/<[^>]+>/g, "") }}
+                    />
+                    <div className="flex flex-wrap gap-2 mb-2">
+                      {blog.categories?.slice(0, 4).map((cat) => (
+                        <span
+                          key={cat}
+                          className="bg-ultramarine/10 text-ultramarine border border-ultramarine/20 font-ibm text-xs px-2 py-1 rounded-full"
+                        >
+                          {cat}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="text-xs text-gray-500 italic">
+                      {new Date(blog.pubDate).toLocaleDateString()}
+                    </div>
+                  </GlassCard>
                 </a>
-              </li>
+              </BlogCard3D>
             ))}
-          </ul>
+          </div>
         )}
-      </GlassCard>
+      </div>
     </section>
   );
 }

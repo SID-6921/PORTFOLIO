@@ -2,7 +2,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import GlassCard from "./GlassCard";
-import BioWaveSVG from "./BioWaveSVG";
+-import BioWaveSVG from "./BioWaveSVG";
++import CustomBioWaveSVG from "./CustomBioWaveSVG";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { Download } from "lucide-react";
@@ -76,9 +77,12 @@ export default function HeroSection() {
           >
             Engineer. Innovator. Human.
           </motion.div>
-          <div className="my-2 mb-6">
-            <BioWaveSVG />
-          </div>
+-          <div className="my-2 mb-6">
+-            <BioWaveSVG />
+-          </div>
++          <div className="my-2 mb-6 w-full flex justify-center">
++            <CustomBioWaveSVG />
++          </div>
           <motion.div
             className="text-center font-ibm max-w-lg text-gray-700 text-base md:text-lg"
             initial={{ opacity: 0 }}
