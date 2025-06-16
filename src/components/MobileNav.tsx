@@ -1,43 +1,83 @@
 
 import React, { useState } from "react";
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { label: "Home", href: "#hero" },
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Achievements", href: "#achievements" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/#hero" },
+  { label: "About", href: "/#about" },
+  { label: "Projects", href: "/#projects" },
+  { label: "Achievements", href: "/#achievements" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function MobileNav() {
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+  const closeMenu = () => setIsOpen(false);
 
   return (
-    <div className="md:hidden">
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger aria-label="Open menu">
-          <Menu className="w-8 h-8 text-ultramarine dark:text-columbiablue" />
-        </SheetTrigger>
-        <SheetContent side="left" className="p-0 w-72 max-w-full bg-white dark:bg-gray-900">
-          <nav className="flex flex-col gap-4 px-6 pt-10 pb-8">
-            <ul className="flex flex-col gap-2 text-base font-ibm text-graphite dark:text-gray-200 font-medium mt-8">
-              {navLinks.map(link => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="block py-2 px-1 rounded hover:bg-columbiablue/30 dark:hover:bg-columbiablue/20 transition-all font-semibold"
-                    onClick={() => setOpen(false)}
+    <>
+      <button
+        onClick={toggleMenu}
+        className="flex items-center justify-center w-10 h-10 text-gray-800 dark:text-gray-100 hover:text-columbiablue dark:hover:text-blue-300 transition-colors"
+        aria-label="Toggle mobile menu"
+      >
+        {isOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/20 dark:bg-black/40 z-40"
+              onClick={closeMenu}
+            />
+            
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="fixed top-0 right-0 h-full w-72 bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-xl z-50 border-l border-gray-200/50 dark:border-gray-700/50"
+            >
+              <div className="flex flex-col h-full">
+                <div className="flex items-center justify-between p-6 border-b border-gray-200/50 dark:border-gray-700/50">
+                  <span className="font-inter font-bold text-lg text-gray-800 dark:text-gray-100">Menu</span>
+                  <button
+                    onClick={closeMenu}
+                    className="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors"
+                    aria-label="Close menu"
                   >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </SheetContent>
-      </Sheet>
-    </div>
+                    <X size={20} />
+                  </button>
+                </div>
+                
+                <nav className="flex-1 p-6">
+                  <ul className="space-y-4">
+                    {navLinks.map((link) => (
+                      <li key={link.label}>
+                        <a
+                          href={link.href}
+                          onClick={closeMenu}
+                          className="block py-3 px-4 text-lg font-ibm font-medium text-gray-700 dark:text-gray-200 hover:text-columbiablue dark:hover:text-blue-300 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-all"
+                        >
+                          {link.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

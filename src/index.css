@@ -84,43 +84,63 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
-
-  /* Custom utility classes for background and text */
-  .bg-background {
-    background-color: hsl(var(--background));
-  }
-  .text-foreground {
-    color: hsl(var(--foreground));
-  }
 }
 
 @layer base {
   * {
-    @apply border-medicalsilver dark:border-gray-600;
+    @apply border-gray-300 dark:border-gray-600;
   }
 
   body {
     @apply bg-background text-foreground transition-colors duration-300;
   }
 
-  /* Dark mode text color fixes */
+  /* Enhanced dark mode text contrast */
+  .dark {
+    color-scheme: dark;
+  }
+
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    @apply text-white;
+  }
+
+  .dark p {
+    @apply text-gray-200;
+  }
+
+  .dark span {
+    @apply text-gray-200;
+  }
+
+  .dark .text-foreground {
+    @apply text-white;
+  }
+
+  .dark .text-muted-foreground {
+    @apply text-gray-300;
+  }
+
   .dark .text-graphite {
     @apply text-gray-100;
   }
 
   .dark .text-gray-700 {
-    @apply text-gray-300;
+    @apply text-gray-200;
   }
 
   .dark .text-gray-600 {
-    @apply text-gray-400;
+    @apply text-gray-300;
   }
 
   .dark .text-gray-500 {
     @apply text-gray-400;
   }
 
-  /* Dark mode background fixes */
+  .dark .text-gray-800 {
+    @apply text-gray-100;
+  }
+
+  /* Dark mode background improvements */
   .dark .bg-white {
     @apply bg-gray-900;
   }
@@ -133,7 +153,6 @@
     @apply bg-gray-800;
   }
 
-  /* Glass card dark mode improvements */
   .dark .bg-background\/80 {
     @apply bg-gray-900/90;
   }
@@ -142,22 +161,12 @@
     @apply bg-gray-800/90;
   }
 
-  /* Header navigation dark mode */
   .dark .bg-white\/80 {
     @apply bg-gray-900/90;
   }
 
-  /* Ensure proper contrast for all text elements */
-  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
-    @apply text-gray-100;
-  }
-
-  .dark p {
-    @apply text-gray-300;
-  }
-
-  .dark span {
-    @apply text-gray-300;
+  .dark .bg-white\/90 {
+    @apply bg-gray-900/90;
   }
 
   /* Button and interactive element improvements */
@@ -169,11 +178,6 @@
     @apply bg-gray-800;
   }
 
-  /* Link color improvements */
-  .dark a {
-    @apply text-blue-300 hover:text-blue-200;
-  }
-
   /* Border improvements */
   .dark .border-gray-200 {
     @apply border-gray-700;
@@ -183,8 +187,29 @@
     @apply border-gray-600;
   }
 
+  .dark .border-medicalsilver {
+    @apply border-gray-600;
+  }
+
   /* Card and container improvements */
   .dark .shadow-glass {
     box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  .dark .shadow-glow {
+    box-shadow: 0 0 16px 4px rgba(155, 221, 255, 0.2);
+  }
+
+  /* Specific component text fixes */
+  .dark .text-ultramarine {
+    @apply text-blue-300;
+  }
+
+  .dark .text-columbiablue {
+    @apply text-blue-400;
+  }
+
+  .dark .text-teal {
+    @apply text-teal-300;
   }
 }

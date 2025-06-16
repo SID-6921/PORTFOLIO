@@ -3,32 +3,43 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PageSplashLoader from "@/components/PageSplashLoader";
-// import ThemeToggle from "@/components/ThemeToggle";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  // App no longer needs splash loader or theme toggle
-  // PageSplashLoader and ThemeToggle removed from render
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 2800); // Show splash for 2.8 seconds
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
-      <div>
+      <PageSplashLoader show={showSplash} />
+      <div className={showSplash ? "opacity-0" : "opacity-100 transition-opacity duration-700"}>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <Toaster />
             <Sonner />
-            <BrowserRouter>
+            <HashRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/about" element={<Index />} />
+                <Route path="/projects" element={<Index />} />
+                <Route path="/achievements" element={<Index />} />
+                <Route path="/contact" element={<Index />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
-            </BrowserRouter>
+            </HashRouter>
           </TooltipProvider>
         </QueryClientProvider>
       </div>
