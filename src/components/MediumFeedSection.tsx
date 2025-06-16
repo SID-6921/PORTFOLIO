@@ -47,15 +47,15 @@ export default function MediumFeedSection() {
 
   return (
     <section id="blog" className="relative py-24 bg-transparent flex flex-col items-center">
-      <div className="max-w-6xl w-full mx-auto">
-        <h2 className="font-inter text-2xl md:text-3xl font-bold mb-8 text-graphite tracking-tight text-center">
+      <div className="max-w-6xl w-full mx-auto px-4">
+        <h2 className="font-inter text-2xl md:text-3xl font-bold mb-8 text-gray-900 dark:text-white tracking-tight text-center">
           Latest from Medium
         </h2>
         {loading && (
-          <div className="text-center text-gray-400 text-lg mb-8">Loading posts...</div>
+          <div className="text-center text-gray-500 dark:text-gray-400 text-lg mb-8">Loading posts...</div>
         )}
         {!loading && shownPosts.length === 0 && (
-          <div className="text-center text-gray-500 mb-8">No articles found for @nandasiddhardha.</div>
+          <div className="text-center text-gray-500 dark:text-gray-400 mb-8">No articles found for @nandasiddhardha.</div>
         )}
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
           {shownPosts.map((post, i) => (
@@ -64,7 +64,7 @@ export default function MediumFeedSection() {
                 href={post.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-xl overflow-hidden block bg-white/70 hover:bg-columbiablue/30 shadow-lg transition-all duration-300 h-full"
+                className="rounded-xl overflow-hidden block bg-white/80 dark:bg-gray-800/90 hover:bg-columbiablue/30 dark:hover:bg-blue-900/50 shadow-lg hover:shadow-glow transition-all duration-300 h-full border border-gray-200/50 dark:border-gray-700/50"
                 tabIndex={0}
                 aria-label={`Read ${post.title}`}
               >
@@ -78,9 +78,9 @@ export default function MediumFeedSection() {
                   }}
                 />
                 <div className="p-5">
-                  <div className="font-inter font-semibold text-lg text-ultramarine mb-2">{post.title}</div>
-                  <div className="font-ibm text-gray-700 text-base">{post.excerpt}</div>
-                  <div className="text-xs text-right text-gray-400 pt-2">{post.pubDate && new Date(post.pubDate).toLocaleDateString()}</div>
+                  <div className="font-inter font-semibold text-lg text-ultramarine dark:text-blue-300 mb-2 line-clamp-2">{post.title}</div>
+                  <div className="font-ibm text-gray-700 dark:text-gray-300 text-base line-clamp-3">{post.excerpt}</div>
+                  <div className="text-xs text-right text-gray-400 dark:text-gray-500 pt-2">{post.pubDate && new Date(post.pubDate).toLocaleDateString()}</div>
                 </div>
               </a>
             </BlogCard3D>
@@ -93,7 +93,7 @@ export default function MediumFeedSection() {
               href="https://medium.com/@nandasiddhardha"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-ultramarine hover:bg-columbiablue text-white px-6 py-2 rounded-lg font-ibm font-semibold transition-colors shadow hover:shadow-glow"
+              className="inline-block bg-ultramarine hover:bg-columbiablue dark:bg-blue-600 dark:hover:bg-blue-500 text-white px-6 py-2 rounded-lg font-ibm font-semibold transition-all duration-300 shadow hover:shadow-glow transform hover:scale-105"
             >
               Check out more on Medium →
             </a>

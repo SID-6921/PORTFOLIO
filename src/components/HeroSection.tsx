@@ -5,6 +5,7 @@ import GlassCard from "./GlassCard";
 import BioWaveSVG from "./BioWaveSVG";
 import { Button } from "./ui/button";
 import { Download } from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 
 // Animation configurations
 const cardVariants = {
@@ -45,8 +46,27 @@ export default function HeroSection() {
         variants={cardVariants}
       >
         <GlassCard className="p-10 pt-16 shadow-glow border-2 border-columbiablue/50 dark:border-blue-400/50 flex flex-col items-center bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl transition-all duration-700">
+          {/* Profile Picture */}
+          <motion.div
+            className="mb-6"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
+            <Avatar className="w-32 h-32 border-4 border-columbiablue/50 dark:border-blue-400/50 shadow-glow">
+              <AvatarImage 
+                src="/public/lovable-uploads/31b97417-8931-4a4d-859c-4ba132c82167.png" 
+                alt="Siddhardha Nanda"
+                className="object-cover"
+              />
+              <AvatarFallback className="text-2xl font-bold bg-gradient-to-br from-columbiablue to-ultramarine text-white">
+                SN
+              </AvatarFallback>
+            </Avatar>
+          </motion.div>
+          
           <motion.span
-            className="text-sm font-ibm text-teal dark:text-teal-300 font-medium tracking-widest uppercase mb-2 letter-spacing-[0.16em]"
+            className="text-sm font-ibm text-teal dark:text-teal font-medium tracking-widest uppercase mb-2 letter-spacing-[0.16em]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.7 }}
@@ -62,7 +82,7 @@ export default function HeroSection() {
             Siddhardha Nanda
           </motion.h1>
           <motion.div
-            className="mb-2 text-base md:text-lg font-inter font-semibold text-teal dark:text-teal-300 text-center tracking-tight"
+            className="mb-2 text-base md:text-lg font-inter font-semibold text-teal dark:text-teal text-center tracking-tight"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.51, duration: 0.6 }}
