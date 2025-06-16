@@ -27,17 +27,17 @@ export default function AchievementsSection() {
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.78, delay: 0.11 }}
       >
-        <h2 className="font-inter text-2xl md:text-3xl font-bold mb-4 text-graphite tracking-tight text-center">
+        <h2 className="font-inter text-2xl md:text-3xl font-bold mb-4 text-graphite dark:text-gray-100 tracking-tight text-center">
           Key Achievements
         </h2>
         {/* Show achievements side-by-side */}
         <div className="flex flex-col gap-4 md:flex-row md:gap-7 justify-center items-stretch">
           {achievements.map((ach, i) => (
             <div key={ach.title} className="flex-1 flex flex-col items-center justify-center px-2">
-              <span className="font-inter font-semibold text-ultramarine text-lg mb-1 text-center">
+              <span className="font-inter font-semibold text-ultramarine dark:text-blue-300 text-lg mb-1 text-center">
                 {ach.title}
               </span>
-              <span className="font-ibm text-gray-700 text-base text-center">{ach.desc}</span>
+              <span className="font-ibm text-gray-700 dark:text-gray-300 text-base text-center">{ach.desc}</span>
             </div>
           ))}
         </div>

@@ -102,4 +102,89 @@
   body {
     @apply bg-background text-foreground transition-colors duration-300;
   }
+
+  /* Dark mode text color fixes */
+  .dark .text-graphite {
+    @apply text-gray-100;
+  }
+
+  .dark .text-gray-700 {
+    @apply text-gray-300;
+  }
+
+  .dark .text-gray-600 {
+    @apply text-gray-400;
+  }
+
+  .dark .text-gray-500 {
+    @apply text-gray-400;
+  }
+
+  /* Dark mode background fixes */
+  .dark .bg-white {
+    @apply bg-gray-900;
+  }
+
+  .dark .bg-gray-50 {
+    @apply bg-gray-800;
+  }
+
+  .dark .bg-gray-100 {
+    @apply bg-gray-800;
+  }
+
+  /* Glass card dark mode improvements */
+  .dark .bg-background\/80 {
+    @apply bg-gray-900/90;
+  }
+
+  .dark .bg-popover\/80 {
+    @apply bg-gray-800/90;
+  }
+
+  /* Header navigation dark mode */
+  .dark .bg-white\/80 {
+    @apply bg-gray-900/90;
+  }
+
+  /* Ensure proper contrast for all text elements */
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    @apply text-gray-100;
+  }
+
+  .dark p {
+    @apply text-gray-300;
+  }
+
+  .dark span {
+    @apply text-gray-300;
+  }
+
+  /* Button and interactive element improvements */
+  .dark .hover\:bg-gray-100:hover {
+    @apply bg-gray-700;
+  }
+
+  .dark .hover\:bg-gray-50:hover {
+    @apply bg-gray-800;
+  }
+
+  /* Link color improvements */
+  .dark a {
+    @apply text-blue-300 hover:text-blue-200;
+  }
+
+  /* Border improvements */
+  .dark .border-gray-200 {
+    @apply border-gray-700;
+  }
+
+  .dark .border-gray-300 {
+    @apply border-gray-600;
+  }
+
+  /* Card and container improvements */
+  .dark .shadow-glass {
+    box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.5);
+  }
 }
