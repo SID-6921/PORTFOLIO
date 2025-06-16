@@ -12,7 +12,7 @@ import Playful3DBackground from "@/components/Playful3DBackground";
 
 const Index = () => {
   return (
-    <div className="relative bg-bio-gradient min-h-screen w-full font-sans transition-all duration-300">
+    <div className="relative bg-bio-gradient dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 min-h-screen w-full font-sans transition-all duration-300">
       {/* 3D playful background - behind all content */}
       {/*
         z-index: 1 on background,
