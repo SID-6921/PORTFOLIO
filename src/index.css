@@ -210,6 +210,6 @@
   }
 
   .dark .text-teal {
-    @apply text-teal-300;
+    @apply text-teal-400;
   }
 }
