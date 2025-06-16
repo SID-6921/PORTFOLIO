@@ -210,6 +210,6 @@
   }
 
   .dark .text-teal {
-    @apply text-teal;
+    color: #20B2AA;
   }
 }
