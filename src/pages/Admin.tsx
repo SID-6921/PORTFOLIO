@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -7,9 +6,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { Trash2, Plus, Edit3, Save, X } from 'lucide-react';
+import { Trash2, Plus, Edit3, Save, X, LogOut } from 'lucide-react';
 import { useSupabaseContent } from '@/hooks/useSupabaseContent';
 import { useToast } from '@/hooks/use-toast';
+import AdminAuth from '@/components/AdminAuth';
 
 interface Project {
   id: string;
@@ -59,9 +59,38 @@ interface AboutContent {
 }
 
 const Admin = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [adminEmail, setAdminEmail] = useState('');
   const { heroContent, projects, loading, refetch } = useSupabaseContent();
   const { toast } = useToast();
   
+  // Check authentication status on mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user?.email === 'elonmuskharrypotter@gmail.com') {
+        setIsAuthenticated(true);
+        setAdminEmail(session.user.email);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  const handleLogin = (email: string) => {
+    setIsAuthenticated(true);
+    setAdminEmail(email);
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setIsAuthenticated(false);
+    setAdminEmail('');
+    toast({
+      title: "Logged out",
+      description: "Successfully signed out of admin panel"
+    });
+  };
+
   // State for different content types
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [blogArticles, setBlogArticles] = useState<BlogArticle[]>([]);
@@ -129,8 +158,10 @@ const Admin = () => {
   });
 
   useEffect(() => {
-    loadAllContent();
-  }, []);
+    if (isAuthenticated) {
+      loadAllContent();
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (heroContent) {
@@ -552,20 +583,36 @@ const Admin = () => {
     }
   };
 
+  if (!isAuthenticated) {
+    return <AdminAuth onLogin={handleLogin} />;
+  }
+
   if (loading) {
-    return <div className="p-8">Loading...</div>;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
+        <div className="text-lg text-slate-600">Loading admin panel...</div>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50/20 to-teal-50/30 p-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">Admin Panel</h1>
-          <p className="text-gray-600">Manage all website content</p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-6xl mx-auto px-8 py-4 flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800">Admin Panel</h1>
+            <p className="text-slate-600 text-sm">Welcome, {adminEmail}</p>
+          </div>
+          <Button onClick={handleLogout} variant="outline" size="sm">
+            <LogOut className="h-4 w-4 mr-2" />
+            Sign Out
+          </Button>
         </div>
+      </div>
 
+      <div className="max-w-6xl mx-auto p-8">
         <Tabs defaultValue="hero" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-6 bg-white shadow-sm">
             <TabsTrigger value="hero">Hero</TabsTrigger>
             <TabsTrigger value="projects">Projects</TabsTrigger>
             <TabsTrigger value="achievements">Achievements</TabsTrigger>
