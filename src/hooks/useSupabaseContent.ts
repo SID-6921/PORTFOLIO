@@ -58,7 +58,9 @@ export const useSupabaseContent = () => {
           title: project.title,
           description: project.description,
           detailed_description: project.detailed_description || '',
-          technologies: Array.isArray(project.technologies) ? project.technologies : [],
+          technologies: Array.isArray(project.technologies) 
+            ? (project.technologies as string[]).filter((tech): tech is string => typeof tech === 'string')
+            : [],
           impact: project.impact || '',
           image_url: project.image_url || '',
           icon: project.icon || '',
