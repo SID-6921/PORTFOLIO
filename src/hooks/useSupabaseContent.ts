@@ -51,7 +51,21 @@ export const useSupabaseContent = () => {
         .eq('status', 'active')
         .order('sort_order');
       
-      if (projectsData) setProjects(projectsData);
+      if (projectsData) {
+        // Transform the data to match our interface
+        const transformedProjects: Project[] = projectsData.map(project => ({
+          id: project.id,
+          title: project.title,
+          description: project.description,
+          detailed_description: project.detailed_description || '',
+          technologies: Array.isArray(project.technologies) ? project.technologies : [],
+          impact: project.impact || '',
+          image_url: project.image_url || '',
+          icon: project.icon || '',
+          sort_order: project.sort_order || 0
+        }));
+        setProjects(transformedProjects);
+      }
     } catch (error) {
       console.error('Failed to load content:', error);
     } finally {
