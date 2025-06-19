@@ -6,6 +6,7 @@ import BioWaveSVG from "./BioWaveSVG";
 import { Button } from "./ui/button";
 import { Download } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
+import { useSupabaseContent } from "@/hooks/useSupabaseContent";
 
 // Animation configurations
 const cardVariants = {
@@ -27,6 +28,20 @@ const bgVariants = {
 };
 
 export default function HeroSection() {
+  const { heroContent, loading } = useSupabaseContent();
+
+  // Fallback data while loading or if no content
+  const fallbackContent = {
+    name: "Siddhardha Nanda",
+    title: "Engineer. Innovator. Human.",
+    subtitle: "Looking for opportunities",
+    description: "Pioneering at the intersection of med-tech, embedded systems, and digital health. Clinical precision. Creative innovation.",
+    profile_image_url: "/public/lovable-uploads/31b97417-8931-4a4d-859c-4ba132c82167.png",
+    resume_url: "/resume.pdf"
+  };
+
+  const content = heroContent || fallbackContent;
+
   return (
     <section id="hero" className="relative flex flex-col justify-center items-center h-[90vh] min-h-[660px] mb-4">
       {/* Decorative BG Blur/Gradient effect */}
@@ -55,12 +70,12 @@ export default function HeroSection() {
           >
             <Avatar className="w-32 h-32 border-4 border-columbiablue/50 dark:border-blue-400/50 shadow-glow">
               <AvatarImage 
-                src="/public/lovable-uploads/31b97417-8931-4a4d-859c-4ba132c82167.png" 
-                alt="Siddhardha Nanda"
+                src={content.profile_image_url} 
+                alt={content.name}
                 className="object-cover"
               />
               <AvatarFallback className="text-2xl font-bold bg-gradient-to-br from-columbiablue to-ultramarine text-white">
-                SN
+                {content.name.split(' ').map(n => n[0]).join('')}
               </AvatarFallback>
             </Avatar>
           </motion.div>
@@ -79,7 +94,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.9 }}
           >
-            Siddhardha Nanda
+            {content.name}
           </motion.h1>
           <motion.div
             className="mb-2 text-base md:text-lg font-inter font-semibold text-teal dark:text-teal text-center tracking-tight"
@@ -87,7 +102,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.51, duration: 0.6 }}
           >
-            Looking for opportunities
+            {content.subtitle}
           </motion.div>
           <motion.div
             className="mb-4 text-xl md:text-2xl font-inter font-semibold text-ultramarine dark:text-blue-300 text-center tracking-tight"
@@ -95,7 +110,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            Engineer. Innovator. Human.
+            {content.title}
           </motion.div>
           <div className="my-1 w-full flex justify-center">
             <BioWaveSVG />
@@ -106,10 +121,10 @@ export default function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.7 }}
           >
-            Pioneering at the intersection of med-tech, embedded systems, and digital health. Clinical precision. Creative innovation.
+            {content.description}
           </motion.div>
           <a
-            href="/resume.pdf"
+            href={content.resume_url}
             target="_blank"
             rel="noopener noreferrer"
             download
