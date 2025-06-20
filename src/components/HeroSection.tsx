@@ -1,7 +1,6 @@
-
 import React from "react";
 import { motion } from "framer-motion";
-import GlassCard from "./GlassCard";
+import MagicalGlassCard from "./MagicalGlassCard";
 import BioWaveSVG from "./BioWaveSVG";
 import { Button } from "./ui/button";
 import { Download } from "lucide-react";
@@ -44,15 +43,15 @@ export default function HeroSection() {
 
   return (
     <section id="hero" className="relative flex flex-col justify-center items-center h-[90vh] min-h-[660px] mb-4">
-      {/* Decorative BG Blur/Gradient effect */}
+      {/* Magical academic background effect */}
       <motion.div
         className="absolute inset-0 -z-10 animate-fade-in pointer-events-none"
         variants={bgVariants}
         initial="hidden"
         animate="visible"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-[#9bddff33] via-[#ffffffcc] dark:via-[#1f2937cc] to-[#f8fbff] dark:to-[#111827] blur-2xl opacity-60" />
-        <div className="absolute -bottom-24 left-0 w-full h-52 bg-gradient-to-t from-columbiablue/60 dark:from-ultramarine/50 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-slate-50/80 dark:via-gray-900/90 to-blue-50/30 dark:to-gray-800/50 blur-2xl opacity-70" />
+        <div className="absolute -bottom-24 left-0 w-full h-52 bg-gradient-to-t from-amber-100/40 dark:from-amber-900/30 via-transparent to-transparent" />
       </motion.div>
       <motion.div
         className="max-w-2xl w-full"
@@ -60,7 +59,7 @@ export default function HeroSection() {
         animate="visible"
         variants={cardVariants}
       >
-        <GlassCard className="p-10 pt-16 shadow-glow border-2 border-columbiablue/50 dark:border-blue-400/50 flex flex-col items-center bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl transition-all duration-700">
+        <MagicalGlassCard className="p-10 pt-16 shadow-glow border-2 border-amber-200/50 dark:border-amber-600/40 flex flex-col items-center bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl transition-all duration-700">
           {/* Profile Picture */}
           <motion.div
             className="mb-6"
@@ -68,20 +67,20 @@ export default function HeroSection() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            <Avatar className="w-32 h-32 border-4 border-columbiablue/50 dark:border-blue-400/50 shadow-glow">
+            <Avatar className="w-32 h-32 border-4 border-amber-300/50 dark:border-amber-500/50 shadow-glow">
               <AvatarImage 
                 src={content.profile_image_url} 
                 alt={content.name}
                 className="object-cover"
               />
-              <AvatarFallback className="text-2xl font-bold bg-gradient-to-br from-columbiablue to-ultramarine text-white">
+              <AvatarFallback className="text-2xl font-bold bg-gradient-to-br from-amber-400 to-amber-600 text-white">
                 {content.name.split(' ').map(n => n[0]).join('')}
               </AvatarFallback>
             </Avatar>
           </motion.div>
           
           <motion.span
-            className="text-sm font-ibm text-teal dark:text-teal font-medium tracking-widest uppercase mb-2 letter-spacing-[0.16em]"
+            className="text-sm font-ibm text-amber-700 dark:text-amber-400 font-medium tracking-widest uppercase mb-2 letter-spacing-[0.16em]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.7 }}
@@ -89,7 +88,7 @@ export default function HeroSection() {
             Columbia University — Biomedical Engineering
           </motion.span>
           <motion.h1
-            className="font-inter text-4xl md:text-5xl font-extrabold mb-2 text-gray-900 dark:text-white text-center tracking-tight"
+            className="font-inter text-4xl md:text-5xl font-extrabold mb-2 text-slate-800 dark:text-amber-50 text-center tracking-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.9 }}
@@ -97,7 +96,7 @@ export default function HeroSection() {
             {content.name}
           </motion.h1>
           <motion.div
-            className="mb-2 text-base md:text-lg font-inter font-semibold text-teal dark:text-teal text-center tracking-tight"
+            className="mb-2 text-base md:text-lg font-inter font-semibold text-amber-700 dark:text-amber-400 text-center tracking-tight"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.51, duration: 0.6 }}
@@ -105,7 +104,7 @@ export default function HeroSection() {
             {content.subtitle}
           </motion.div>
           <motion.div
-            className="mb-4 text-xl md:text-2xl font-inter font-semibold text-ultramarine dark:text-blue-300 text-center tracking-tight"
+            className="mb-4 text-xl md:text-2xl font-inter font-semibold text-slate-700 dark:text-amber-200 text-center tracking-tight"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
@@ -116,7 +115,7 @@ export default function HeroSection() {
             <BioWaveSVG />
           </div>
           <motion.div
-            className="text-center font-ibm max-w-lg text-gray-600 dark:text-gray-300 text-base md:text-lg"
+            className="text-center font-ibm max-w-lg text-slate-600 dark:text-amber-100 text-base md:text-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.7 }}
@@ -130,21 +129,21 @@ export default function HeroSection() {
             download
             className="mt-6"
           >
-            <Button size="lg" variant="default" className="transition-transform hover:scale-105 active:scale-100 shadow-md">
+            <Button size="lg" variant="default" className="bg-amber-600 hover:bg-amber-700 dark:bg-amber-500 dark:hover:bg-amber-600 transition-transform hover:scale-105 active:scale-100 shadow-md border-amber-700/20">
               <Download className="mr-2" /> Download Resume
             </Button>
           </a>
-        </GlassCard>
-        <div className="mt-4 flex flex-col items-center text-base text-gray-500 dark:text-gray-400 italic font-ibm w-full">
+        </MagicalGlassCard>
+        <div className="mt-4 flex flex-col items-center text-base text-slate-500 dark:text-amber-300 italic font-ibm w-full">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.1, duration: 1 }}
             className="flex flex-col items-center"
           >
-            <span className="text-gray-800 dark:text-gray-200 font-medium">Scroll to explore</span>
+            <span className="text-slate-700 dark:text-amber-200 font-medium">Scroll to explore</span>
             <motion.svg
-              className="inline-block w-7 h-7 animate-bounce mt-1 text-ultramarine dark:text-blue-300"
+              className="inline-block w-7 h-7 animate-bounce mt-1 text-amber-600 dark:text-amber-400"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
