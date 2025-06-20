@@ -1,20 +1,21 @@
+
 import React from "react";
 import { motion } from "framer-motion";
-import MagicalGlassCard from "./MagicalGlassCard";
+import ProfessionalCard from "./ProfessionalCard";
 import BioWaveSVG from "./BioWaveSVG";
 import { Button } from "./ui/button";
-import { Download } from "lucide-react";
+import { Download, GraduationCap } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { useSupabaseContent } from "@/hooks/useSupabaseContent";
 
 // Animation configurations
 const cardVariants = {
-  hidden: { opacity: 0, scale: 0.98, y: 30 },
+  hidden: { opacity: 0, scale: 0.98, y: 20 },
   visible: {
     opacity: 1,
     scale: 1,
     y: 0,
-    transition: { duration: 1, ease: "easeOut" as const }
+    transition: { duration: 0.8, ease: "easeOut" as const }
   }
 };
 
@@ -22,7 +23,7 @@ const bgVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { delay: 0.2, duration: 1.3, ease: "easeOut" as const }
+    transition: { delay: 0.1, duration: 1, ease: "easeOut" as const }
   }
 };
 
@@ -43,115 +44,143 @@ export default function HeroSection() {
 
   return (
     <section id="hero" className="relative flex flex-col justify-center items-center h-[90vh] min-h-[660px] mb-4">
-      {/* Magical academic background effect */}
+      {/* Professional background gradient */}
       <motion.div
-        className="absolute inset-0 -z-10 animate-fade-in pointer-events-none"
+        className="absolute inset-0 -z-10 pointer-events-none"
         variants={bgVariants}
         initial="hidden"
         animate="visible"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-slate-50/80 dark:via-gray-900/90 to-blue-50/30 dark:to-gray-800/50 blur-2xl opacity-70" />
-        <div className="absolute -bottom-24 left-0 w-full h-52 bg-gradient-to-t from-amber-100/40 dark:from-amber-900/30 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/40 via-gray-50/60 dark:via-gray-900/80 to-slate-50/40 dark:to-gray-800/60" />
+        <div className="absolute -bottom-24 left-0 w-full h-52 bg-gradient-to-t from-blue-50/30 dark:from-blue-900/20 via-transparent to-transparent" />
       </motion.div>
+
       <motion.div
         className="max-w-2xl w-full"
         initial="hidden"
         animate="visible"
         variants={cardVariants}
       >
-        <MagicalGlassCard className="p-10 pt-16 shadow-glow border-2 border-amber-200/50 dark:border-amber-600/40 flex flex-col items-center bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl transition-all duration-700">
+        <ProfessionalCard variant="elevated" className="p-12 flex flex-col items-center">
+          {/* Professional Academic Badge */}
+          <motion.div
+            className="mb-6 flex items-center gap-2 px-4 py-2 bg-blue-50/80 dark:bg-blue-900/30 border border-blue-200/60 dark:border-blue-800/50 rounded-full"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            <GraduationCap className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            <span className="text-sm font-medium text-blue-700 dark:text-blue-300 tracking-wide">
+              Columbia University — Biomedical Engineering
+            </span>
+          </motion.div>
+
           {/* Profile Picture */}
           <motion.div
             className="mb-6"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
+            transition={{ delay: 0.3, duration: 0.7 }}
           >
-            <Avatar className="w-32 h-32 border-4 border-amber-300/50 dark:border-amber-500/50 shadow-glow">
+            <Avatar className="w-28 h-28 border-3 border-gray-200 dark:border-gray-600 shadow-lg">
               <AvatarImage 
                 src={content.profile_image_url} 
                 alt={content.name}
                 className="object-cover"
               />
-              <AvatarFallback className="text-2xl font-bold bg-gradient-to-br from-amber-400 to-amber-600 text-white">
+              <AvatarFallback className="text-xl font-semibold bg-gradient-to-br from-blue-500 to-teal-600 text-white">
                 {content.name.split(' ').map(n => n[0]).join('')}
               </AvatarFallback>
             </Avatar>
           </motion.div>
           
-          <motion.span
-            className="text-sm font-ibm text-amber-700 dark:text-amber-400 font-medium tracking-widest uppercase mb-2 letter-spacing-[0.16em]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.7 }}
-          >
-            Columbia University — Biomedical Engineering
-          </motion.span>
           <motion.h1
-            className="font-inter text-4xl md:text-5xl font-extrabold mb-2 text-slate-800 dark:text-amber-50 text-center tracking-tight"
-            initial={{ opacity: 0, y: 20 }}
+            className="font-sans text-4xl md:text-5xl font-bold mb-3 text-gray-900 dark:text-gray-100 text-center tracking-tight"
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.9 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
           >
             {content.name}
           </motion.h1>
+
           <motion.div
-            className="mb-2 text-base md:text-lg font-inter font-semibold text-amber-700 dark:text-amber-400 text-center tracking-tight"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.51, duration: 0.6 }}
-          >
-            {content.subtitle}
-          </motion.div>
-          <motion.div
-            className="mb-4 text-xl md:text-2xl font-inter font-semibold text-slate-700 dark:text-amber-200 text-center tracking-tight"
+            className="mb-2 text-lg md:text-xl font-medium text-blue-600 dark:text-blue-400 text-center"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
+            transition={{ delay: 0.5, duration: 0.7 }}
           >
             {content.title}
           </motion.div>
-          <div className="my-1 w-full flex justify-center">
+
+          <motion.div
+            className="mb-4 text-sm font-medium text-teal-600 dark:text-teal-400 text-center px-3 py-1 bg-teal-50/60 dark:bg-teal-900/30 rounded-full border border-teal-200/40 dark:border-teal-800/40"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
+            {content.subtitle}
+          </motion.div>
+
+          <div className="my-4 w-full flex justify-center">
             <BioWaveSVG />
           </div>
+
           <motion.div
-            className="text-center font-ibm max-w-lg text-slate-600 dark:text-amber-100 text-base md:text-lg"
+            className="text-center max-w-lg text-gray-700 dark:text-gray-300 text-base md:text-lg leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.7 }}
+            transition={{ delay: 0.7, duration: 0.8 }}
           >
             {content.description}
           </motion.div>
-          <a
-            href={content.resume_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            download
-            className="mt-6"
-          >
-            <Button size="lg" variant="default" className="bg-amber-600 hover:bg-amber-700 dark:bg-amber-500 dark:hover:bg-amber-600 transition-transform hover:scale-105 active:scale-100 shadow-md border-amber-700/20">
-              <Download className="mr-2" /> Download Resume
-            </Button>
-          </a>
-        </MagicalGlassCard>
-        <div className="mt-4 flex flex-col items-center text-base text-slate-500 dark:text-amber-300 italic font-ibm w-full">
-          <motion.span
-            initial={{ opacity: 0, y: 30 }}
+
+          <motion.div
+            className="mt-8"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 1 }}
+            transition={{ delay: 0.8, duration: 0.7 }}
+          >
+            <a
+              href={content.resume_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+            >
+              <Button 
+                size="lg" 
+                className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium px-8 py-3 shadow-md hover:shadow-lg transition-all duration-300"
+              >
+                <Download className="mr-2 w-4 h-4" />
+                Download Resume
+              </Button>
+            </a>
+          </motion.div>
+        </ProfessionalCard>
+
+        {/* Professional scroll indicator */}
+        <div className="mt-6 flex flex-col items-center text-gray-500 dark:text-gray-400">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 0.8 }}
             className="flex flex-col items-center"
           >
-            <span className="text-slate-700 dark:text-amber-200 font-medium">Scroll to explore</span>
+            <span className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">Explore Portfolio</span>
             <motion.svg
-              className="inline-block w-7 h-7 animate-bounce mt-1 text-amber-600 dark:text-amber-400"
+              className="w-6 h-6 text-blue-500 dark:text-blue-400"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
               viewBox="0 0 24 24"
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.5, duration: 0.9, type: "spring" }}
-              aria-hidden="true"
+              transition={{ 
+                delay: 1.3, 
+                duration: 0.8,
+                repeat: Infinity,
+                repeatType: "reverse",
+                repeatDelay: 1
+              }}
             >
               <path d="M12 6v12m0 0l6-6m-6 6l-6-6" strokeLinecap="round" strokeLinejoin="round"/>
             </motion.svg>

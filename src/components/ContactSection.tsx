@@ -1,7 +1,8 @@
 
 import React from "react";
-import GlassCard from "./GlassCard";
+import ProfessionalCard from "./ProfessionalCard";
 import { motion } from "framer-motion";
+import { Mail, Send } from "lucide-react";
 
 export default function ContactSection() {
   return (
@@ -11,57 +12,70 @@ export default function ContactSection() {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 1, delay: 0.1 }}
+        transition={{ duration: 0.8, delay: 0.1 }}
       >
-        <GlassCard className="p-9 flex flex-col items-center">
-          <h2 className="font-inter text-2xl md:text-3xl font-bold mb-2 text-foreground tracking-tight">Contact</h2>
-          <div className="font-ibm text-muted-foreground text-base mb-7 text-center">
-            Let’s build health with tech. <span className="font-semibold text-ultramarine dark:text-columbiablue">Together.</span>
+        <ProfessionalCard variant="bordered" className="p-10">
+          <div className="flex items-center gap-3 mb-6 justify-center">
+            <Mail className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            <h2 className="font-sans text-3xl font-bold text-gray-900 dark:text-gray-100">Get In Touch</h2>
           </div>
+          
+          <div className="text-center text-gray-600 dark:text-gray-400 mb-8">
+            <p className="text-lg">Let's discuss how we can innovate together in</p>
+            <p className="text-lg font-semibold text-blue-600 dark:text-blue-400">healthcare technology</p>
+          </div>
+
           <form
-            className="w-full flex flex-col gap-3"
+            className="w-full space-y-4"
             action="mailto:siddhardha.nanda@columbia.edu"
             method="POST"
             encType="text/plain"
           >
-            <input
-              type="text"
-              name="name"
-              className="rounded-lg px-4 py-2 border border-medicalsilver bg-background/80 text-foreground font-ibm placeholder:text-gray-400 dark:placeholder:text-gray-400 focus:outline-columbiablue transition-all"
-              placeholder="Your Name"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              className="rounded-lg px-4 py-2 border border-medicalsilver bg-background/80 text-foreground font-ibm placeholder:text-gray-400 dark:placeholder:text-gray-400 focus:outline-columbiablue transition-all"
-              placeholder="Your Email"
-              required
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                name="name"
+                className="rounded-lg px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                placeholder="Your Name"
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                className="rounded-lg px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                placeholder="Your Email"
+                required
+              />
+            </div>
             <textarea
               name="message"
               required
-              className="rounded-lg px-4 py-2 border border-medicalsilver bg-background/80 text-foreground font-ibm placeholder:text-gray-400 dark:placeholder:text-gray-400 focus:outline-columbiablue transition-all min-h-[82px]"
-              placeholder="How can we collaborate?"
+              rows={4}
+              className="w-full rounded-lg px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+              placeholder="How can we collaborate on innovative healthcare solutions?"
             />
             <button
               type="submit"
-              className="w-full mt-2 font-inter bg-columbiablue/80 hover:bg-columbiablue text-ultramarine dark:bg-ultramarine dark:text-columbiablue text-lg font-semibold rounded-xl py-2 shadow-md hover:shadow-glow transition-all"
+              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white font-medium py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Send
+              <Send className="w-4 h-4" />
+              Send Message
             </button>
           </form>
-          <div className="mt-8 flex gap-8 items-center justify-center">
+
+          <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 text-center">
             <a
               href="mailto:siddhardha.nanda@columbia.edu"
-              className="text-teal hover:text-columbiablue font-ibm font-medium underline underline-offset-4 transition-all text-base dark:text-columbiablue"
+              className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors"
             >
+              <Mail className="w-4 h-4" />
               siddhardha.nanda@columbia.edu
             </a>
           </div>
-        </GlassCard>
+        </ProfessionalCard>
       </motion.div>
-      <div className="text-xs text-gray-400 mt-6 font-ibm text-center">
+
+      <div className="text-xs text-gray-400 mt-8 text-center">
         © {new Date().getFullYear()} Nanda Siddhardha. All rights reserved.
       </div>
     </section>
