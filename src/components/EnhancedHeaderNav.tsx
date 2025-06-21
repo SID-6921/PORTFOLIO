@@ -17,19 +17,8 @@ export default function EnhancedHeaderNav() {
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
   
-  const headerBackground = useTransform(
-    scrollY,
-    [0, 100],
-    ["rgba(255, 255, 255, 0.8)", "rgba(255, 255, 255, 0.95)"]
-  );
-  
-  const headerBackgroundDark = useTransform(
-    scrollY,
-    [0, 100],
-    ["rgba(17, 24, 39, 0.8)", "rgba(17, 24, 39, 0.95)"]
-  );
-
-  const headerPadding = useTransform(scrollY, [0, 100], ["1.5rem", "1rem"]);
+  const headerOpacity = useTransform(scrollY, [0, 100], [0.8, 0.95]);
+  const headerPadding = useTransform(scrollY, [0, 100], [24, 16]);
 
   useEffect(() => {
     const unsubscribe = scrollY.onChange((latest) => {
@@ -42,14 +31,16 @@ export default function EnhancedHeaderNav() {
     <motion.header 
       className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl border-b border-white/10 dark:border-gray-800/50 transition-all duration-300"
       style={{
-        background: headerBackground,
+        backgroundColor: `rgba(255, 255, 255, ${headerOpacity.get()})`,
       }}
     >
-      <div className="dark:hidden absolute inset-0" style={{ background: headerBackground }} />
-      <div className="dark:block hidden absolute inset-0" style={{ background: headerBackgroundDark }} />
+      <motion.div
+        className="absolute inset-0 bg-white/80 dark:bg-gray-900/80"
+        style={{ opacity: headerOpacity }}
+      />
       
       <motion.nav 
-        className="max-w-7xl mx-auto flex items-center justify-between px-6 transition-all duration-300"
+        className="relative max-w-7xl mx-auto flex items-center justify-between px-6 transition-all duration-300"
         style={{ paddingTop: headerPadding, paddingBottom: headerPadding }}
       >
         <motion.div
