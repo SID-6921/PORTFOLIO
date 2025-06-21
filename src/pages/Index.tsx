@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import SmoothScrollWrapper from "@/components/SmoothScrollWrapper";
 import EnhancedHeaderNav from "@/components/EnhancedHeaderNav";
 import EnhancedHeroSection from "@/components/EnhancedHeroSection";
+import Playful3DBackground from "@/components/Playful3DBackground";
 
 // Lazy load non-critical sections for better performance
 const AboutSection = React.lazy(() => import("@/components/AboutSection"));
@@ -40,6 +41,9 @@ const Index = () => {
 
       <SmoothScrollWrapper>
         <div className="relative bg-white dark:bg-gray-900 min-h-screen w-full font-inter transition-colors duration-300">
+          {/* Subtle 3D biomedical background */}
+          <Playful3DBackground />
+          
           {/* Optimized background with reduced complexity */}
           <div className="fixed inset-0 -z-10">
             <div className="absolute inset-0 bg-gradient-to-br from-slate-50/80 via-white to-blue-50/20 dark:from-gray-900 dark:via-gray-900 dark:to-slate-900" />
