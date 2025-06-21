@@ -62,15 +62,7 @@ const Index = () => {
             {/* Enhanced gradient background */}
             <div className="fixed inset-0 -z-10">
               <div className="absolute inset-0 bg-gradient-to-br from-slate-50/90 via-white to-blue-50/40 dark:from-gray-900 dark:via-gray-900/95 dark:to-slate-900" />
-              <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]" style={{
-                backgroundImage: `
-                  radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%), 
-                  radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
-                  radial-gradient(circle at 40% 60%, rgba(139, 92, 246, 0.05) 0%, transparent 50%)
-                `,
-                backgroundSize: '600px 600px, 800px 800px, 400px 400px',
-                animation: 'float 20s infinite linear'
-              }} />
+              <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03] animate-float-bg" />
             </div>
             
             <PremiumHeaderNav />
@@ -105,14 +97,6 @@ const Index = () => {
           </div>
         </SmoothScrollWrapper>
       </div>
-
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
-          33% { transform: translateX(30px) translateY(-30px) rotate(120deg); }
-          66% { transform: translateX(-20px) translateY(20px) rotate(240deg); }
-        }
-      `}</style>
     </>
   );
 };
