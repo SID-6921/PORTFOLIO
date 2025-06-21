@@ -24,7 +24,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: "easeOut" }
+    transition: { duration: 0.8 }
   }
 };
 
@@ -176,12 +176,12 @@ export default function EnhancedHeroSection() {
             <span className="text-sm font-medium mb-3">Explore Portfolio</span>
             <motion.div
               animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 2, repeat: Infinity }}
               className="w-6 h-10 border-2 border-gray-300 dark:border-gray-600 rounded-full flex justify-center"
             >
               <motion.div
                 animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: 2, repeat: Infinity }}
                 className="w-1 h-3 bg-gray-400 dark:bg-gray-500 rounded-full mt-2"
               />
             </motion.div>
