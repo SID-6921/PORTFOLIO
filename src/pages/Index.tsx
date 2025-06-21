@@ -5,6 +5,7 @@ import SmoothScrollWrapper from "@/components/SmoothScrollWrapper";
 import PremiumHeaderNav from "@/components/PremiumHeaderNav";
 import UltraHeroSection from "@/components/UltraHeroSection";
 import PremiumSplashLoader from "@/components/PremiumSplashLoader";
+import PremiumFooter from "@/components/PremiumFooter";
 
 // Lazy load sections for performance
 const PremiumAboutSection = React.lazy(() => import("@/components/PremiumAboutSection"));
@@ -94,6 +95,8 @@ const Index = () => {
                 <ProfileLinks />
               </Suspense>
             </main>
+            
+            <PremiumFooter />
           </div>
         </SmoothScrollWrapper>
       </div>

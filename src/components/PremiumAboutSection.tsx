@@ -3,7 +3,7 @@ import React from "react";
 import { motion, useInView } from "framer-motion";
 import DashboardCard from "./DashboardCard";
 import PremiumSectionDivider from "./PremiumSectionDivider";
-import { Zap, Target, Heart, Award } from "lucide-react";
+import { Zap, Target, Heart, Award, Brain } from "lucide-react";
 
 const expertiseAreas = [
   { name: "Medical Technology", icon: "🏥", color: "from-blue-500 to-blue-600" },
@@ -11,7 +11,6 @@ const expertiseAreas = [
   { name: "Digital Health", icon: "💻", color: "from-teal-500 to-teal-600" },
   { name: "Embedded Systems", icon: "⚡", color: "from-orange-500 to-orange-600" },
   { name: "Signal Processing", icon: "📡", color: "from-green-500 to-green-600" },
-  { name: "User Experience", icon: "🎨", color: "from-pink-500 to-pink-600" },
   { name: "Biomedical Devices", icon: "🔬", color: "from-indigo-500 to-indigo-600" },
 ];
 
@@ -32,6 +31,26 @@ const highlights = [
     description: "Raised by a single parent, driven by precision and compassion"
   }
 ];
+
+// Biomedical waveform SVG component
+const BiomedicalWaveform = () => (
+  <motion.svg
+    width="100%"
+    height="2"
+    viewBox="0 0 400 20"
+    className="absolute top-1/2 left-0 transform -translate-y-1/2 text-blue-400/30 dark:text-blue-300/20"
+  >
+    <motion.path
+      d="M0,10 Q100,5 200,10 T400,10"
+      stroke="currentColor"
+      strokeWidth="2"
+      fill="none"
+      initial={{ pathLength: 0, opacity: 0 }}
+      animate={{ pathLength: 1, opacity: 1 }}
+      transition={{ duration: 2, ease: "easeInOut" }}
+    />
+  </motion.svg>
+);
 
 export default function PremiumAboutSection() {
   const ref = React.useRef(null);
@@ -149,48 +168,64 @@ export default function PremiumAboutSection() {
           </motion.div>
         </div>
 
-        {/* Expertise Section */}
+        {/* Areas of Expertise Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.8, duration: 0.8 }}
         >
-          <DashboardCard variant="elevated" className="p-8">
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-teal-50 dark:bg-teal-900/20 rounded-full border border-teal-200 dark:border-teal-800 mb-4">
-                <Award className="w-4 h-4 text-teal-600 dark:text-teal-400" />
-                <span className="text-sm font-medium text-teal-700 dark:text-teal-300">Areas of Expertise</span>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Technical Specializations
-              </h3>
+          <DashboardCard variant="elevated" className="p-8 relative overflow-hidden">
+            {/* Biomedical waveform background */}
+            <div className="absolute inset-0 pointer-events-none">
+              <BiomedicalWaveform />
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {expertiseAreas.map((area, index) => (
-                <motion.div
-                  key={area.name}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: 1 + index * 0.1, duration: 0.5 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className="group relative cursor-pointer"
-                >
-                  <div className={`p-6 bg-gradient-to-br ${area.color} rounded-xl text-white shadow-lg hover:shadow-xl transition-all duration-300 group-hover:shadow-2xl`}>
-                    <div className="flex items-center gap-3">
-                      <span className="text-2xl group-hover:scale-110 transition-transform duration-300">
-                        {area.icon}
-                      </span>
-                      <span className="font-medium text-sm group-hover:text-white transition-colors">
-                        {area.name}
-                      </span>
+            <div className="relative z-10">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-teal-50 dark:bg-teal-900/20 rounded-full border border-teal-200 dark:border-teal-800 mb-4">
+                  <Brain className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+                  <span className="text-sm font-medium text-teal-700 dark:text-teal-300">🧠 Areas of Expertise</span>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  🔧 Technical Specializations
+                </h3>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {expertiseAreas.map((area, index) => (
+                  <motion.div
+                    key={area.name}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ delay: 1 + index * 0.1, duration: 0.5 }}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="group relative cursor-pointer"
+                  >
+                    <div className={`p-6 bg-gradient-to-br ${area.color} rounded-xl text-white shadow-lg hover:shadow-xl transition-all duration-300 group-hover:shadow-2xl relative overflow-hidden`}>
+                      <div className="flex items-center gap-3">
+                        <motion.span 
+                          className="text-2xl group-hover:scale-110 transition-transform duration-300"
+                          whileHover={{ rotate: 15 }}
+                        >
+                          {area.icon}
+                        </motion.span>
+                        <span className="font-medium text-sm group-hover:text-white transition-colors">
+                          {area.name}
+                        </span>
+                      </div>
+                      
+                      {/* Animated pulse effect */}
+                      <motion.div
+                        className="absolute inset-0 bg-white/10 rounded-xl opacity-0 group-hover:opacity-100"
+                        animate={{
+                          scale: [1, 1.05, 1],
+                        }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
                     </div>
-                    
-                    {/* Hover overlay */}
-                    <div className="absolute inset-0 bg-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </DashboardCard>
         </motion.div>

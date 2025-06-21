@@ -1,9 +1,9 @@
-
 import React, { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import DashboardCard from "./DashboardCard";
 import EnhancedButton from "./EnhancedButton";
 import OptimizedImage from "./OptimizedImage";
+import AnimatedHeartbeat from "./AnimatedHeartbeat";
 import { Download, Sparkles, MapPin, Zap, Heart } from "lucide-react";
 import { useSupabaseContent } from "@/hooks/useSupabaseContent";
 
@@ -28,7 +28,7 @@ export default function UltraHeroSection() {
 
   const fallbackContent = {
     name: "Siddhardha Nanda",
-    title: "Engineer. Innovator. Human.",
+    title: "Engineer. Innovator. Purpose-Driven Technologist.",
     subtitle: "Looking for opportunities",
     description: "Pioneering at the intersection of med-tech, embedded systems, and digital health. Clinical precision. Creative innovation.",
     profile_image_url: "/public/lovable-uploads/31b97417-8931-4a4d-859c-4ba132c82167.png",
@@ -178,26 +178,37 @@ export default function UltraHeroSection() {
             </motion.div>
           </motion.div>
           
-          {/* Animated name */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-            className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 dark:from-white dark:via-blue-200 dark:to-white bg-clip-text text-transparent tracking-tight"
-          >
-            {content.name.split(' ').map((word, index) => (
-              <motion.span
-                key={word}
-                className="inline-block"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 + index * 0.1, duration: 0.6 }}
-              >
-                {word}{index === 0 && <br className="md:hidden" />}
-                {index < content.name.split(' ').length - 1 && ' '}
-              </motion.span>
-            ))}
-          </motion.h1>
+          {/* Animated name with heartbeat */}
+          <div className="flex flex-col items-center gap-4 mb-6">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.8 }}
+              className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 dark:from-white dark:via-blue-200 dark:to-white bg-clip-text text-transparent tracking-tight"
+            >
+              {content.name.split(' ').map((word, index) => (
+                <motion.span
+                  key={word}
+                  className="inline-block"
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7 + index * 0.1, duration: 0.6 }}
+                >
+                  {word}{index === 0 && <br className="md:hidden" />}
+                  {index < content.name.split(' ').length - 1 && ' '}
+                </motion.span>
+              ))}
+            </motion.h1>
+            
+            {/* Heartbeat animation */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.2, duration: 0.8 }}
+            >
+              <AnimatedHeartbeat />
+            </motion.div>
+          </div>
 
           {/* Typewriter title */}
           <motion.div
