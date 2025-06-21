@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet-async";
 import SmoothScrollWrapper from "@/components/SmoothScrollWrapper";
 import EnhancedHeaderNav from "@/components/EnhancedHeaderNav";
 import EnhancedHeroSection from "@/components/EnhancedHeroSection";
-import Playful3DBackground from "@/components/Playful3DBackground";
 
 // Lazy load non-critical sections for better performance
 const AboutSection = React.lazy(() => import("@/components/AboutSection"));
@@ -14,10 +13,16 @@ const MediumFeedSection = React.lazy(() => import("@/components/MediumFeedSectio
 const ContactSection = React.lazy(() => import("@/components/ContactSection"));
 const ProfileLinks = React.lazy(() => import("@/components/ProfileLinks"));
 
-// Loading component for lazy-loaded sections
+// Enhanced loading component with progress bar
 const SectionLoader = () => (
-  <div className="flex justify-center items-center py-20">
-    <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+  <div className="flex flex-col justify-center items-center py-20">
+    <div className="w-12 h-12 relative mb-4">
+      <div className="absolute inset-0 border-4 border-blue-200 dark:border-blue-800 rounded-full"></div>
+      <div className="absolute inset-0 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+    <div className="w-32 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+      <div className="h-full bg-gradient-to-r from-blue-500 to-teal-500 rounded-full animate-pulse"></div>
+    </div>
   </div>
 );
 
@@ -40,15 +45,13 @@ const Index = () => {
       </Helmet>
 
       <SmoothScrollWrapper>
-        <div className="relative bg-white dark:bg-gray-900 min-h-screen w-full font-inter transition-colors duration-300">
-          {/* Subtle 3D biomedical background */}
-          <Playful3DBackground />
-          
-          {/* Optimized background with reduced complexity */}
+        <div className="relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-900 dark:to-slate-900 min-h-screen w-full font-inter transition-all duration-500">
+          {/* Enhanced gradient background with subtle pattern */}
           <div className="fixed inset-0 -z-10">
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-50/80 via-white to-blue-50/20 dark:from-gray-900 dark:via-gray-900 dark:to-slate-900" />
-            <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]" style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.05'%3E%3Ccircle cx='20' cy='20' r='1'/%3E%3C/g%3E%3C/svg%3E")`,
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-50/90 via-white to-blue-50/40 dark:from-gray-900 dark:via-gray-900/95 dark:to-slate-900" />
+            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]" style={{
+              backgroundImage: `radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%)`,
+              backgroundSize: '400px 400px'
             }} />
           </div>
           
