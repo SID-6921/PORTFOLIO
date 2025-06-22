@@ -1,10 +1,10 @@
+
 import React, { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import DashboardCard from "./DashboardCard";
 import EnhancedButton from "./EnhancedButton";
 import OptimizedImage from "./OptimizedImage";
 import AnimatedHeartbeat from "./AnimatedHeartbeat";
-import ColumbiaLionIcon from "./ColumbiaLionIcon";
 import { Download, Sparkles, MapPin, Zap, Heart } from "lucide-react";
 import { useSupabaseContent } from "@/hooks/useSupabaseContent";
 
@@ -131,7 +131,7 @@ export default function UltraHeroSection() {
             <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           </motion.div>
 
-          {/* Profile image with advanced effects and Columbia Lion */}
+          {/* Profile image with advanced effects */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -143,14 +143,6 @@ export default function UltraHeroSection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {/* Columbia Lion - positioned elegantly behind/beside profile */}
-              <div className="absolute -top-4 -right-4 md:-right-8 z-0">
-                <ColumbiaLionIcon size={60} className="hidden sm:block" />
-              </div>
-              <div className="absolute -bottom-2 -left-4 z-0 sm:hidden">
-                <ColumbiaLionIcon size={40} />
-              </div>
-
               {/* Rotating rings */}
               <motion.div
                 className="absolute inset-0 w-44 h-44 rounded-full border-4 border-blue-400/30"
@@ -236,7 +228,7 @@ export default function UltraHeroSection() {
             </motion.div>
           </div>
 
-          {/* Enhanced typewriter title */}
+          {/* Enhanced typewriter title with NEW TAGLINE */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -287,14 +279,22 @@ export default function UltraHeroSection() {
             {content.description}
           </motion.p>
 
-          {/* CTA buttons */}
+          {/* CTA buttons with enhanced animations */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.1, duration: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <motion.div 
+              whileHover={{ scale: 1.05, y: -2 }} 
+              whileTap={{ scale: 0.95 }}
+              className="relative"
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-500 rounded-lg blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300"
+                whileHover={{ scale: 1.1 }}
+              />
               <EnhancedButton
                 href={content.resume_url}
                 target="_blank"
@@ -302,22 +302,64 @@ export default function UltraHeroSection() {
                 download
                 variant="primary"
                 size="lg"
-                className="min-w-[220px] shadow-2xl hover:shadow-blue-500/25"
+                className="min-w-[220px] shadow-2xl hover:shadow-blue-500/25 relative z-10 group overflow-hidden"
               >
-                <Download className="w-5 h-5" />
-                Download Resume
+                <motion.div
+                  className="flex items-center gap-2"
+                  whileHover={{ x: 2 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <motion.div
+                    whileHover={{ rotate: 15, scale: 1.1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Download className="w-5 h-5" />
+                  </motion.div>
+                  Download Resume
+                </motion.div>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
+                  transition={{ duration: 0.6 }}
+                />
               </EnhancedButton>
             </motion.div>
             
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <motion.div 
+              whileHover={{ scale: 1.05, y: -2 }} 
+              whileTap={{ scale: 0.95 }}
+              className="relative"
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-teal-500 to-purple-500 rounded-lg blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300"
+                whileHover={{ scale: 1.1 }}
+              />
               <EnhancedButton
                 href="#contact"
                 variant="secondary"
                 size="lg"
-                className="min-w-[220px] shadow-xl hover:shadow-teal-500/25"
+                className="min-w-[220px] shadow-xl hover:shadow-teal-500/25 relative z-10 group overflow-hidden"
               >
-                <Zap className="w-5 h-5" />
-                Get In Touch
+                <motion.div
+                  className="flex items-center gap-2"
+                  whileHover={{ x: 2 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <motion.div
+                    whileHover={{ rotate: 15, scale: 1.1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Zap className="w-5 h-5" />
+                  </motion.div>
+                  Get In Touch
+                </motion.div>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
+                  transition={{ duration: 0.6 }}
+                />
               </EnhancedButton>
             </motion.div>
           </motion.div>

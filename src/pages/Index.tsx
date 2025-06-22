@@ -13,7 +13,6 @@ const ProjectsSection = React.lazy(() => import("@/components/ProjectsSection"))
 const AchievementsSection = React.lazy(() => import("@/components/AchievementsSection"));
 const MediumFeedSection = React.lazy(() => import("@/components/MediumFeedSection"));
 const ContactSection = React.lazy(() => import("@/components/ContactSection"));
-const ProfileLinks = React.lazy(() => import("@/components/ProfileLinks"));
 
 // Enhanced loading component
 const SectionLoader = () => (
@@ -89,10 +88,6 @@ const Index = () => {
               
               <Suspense fallback={<SectionLoader />}>
                 <ContactSection />
-              </Suspense>
-              
-              <Suspense fallback={<SectionLoader />}>
-                <ProfileLinks />
               </Suspense>
             </main>
             

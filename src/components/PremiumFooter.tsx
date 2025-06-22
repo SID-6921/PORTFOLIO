@@ -1,19 +1,40 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Github, Linkedin, FileText, ArrowUp, Sparkles } from "lucide-react";
+import { Mail, Linkedin, Github, BookOpen, ArrowUp, Heart } from "lucide-react";
 
 const socialLinks = [
-  { name: "GitHub", icon: Github, href: "https://github.com", color: "hover:text-gray-900 dark:hover:text-white" },
-  { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com", color: "hover:text-blue-600 dark:hover:text-blue-400" },
-  { name: "Medium", icon: FileText, href: "https://medium.com", color: "hover:text-green-600 dark:hover:text-green-400" },
+  {
+    name: "LinkedIn",
+    icon: Linkedin,
+    url: "https://linkedin.com/in/siddhardhananda",
+    color: "hover:text-blue-600"
+  },
+  {
+    name: "GitHub", 
+    icon: Github,
+    url: "https://github.com/siddhardhananda",
+    color: "hover:text-gray-800 dark:hover:text-gray-200"
+  },
+  {
+    name: "Medium",
+    icon: BookOpen,
+    url: "https://medium.com/@siddhardhananda",
+    color: "hover:text-green-600"
+  },
+  {
+    name: "ResearchGate",
+    icon: BookOpen,
+    url: "#",
+    color: "hover:text-teal-600"
+  }
 ];
 
-const navLinks = [
+const navigationLinks = [
   { name: "Home", href: "#hero" },
   { name: "About", href: "#about" },
   { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
+  { name: "Contact", href: "#contact" }
 ];
 
 export default function PremiumFooter() {
@@ -22,219 +43,172 @@ export default function PremiumFooter() {
   };
 
   return (
-    <footer className="relative bg-gradient-to-br from-slate-900 via-gray-900 to-blue-900 text-white overflow-hidden">
-      {/* Animated top divider */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-teal-500 to-purple-500">
+    <footer className="relative py-16 px-6 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20 border-t border-gray-200/50 dark:border-gray-700/50">
+      {/* Background effects */}
+      <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="h-full bg-gradient-to-r from-transparent via-white/60 to-transparent"
-          animate={{ x: ["-100%", "100%"] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/10 to-teal-400/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.3, 0.5, 0.3]
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
         />
       </div>
-      
-      {/* Floating particles background */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(12)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-blue-400/30 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.2, 0.8, 0.2],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-      </div>
-      
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-20">
-        {/* Main content */}
-        <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="flex items-center justify-center gap-2 mb-6"
-          >
-            <Sparkles className="w-6 h-6 text-blue-400" />
-            <motion.h3
-              className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-teal-400 to-purple-400 bg-clip-text text-transparent"
-              animate={{
-                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              style={{ backgroundSize: "200% 100%" }}
-            >
-              Let's build something meaningful together.
-            </motion.h3>
-            <Sparkles className="w-6 h-6 text-purple-400" />
-          </motion.div>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed"
-          >
-            Ready to innovate at the intersection of technology and healthcare? 
-            Let's connect and create impact together.
-          </motion.p>
-        </div>
 
-        {/* Enhanced social links */}
+      <div className="relative z-10 max-w-6xl mx-auto">
+        {/* Main CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="flex justify-center gap-6 mb-12"
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
         >
-          {socialLinks.map((social, index) => (
-            <motion.a
-              key={social.name}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`group relative p-4 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 text-gray-300 transition-all duration-500 ${social.color} hover:bg-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-blue-500/20`}
-              whileHover={{ 
-                y: -8, 
-                scale: 1.1,
-                rotateY: 15
-              }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
+          <motion.div
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-teal-50 dark:from-blue-900/20 dark:to-teal-900/20 rounded-full border border-blue-200/40 dark:border-blue-800/40 mb-6"
+            whileHover={{ scale: 1.05 }}
+          >
+            <Heart className="w-4 h-4 text-red-500" fill="currentColor" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Open to opportunities
+            </span>
+          </motion.div>
+          
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+            Ready to innovate at the intersection of 
+            <br className="hidden md:block" />
+            <span className="bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
+              technology and healthcare?
+            </span>
+          </h2>
+          
+          <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+            Let's connect and create impact together.
+          </p>
+
+          <motion.a
+            href="mailto:siddhardha.nanda@columbia.edu"
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 group"
+          >
+            <motion.div
+              whileHover={{ rotate: 15, scale: 1.1 }}
+              transition={{ duration: 0.2 }}
             >
-              {/* Animated background */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-teal-500/10 to-purple-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                animate={{
-                  backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              />
-              
-              <social.icon className="w-6 h-6 relative z-10 group-hover:scale-110 transition-transform duration-300" />
-              
-              {/* Hover glow */}
-              <motion.div
-                className="absolute inset-0 bg-blue-400/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                whileHover={{ scale: 1.2 }}
-              />
-            </motion.a>
-          ))}
+              <Mail className="w-5 h-5" />
+            </motion.div>
+            siddhardha.nanda@columbia.edu
+            <motion.div
+              className="w-2 h-2 bg-white/30 rounded-full group-hover:bg-white/50 transition-colors"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.7, 1, 0.7]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity
+              }}
+            />
+          </motion.a>
         </motion.div>
 
-        {/* Enhanced navigation */}
+        {/* Social Links */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-wrap justify-center gap-8 mb-16"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex justify-center gap-6 mb-12"
         >
-          {navLinks.map((link, index) => (
+          {socialLinks.map((link, index) => (
             <motion.a
               key={link.name}
-              href={link.href}
-              className="relative text-gray-300 hover:text-white transition-colors duration-300 font-medium group"
-              whileHover={{ y: -2 }}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.7 + index * 0.05 }}
+              transition={{ duration: 0.4, delay: 0.1 * index }}
+              whileHover={{ scale: 1.2, y: -3 }}
+              whileTap={{ scale: 0.9 }}
+              className={`p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-gray-600 dark:text-gray-400 ${link.color} group`}
+            >
+              <link.icon className="w-6 h-6" />
+              <span className="sr-only">{link.name}</span>
+            </motion.a>
+          ))}
+        </motion.div>
+
+        {/* Navigation Links */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex justify-center gap-8 mb-12"
+        >
+          {navigationLinks.map((link, index) => (
+            <motion.a
+              key={link.name}
+              href={link.href}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.1 * index }}
+              whileHover={{ scale: 1.1, y: -2 }}
+              className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all duration-300 relative group"
             >
               {link.name}
               <motion.div
-                className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-400 to-teal-400 origin-left"
-                initial={{ scaleX: 0 }}
-                whileHover={{ scaleX: 1 }}
-                transition={{ duration: 0.3 }}
+                className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-600 to-teal-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
               />
             </motion.a>
           ))}
         </motion.div>
 
-        {/* Bottom section with enhanced interactions */}
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex items-center gap-4"
-          >
-            <div className="text-gray-400 text-sm">
-              © 2025 Nanda Siddhardha · All rights reserved
-            </div>
-            <motion.div
-              animate={{ 
-                scale: [1, 1.2, 1],
-                rotate: [0, 10, -10, 0]
-              }}
-              transition={{ 
-                duration: 3, 
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              ❤️
-            </motion.div>
-          </motion.div>
+        {/* Divider */}
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 1, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent mb-8"
+        />
+
+        {/* Copyright and Scroll to Top */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="flex flex-col sm:flex-row items-center justify-between gap-4"
+        >
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
+            © 2025 Nanda Siddhardha · All rights reserved.
+          </p>
           
           <motion.button
             onClick={scrollToTop}
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.8, type: "spring", bounce: 0.5 }}
-            className="group relative p-3 bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 hover:border-blue-400/50 rounded-full transition-all duration-300 backdrop-blur-sm"
-            whileHover={{ 
-              y: -4, 
-              scale: 1.1,
-              boxShadow: "0 10px 30px rgba(59, 130, 246, 0.3)"
-            }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.1, y: -2 }}
+            whileTap={{ scale: 0.9 }}
+            className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 group"
           >
-            {/* Animated background pulse */}
             <motion.div
-              className="absolute inset-0 bg-blue-500/20 rounded-full"
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.5, 0, 0.5]
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-            
-            <ArrowUp className="w-5 h-5 text-blue-400 group-hover:text-blue-300 transition-colors duration-300 relative z-10 group-hover:animate-bounce" />
+              animate={{ y: [0, -2, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <ArrowUp className="w-4 h-4" />
+            </motion.div>
+            <span className="text-sm font-medium">Back to top</span>
           </motion.button>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );
