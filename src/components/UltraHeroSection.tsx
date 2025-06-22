@@ -5,6 +5,7 @@ import DashboardCard from "./DashboardCard";
 import EnhancedButton from "./EnhancedButton";
 import OptimizedImage from "./OptimizedImage";
 import AnimatedHeartbeat from "./AnimatedHeartbeat";
+import ColumbiaLionIcon from "./ColumbiaLionIcon";
 import { Download, Sparkles, MapPin, Zap, Heart } from "lucide-react";
 import { useSupabaseContent } from "@/hooks/useSupabaseContent";
 
@@ -131,7 +132,7 @@ export default function UltraHeroSection() {
             <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           </motion.div>
 
-          {/* Profile image with advanced effects */}
+          {/* Profile image with Columbia mascot */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -168,6 +169,9 @@ export default function UltraHeroSection() {
                 />
               </div>
               
+              {/* Columbia Lion Mascot */}
+              <ColumbiaLionIcon />
+              
               {/* Pulse indicator */}
               <motion.div
                 className="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-500 rounded-full border-4 border-white dark:border-gray-800 shadow-lg flex items-center justify-center"
@@ -179,26 +183,28 @@ export default function UltraHeroSection() {
             </motion.div>
           </motion.div>
           
-          {/* Enhanced name with heartbeat */}
+          {/* Enhanced name with fixed gradient */}
           <div className="flex flex-col items-center gap-4 mb-6">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.8 }}
-              className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 dark:from-white dark:via-blue-200 dark:to-white bg-clip-text text-transparent tracking-tight"
+              className="text-5xl md:text-7xl font-bold tracking-tight"
             >
-              {content.name.split(' ').map((word, index) => (
-                <motion.span
-                  key={word}
-                  className="inline-block"
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7 + index * 0.1, duration: 0.6 }}
-                >
-                  {word}{index === 0 && <br className="md:hidden" />}
-                  {index < content.name.split(' ').length - 1 && ' '}
-                </motion.span>
-              ))}
+              <span className="text-gray-900 dark:text-white">
+                {content.name.split(' ').map((word, index) => (
+                  <motion.span
+                    key={word}
+                    className="inline-block"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 + index * 0.1, duration: 0.6 }}
+                  >
+                    {word}{index === 0 && <br className="md:hidden" />}
+                    {index < content.name.split(' ').length - 1 && ' '}
+                  </motion.span>
+                ))}
+              </span>
             </motion.h1>
             
             {/* Enhanced heartbeat animation */}
@@ -228,7 +234,7 @@ export default function UltraHeroSection() {
             </motion.div>
           </div>
 
-          {/* Enhanced typewriter title with NEW TAGLINE */}
+          {/* Enhanced typewriter title */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

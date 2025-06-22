@@ -60,19 +60,19 @@ export default function InteractiveProjectCard({
             whileHover={{ scale: 1.05 }}
           />
           
-          {/* Category badge */}
-          <div className={`absolute top-4 right-4 px-3 py-1 rounded-full bg-gradient-to-r ${categoryColors[category] || categoryColors.AI} text-white text-xs font-medium shadow-lg`}>
-            {category}
-          </div>
-
           <div className="relative z-10">
-            {/* Project image placeholder */}
-            <div className="w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
+            {/* Project image with proper category badge positioning */}
+            <div className="relative w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
               {imageUrl ? (
                 <img src={imageUrl} alt={title} className="w-full h-full object-cover" />
               ) : (
                 <Code className="w-12 h-12 text-gray-400" />
               )}
+              
+              {/* Category badge with proper z-index */}
+              <div className={`absolute top-3 right-3 z-20 px-3 py-1 rounded-full bg-gradient-to-r ${categoryColors[category] || categoryColors.AI} text-white text-xs font-medium shadow-lg backdrop-blur-sm`}>
+                {category}
+              </div>
             </div>
 
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
@@ -88,13 +88,13 @@ export default function InteractiveProjectCard({
               {techStack.slice(0, 3).map((tech, index) => (
                 <span
                   key={index}
-                  className="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg"
+                  className="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg border border-blue-200/30 dark:border-blue-700/30"
                 >
                   {tech}
                 </span>
               ))}
               {techStack.length > 3 && (
-                <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-lg">
+                <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-lg border border-gray-200/30 dark:border-gray-600/30">
                   +{techStack.length - 3} more
                 </span>
               )}
@@ -110,7 +110,7 @@ export default function InteractiveProjectCard({
                     e.stopPropagation();
                     window.open(githubUrl, '_blank');
                   }}
-                  className="p-2 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                  className="p-2 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors shadow-sm"
                 >
                   <Github className="w-4 h-4" />
                 </motion.button>
@@ -123,7 +123,7 @@ export default function InteractiveProjectCard({
                     e.stopPropagation();
                     window.open(demoUrl, '_blank');
                   }}
-                  className="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800/50 transition-colors"
+                  className="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800/50 transition-colors shadow-sm"
                 >
                   <ExternalLink className="w-4 h-4" />
                 </motion.button>
@@ -154,7 +154,7 @@ export default function InteractiveProjectCard({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8, y: 50 }}
               transition={{ type: "spring", bounce: 0.3 }}
-              className="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal header */}
@@ -177,13 +177,16 @@ export default function InteractiveProjectCard({
                           {team}
                         </div>
                       )}
+                      <div className={`px-2 py-1 rounded-full bg-gradient-to-r ${categoryColors[category] || categoryColors.AI} text-white text-xs font-medium`}>
+                        {category}
+                      </div>
                     </div>
                   </div>
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => setIsExpanded(false)}
-                    className="p-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                    className="p-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                   >
                     <X className="w-6 h-6" />
                   </motion.button>
@@ -205,7 +208,7 @@ export default function InteractiveProjectCard({
                     {techStack.map((tech, index) => (
                       <span
                         key={index}
-                        className="px-3 py-1 text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg"
+                        className="px-3 py-1 text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg border border-blue-200/30 dark:border-blue-700/30"
                       >
                         {tech}
                       </span>
@@ -222,7 +225,7 @@ export default function InteractiveProjectCard({
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 px-4 py-2 bg-gray-900 dark:bg-gray-700 text-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 bg-gray-900 dark:bg-gray-700 text-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors shadow-md"
                     >
                       <Github className="w-4 h-4" />
                       View Code
@@ -235,7 +238,7 @@ export default function InteractiveProjectCard({
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
                     >
                       <ExternalLink className="w-4 h-4" />
                       Live Demo

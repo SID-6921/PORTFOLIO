@@ -15,8 +15,8 @@ const expertiseAreas = [
   },
   {
     emoji: "⚡",
-    title: "Embedded Systems",
-    description: "IoT devices, sensor integration, and real-time processing"
+    title: "Hardware Systems",
+    description: "Electronic design, circuit analysis, and embedded solutions"
   },
   {
     emoji: "🔬",
@@ -30,8 +30,8 @@ const expertiseAreas = [
   },
   {
     emoji: "💻",
-    title: "Software Engineering",
-    description: "Full-stack development and system architecture"
+    title: "Digital Health",
+    description: "Connected health systems and IoT medical devices"
   }
 ];
 
@@ -58,7 +58,7 @@ const cardVariants = {
     scale: 1,
     transition: {
       duration: 0.6,
-      type: "spring",
+      type: "spring" as const,
       bounce: 0.3
     }
   }
@@ -78,8 +78,10 @@ export default function AreasOfExpertise() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 dark:from-white dark:via-blue-200 dark:to-white bg-clip-text text-transparent mb-4">
-            Areas of Expertise
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 dark:from-white dark:via-blue-200 dark:to-white bg-clip-text text-transparent">
+              Areas of Expertise
+            </span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Specialized in the convergence of technology and healthcare
