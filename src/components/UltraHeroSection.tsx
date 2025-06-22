@@ -1,10 +1,10 @@
-
 import React, { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import DashboardCard from "./DashboardCard";
 import EnhancedButton from "./EnhancedButton";
 import OptimizedImage from "./OptimizedImage";
 import AnimatedHeartbeat from "./AnimatedHeartbeat";
+import ColumbiaLionIcon from "./ColumbiaLionIcon";
 import { Download, Sparkles, MapPin, Zap, Heart } from "lucide-react";
 import { useSupabaseContent } from "@/hooks/useSupabaseContent";
 
@@ -131,7 +131,7 @@ export default function UltraHeroSection() {
             <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           </motion.div>
 
-          {/* Profile image with advanced effects */}
+          {/* Profile image with advanced effects and Columbia Lion */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -143,6 +143,14 @@ export default function UltraHeroSection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
+              {/* Columbia Lion - positioned elegantly behind/beside profile */}
+              <div className="absolute -top-4 -right-4 md:-right-8 z-0">
+                <ColumbiaLionIcon size={60} className="hidden sm:block" />
+              </div>
+              <div className="absolute -bottom-2 -left-4 z-0 sm:hidden">
+                <ColumbiaLionIcon size={40} />
+              </div>
+
               {/* Rotating rings */}
               <motion.div
                 className="absolute inset-0 w-44 h-44 rounded-full border-4 border-blue-400/30"
@@ -241,7 +249,7 @@ export default function UltraHeroSection() {
               transition={{ delay: 1.4, duration: 2, ease: "easeInOut" }}
               className="inline-block overflow-hidden whitespace-nowrap border-r-2 border-blue-600 dark:border-blue-400"
             >
-              {content.title}
+              Engineer. Innovator. Purpose-Driven Technologist.
             </motion.span>
           </motion.div>
 
