@@ -28,12 +28,12 @@ export default function EnhancedButton({
   rel,
   download
 }: EnhancedButtonProps) {
-  const baseClasses = "inline-flex items-center justify-center font-medium rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+  const baseClasses = "relative inline-flex items-center justify-center font-medium rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden";
   
   const variants = {
-    primary: "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl focus:ring-blue-500",
-    secondary: "bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 shadow-md hover:shadow-lg focus:ring-blue-500",
-    ghost: "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 focus:ring-blue-500"
+    primary: "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl focus:ring-blue-500 group",
+    secondary: "bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-2 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 shadow-md hover:shadow-lg focus:ring-blue-500 group",
+    ghost: "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 focus:ring-blue-500 group"
   };
 
   const sizes = {
@@ -45,13 +45,51 @@ export default function EnhancedButton({
   const combinedClasses = cn(baseClasses, variants[variant], sizes[size], className);
 
   const buttonContent = (
-    <motion.span
-      className="flex items-center gap-2"
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-    >
-      {children}
-    </motion.span>
+    <>
+      {/* Animated background glow */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-teal-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        animate={{
+          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        style={{ backgroundSize: "200% 100%" }}
+      />
+      
+      {/* Pulse effect */}
+      <motion.div
+        className="absolute inset-0 bg-white/10 rounded-xl opacity-0 group-hover:opacity-100"
+        animate={{
+          scale: [1, 1.05, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      
+      {/* Content with icon animation */}
+      <motion.span
+        className="relative flex items-center gap-2 z-10"
+        whileHover={{ x: 2 }}
+        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+      >
+        {React.Children.map(children, (child, index) => (
+          <motion.span
+            key={index}
+            whileHover={index === 0 ? { rotate: 15, scale: 1.1 } : { x: 3 }}
+            transition={{ type: "spring", stiffness: 300, damping: 10 }}
+          >
+            {child}
+          </motion.span>
+        ))}
+      </motion.span>
+    </>
   );
 
   if (href) {
@@ -62,8 +100,8 @@ export default function EnhancedButton({
         target={target}
         rel={rel}
         download={download}
-        whileHover={{ y: -2 }}
-        whileTap={{ y: 0 }}
+        whileHover={{ y: -3, scale: 1.02 }}
+        whileTap={{ y: 0, scale: 0.98 }}
         transition={{ type: "spring", stiffness: 400, damping: 17 }}
       >
         {buttonContent}
@@ -76,8 +114,8 @@ export default function EnhancedButton({
       className={combinedClasses}
       onClick={onClick}
       disabled={disabled}
-      whileHover={{ y: -2 }}
-      whileTap={{ y: 0 }}
+      whileHover={{ y: -3, scale: 1.02 }}
+      whileTap={{ y: 0, scale: 0.98 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
     >
       {buttonContent}

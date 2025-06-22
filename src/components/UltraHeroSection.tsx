@@ -178,7 +178,7 @@ export default function UltraHeroSection() {
             </motion.div>
           </motion.div>
           
-          {/* Animated name with heartbeat */}
+          {/* Enhanced name with heartbeat */}
           <div className="flex flex-col items-center gap-4 mb-6">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -200,17 +200,34 @@ export default function UltraHeroSection() {
               ))}
             </motion.h1>
             
-            {/* Heartbeat animation */}
+            {/* Enhanced heartbeat animation */}
             <motion.div
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 1.2, duration: 0.8 }}
+              className="relative"
             >
               <AnimatedHeartbeat />
+              
+              {/* Additional pulse rings */}
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.3, 0, 0.3]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                <div className="w-20 h-20 border border-red-400/30 rounded-full" />
+              </motion.div>
             </motion.div>
           </div>
 
-          {/* Typewriter title */}
+          {/* Enhanced typewriter title */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -220,7 +237,7 @@ export default function UltraHeroSection() {
             <motion.span
               initial={{ width: 0 }}
               animate={{ width: "auto" }}
-              transition={{ delay: 1.2, duration: 1.5, ease: "easeInOut" }}
+              transition={{ delay: 1.4, duration: 2, ease: "easeInOut" }}
               className="inline-block overflow-hidden whitespace-nowrap border-r-2 border-blue-600 dark:border-blue-400"
             >
               {content.title}
@@ -276,7 +293,7 @@ export default function UltraHeroSection() {
                 download
                 variant="primary"
                 size="lg"
-                className="min-w-[220px] shadow-2xl hover:shadow-blue-500/25 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
+                className="min-w-[220px] shadow-2xl hover:shadow-blue-500/25"
               >
                 <Download className="w-5 h-5" />
                 Download Resume
@@ -288,7 +305,7 @@ export default function UltraHeroSection() {
                 href="#contact"
                 variant="secondary"
                 size="lg"
-                className="min-w-[220px] shadow-xl hover:shadow-teal-500/25 border-2 border-gray-200 dark:border-gray-700 hover:border-teal-500 dark:hover:border-teal-400"
+                className="min-w-[220px] shadow-xl hover:shadow-teal-500/25"
               >
                 <Zap className="w-5 h-5" />
                 Get In Touch
