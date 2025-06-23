@@ -5,7 +5,6 @@ import DashboardCard from "./DashboardCard";
 import EnhancedButton from "./EnhancedButton";
 import OptimizedImage from "./OptimizedImage";
 import AnimatedHeartbeat from "./AnimatedHeartbeat";
-import ColumbiaLionIcon from "./ColumbiaLionIcon";
 import { Download, Sparkles, MapPin, Zap, Heart } from "lucide-react";
 import { useSupabaseContent } from "@/hooks/useSupabaseContent";
 
@@ -46,30 +45,21 @@ export default function UltraHeroSection() {
       className="relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden"
       style={{ y, opacity }}
     >
-      {/* Animated background gradients */}
+      {/* Clean modern background with subtle texture */}
       <div className="absolute inset-0">
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-white to-teal-50/60 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20"
-          animate={{
-            background: [
-              "linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(255, 255, 255, 0.9), rgba(20, 184, 166, 0.1))",
-              "linear-gradient(225deg, rgba(139, 92, 246, 0.1), rgba(255, 255, 255, 0.9), rgba(59, 130, 246, 0.1))",
-              "linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(255, 255, 255, 0.9), rgba(20, 184, 166, 0.1))"
-            ]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-        />
+        <div className="absolute inset-0 bg-slate-50/95 dark:bg-gray-900/95" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.05),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(20,184,166,0.05),transparent_50%)]" />
       </div>
 
       {/* Floating elements */}
       {floatingElements.map((element, index) => (
         <motion.div
           key={index}
-          className="absolute text-4xl pointer-events-none select-none"
+          className="absolute text-4xl pointer-events-none select-none opacity-30 dark:opacity-20"
           style={{ left: element.x, top: element.y }}
           initial={{ opacity: 0, scale: 0, rotate: -180 }}
           animate={{ 
-            opacity: [0, 0.6, 0.3, 0.6],
+            opacity: [0, 0.3, 0.1, 0.3],
             scale: [0, 1.2, 0.8, 1],
             rotate: [0, 360],
             y: [0, -20, 0]
@@ -92,16 +82,16 @@ export default function UltraHeroSection() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
       >
-        <DashboardCard variant="elevated" className="p-12 text-center relative overflow-hidden backdrop-blur-xl">
-          {/* Animated corner accents */}
+        <DashboardCard variant="elevated" className="p-12 text-center relative overflow-hidden backdrop-blur-xl bg-white/95 dark:bg-gray-800/95 border border-gray-200/50 dark:border-gray-700/50">
+          {/* Clean corner accents */}
           <motion.div
             className="absolute top-0 left-0 w-20 h-20"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <div className="absolute top-4 left-4 w-12 h-1 bg-gradient-to-r from-blue-500 to-transparent rounded-full" />
-            <div className="absolute top-4 left-4 w-1 h-12 bg-gradient-to-b from-blue-500 to-transparent rounded-full" />
+            <div className="absolute top-4 left-4 w-12 h-1 bg-blue-500 rounded-full" />
+            <div className="absolute top-4 left-4 w-1 h-12 bg-blue-500 rounded-full" />
           </motion.div>
           
           <motion.div
@@ -110,16 +100,16 @@ export default function UltraHeroSection() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.7, duration: 0.8 }}
           >
-            <div className="absolute top-4 right-4 w-12 h-1 bg-gradient-to-l from-teal-500 to-transparent rounded-full" />
-            <div className="absolute top-4 right-4 w-1 h-12 bg-gradient-to-b from-teal-500 to-transparent rounded-full" />
+            <div className="absolute top-4 right-4 w-12 h-1 bg-teal-500 rounded-full" />
+            <div className="absolute top-4 right-4 w-1 h-12 bg-teal-500 rounded-full" />
           </motion.div>
 
-          {/* Status badge */}
+          {/* Professional status badge */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="mb-8 flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-50 to-teal-50 dark:from-blue-900/20 dark:to-teal-900/20 border border-blue-200/60 dark:border-blue-800/50 rounded-full shadow-lg backdrop-blur-sm"
+            className="mb-8 flex items-center justify-center gap-3 px-8 py-4 bg-white/80 dark:bg-gray-800/80 border border-blue-200/60 dark:border-blue-800/50 rounded-full shadow-lg backdrop-blur-sm"
           >
             <motion.div 
               className="w-3 h-3 bg-emerald-500 rounded-full"
@@ -132,7 +122,7 @@ export default function UltraHeroSection() {
             <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           </motion.div>
 
-          {/* Profile image with Columbia mascot */}
+          {/* Clean profile image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -144,23 +134,18 @@ export default function UltraHeroSection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {/* Rotating rings */}
+              {/* Subtle rotating ring */}
               <motion.div
-                className="absolute inset-0 w-44 h-44 rounded-full border-4 border-blue-400/30"
+                className="absolute inset-0 w-44 h-44 rounded-full border-2 border-blue-400/20"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               />
-              <motion.div
-                className="absolute inset-2 w-40 h-40 rounded-full border-2 border-teal-400/20"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              />
               
-              {/* Glow effect */}
-              <div className="absolute inset-0 w-44 h-44 rounded-full bg-gradient-conic from-blue-500 via-teal-500 to-purple-500 blur-xl scale-110 opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
+              {/* Glassmorphism glow effect */}
+              <div className="absolute inset-0 w-44 h-44 rounded-full bg-blue-500/10 blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               {/* Main image */}
-              <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-white/80 dark:border-gray-700/50 shadow-2xl backdrop-blur-sm">
+              <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-white/90 dark:border-gray-700/70 shadow-2xl backdrop-blur-sm">
                 <OptimizedImage
                   src={content.profile_image_url}
                   alt={content.name}
@@ -169,10 +154,7 @@ export default function UltraHeroSection() {
                 />
               </div>
               
-              {/* Columbia Lion Mascot */}
-              <ColumbiaLionIcon />
-              
-              {/* Pulse indicator */}
+              {/* Clean pulse indicator */}
               <motion.div
                 className="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-500 rounded-full border-4 border-white dark:border-gray-800 shadow-lg flex items-center justify-center"
                 animate={{ scale: [1, 1.1, 1] }}
@@ -183,19 +165,19 @@ export default function UltraHeroSection() {
             </motion.div>
           </motion.div>
           
-          {/* Enhanced name with fixed gradient */}
+          {/* Name with animated underline instead of gradient */}
           <div className="flex flex-col items-center gap-4 mb-6">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.8 }}
-              className="text-5xl md:text-7xl font-bold tracking-tight"
+              className="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 dark:text-white relative group"
             >
-              <span className="text-gray-900 dark:text-white">
+              <span className="relative">
                 {content.name.split(' ').map((word, index) => (
                   <motion.span
                     key={word}
-                    className="inline-block"
+                    className="inline-block relative"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 + index * 0.1, duration: 0.6 }}
@@ -204,6 +186,13 @@ export default function UltraHeroSection() {
                     {index < content.name.split(' ').length - 1 && ' '}
                   </motion.span>
                 ))}
+                {/* Animated underline accent */}
+                <motion.div
+                  className="absolute -bottom-2 left-1/2 h-1 bg-blue-500 rounded-full"
+                  initial={{ width: 0, x: "-50%" }}
+                  animate={{ width: "60%", x: "-50%" }}
+                  transition={{ delay: 1.5, duration: 0.8, ease: "easeOut" }}
+                />
               </span>
             </motion.h1>
             
@@ -215,40 +204,25 @@ export default function UltraHeroSection() {
               className="relative"
             >
               <AnimatedHeartbeat />
-              
-              {/* Additional pulse rings */}
-              <motion.div
-                className="absolute inset-0 flex items-center justify-center"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0, 0.3]
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >
-                <div className="w-20 h-20 border border-red-400/30 rounded-full" />
-              </motion.div>
             </motion.div>
           </div>
 
-          {/* Enhanced typewriter title */}
+          {/* Title with subtle shimmer effect */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 0.6 }}
-            className="mb-4 text-2xl md:text-3xl font-semibold text-blue-600 dark:text-blue-400"
+            className="mb-4 text-2xl md:text-3xl font-semibold text-blue-600 dark:text-blue-400 relative"
           >
-            <motion.span
-              initial={{ width: 0 }}
-              animate={{ width: "auto" }}
-              transition={{ delay: 1.4, duration: 2, ease: "easeInOut" }}
-              className="inline-block overflow-hidden whitespace-nowrap border-r-2 border-blue-600 dark:border-blue-400"
-            >
+            <span className="relative inline-block">
               Engineer. Innovator. Purpose-Driven Technologist.
-            </motion.span>
+              <motion.div
+                className="absolute inset-0 bg-white/20 -skew-x-12"
+                initial={{ x: "-100%" }}
+                animate={{ x: "200%" }}
+                transition={{ delay: 2, duration: 1.5, ease: "easeInOut" }}
+              />
+            </span>
           </motion.div>
 
           {/* Status with location */}
@@ -258,7 +232,7 @@ export default function UltraHeroSection() {
             transition={{ delay: 1.5, duration: 0.6 }}
             className="mb-6 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-teal-50 to-emerald-50 dark:from-teal-900/30 dark:to-emerald-900/30 rounded-full border border-teal-200/40 dark:border-teal-800/40 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-teal-50/80 dark:bg-teal-900/30 rounded-full border border-teal-200/40 dark:border-teal-800/40 shadow-sm backdrop-blur-sm">
               <motion.div 
                 className="w-2 h-2 bg-emerald-500 rounded-full"
                 animate={{ scale: [1, 1.2, 1] }}
@@ -285,7 +259,7 @@ export default function UltraHeroSection() {
             {content.description}
           </motion.p>
 
-          {/* CTA buttons with enhanced animations */}
+          {/* Enhanced CTA buttons with hover effects */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -295,12 +269,8 @@ export default function UltraHeroSection() {
             <motion.div 
               whileHover={{ scale: 1.05, y: -2 }} 
               whileTap={{ scale: 0.95 }}
-              className="relative"
+              className="relative group"
             >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-500 rounded-lg blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300"
-                whileHover={{ scale: 1.1 }}
-              />
               <EnhancedButton
                 href={content.resume_url}
                 target="_blank"
@@ -308,7 +278,7 @@ export default function UltraHeroSection() {
                 download
                 variant="primary"
                 size="lg"
-                className="min-w-[220px] shadow-2xl hover:shadow-blue-500/25 relative z-10 group overflow-hidden"
+                className="min-w-[220px] shadow-xl hover:shadow-2xl relative z-10 overflow-hidden"
               >
                 <motion.div
                   className="flex items-center gap-2"
@@ -323,29 +293,19 @@ export default function UltraHeroSection() {
                   </motion.div>
                   Download Resume
                 </motion.div>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: "100%" }}
-                  transition={{ duration: 0.6 }}
-                />
               </EnhancedButton>
             </motion.div>
             
             <motion.div 
               whileHover={{ scale: 1.05, y: -2 }} 
               whileTap={{ scale: 0.95 }}
-              className="relative"
+              className="relative group"
             >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-teal-500 to-purple-500 rounded-lg blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300"
-                whileHover={{ scale: 1.1 }}
-              />
               <EnhancedButton
                 href="#contact"
                 variant="secondary"
                 size="lg"
-                className="min-w-[220px] shadow-xl hover:shadow-teal-500/25 relative z-10 group overflow-hidden"
+                className="min-w-[220px] shadow-lg hover:shadow-xl relative z-10 overflow-hidden"
               >
                 <motion.div
                   className="flex items-center gap-2"
@@ -360,17 +320,11 @@ export default function UltraHeroSection() {
                   </motion.div>
                   Get In Touch
                 </motion.div>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: "100%" }}
-                  transition={{ duration: 0.6 }}
-                />
               </EnhancedButton>
             </motion.div>
           </motion.div>
 
-          {/* Scroll indicator */}
+          {/* Clean scroll indicator */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -386,7 +340,7 @@ export default function UltraHeroSection() {
               <motion.div
                 animate={{ y: [0, 12, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="w-1 h-3 bg-gradient-to-b from-blue-500 to-teal-500 rounded-full mt-2 group-hover:from-teal-500 group-hover:to-purple-500 transition-colors duration-300"
+                className="w-1 h-3 bg-blue-500 rounded-full mt-2 group-hover:bg-teal-500 transition-colors duration-300"
               />
             </motion.div>
           </motion.div>

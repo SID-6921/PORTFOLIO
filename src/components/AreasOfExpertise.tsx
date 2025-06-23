@@ -58,7 +58,7 @@ const cardVariants = {
     scale: 1,
     transition: {
       duration: 0.6,
-      type: "spring" as const,
+      type: "spring",
       bounce: 0.3
     }
   }
@@ -67,8 +67,9 @@ const cardVariants = {
 export default function AreasOfExpertise() {
   return (
     <section className="py-20 px-6 relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-white to-teal-50/30 dark:from-gray-900/50 dark:via-gray-800/30 dark:to-blue-900/20" />
+      {/* Clean background with subtle texture */}
+      <div className="absolute inset-0 bg-slate-50/80 dark:bg-gray-900/80" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(59,130,246,0.03),transparent_70%),radial-gradient(circle_at_80%_20%,rgba(20,184,166,0.03),transparent_70%)]" />
       
       <div className="relative z-10 max-w-6xl mx-auto">
         <motion.div
@@ -78,12 +79,20 @@ export default function AreasOfExpertise() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 dark:from-white dark:via-blue-200 dark:to-white bg-clip-text text-transparent">
+          <div className="relative inline-block">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
               Areas of Expertise
-            </span>
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            </h2>
+            {/* Animated underline */}
+            <motion.div
+              className="absolute -bottom-1 left-1/2 h-1 bg-blue-500 rounded-full"
+              initial={{ width: 0, x: "-50%" }}
+              whileInView={{ width: "80%", x: "-50%" }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
+            />
+          </div>
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mt-6">
             Specialized in the convergence of technology and healthcare
           </p>
         </motion.div>
@@ -101,19 +110,18 @@ export default function AreasOfExpertise() {
               variants={cardVariants}
               whileHover={{ 
                 scale: 1.05,
-                rotateY: 5,
-                z: 50
+                y: -5
               }}
               whileTap={{ scale: 0.95 }}
               className="group relative"
             >
-              {/* Glassmorphism card */}
-              <div className="relative h-full p-8 rounded-2xl bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border border-white/20 dark:border-gray-700/30 shadow-xl hover:shadow-2xl transition-all duration-500">
-                {/* Glow effect on hover */}
+              {/* Clean glassmorphism card */}
+              <div className="relative h-full p-8 rounded-2xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/30 shadow-lg hover:shadow-xl transition-all duration-500">
+                {/* Subtle glow effect on hover */}
                 <motion.div
-                  className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 via-teal-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                  className="absolute inset-0 rounded-2xl bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   initial={{ scale: 0.8 }}
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1 }}
                 />
                 
                 {/* Content */}
@@ -130,8 +138,15 @@ export default function AreasOfExpertise() {
                     {area.emoji}
                   </motion.div>
                   
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 relative">
                     {area.title}
+                    {/* Animated underline on hover */}
+                    <motion.div
+                      className="absolute -bottom-1 left-0 h-0.5 bg-blue-500 rounded-full"
+                      initial={{ width: 0 }}
+                      whileHover={{ width: "100%" }}
+                      transition={{ duration: 0.3 }}
+                    />
                   </h3>
                   
                   <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -139,16 +154,8 @@ export default function AreasOfExpertise() {
                   </p>
                 </div>
 
-                {/* Subtle border highlight */}
-                <motion.div
-                  className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-blue-500/30 transition-colors duration-500"
-                  whileHover={{
-                    borderColor: "rgba(59, 130, 246, 0.5)"
-                  }}
-                />
-
                 {/* Corner accent */}
-                <div className="absolute top-4 right-4 w-2 h-2 bg-gradient-to-br from-blue-500 to-teal-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute top-4 right-4 w-2 h-2 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
             </motion.div>
           ))}
