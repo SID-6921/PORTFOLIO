@@ -45,9 +45,9 @@ export default function PremiumHeaderNav() {
 
   return (
     <>
-      {/* Scroll progress bar */}
+      {/* Scroll progress bar - Solid color instead of gradient */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-teal-500 to-purple-500 z-[60] origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-blue-600 z-[60] origin-left"
         style={{ scaleX: scrollYProgress }}
       />
       
@@ -83,7 +83,7 @@ export default function PremiumHeaderNav() {
           </motion.div>
 
           <motion.ul 
-            className="hidden md:flex gap-8 text-sm font-medium"
+            className="hidden md:flex gap-8 text-sm font-semibold"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
@@ -99,22 +99,32 @@ export default function PremiumHeaderNav() {
                 >
                   <motion.a
                     href={link.href}
-                    className={`relative transition-colors duration-300 group ${
+                    className={`relative transition-all duration-300 group ${
                       isActive 
-                        ? 'text-blue-600 dark:text-blue-400' 
-                        : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+                        ? 'text-blue-600 dark:text-blue-400 font-bold' 
+                        : 'text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400'
                     }`}
                     whileHover={{ y: -2 }}
                     whileTap={{ y: 0 }}
                   >
                     {link.label}
+                    {/* Enhanced underline with better visibility */}
                     <motion.span 
                       className="absolute -bottom-1 left-0 h-0.5 bg-blue-600 dark:bg-blue-400 rounded-full"
                       initial={{ width: isActive ? "100%" : "0%" }}
                       animate={{ width: isActive ? "100%" : "0%" }}
                       whileHover={{ width: "100%" }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
                     />
+                    {/* Additional glow effect for active state */}
+                    {isActive && (
+                      <motion.div
+                        className="absolute -bottom-1 left-0 h-0.5 bg-blue-400 rounded-full blur-sm"
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                      />
+                    )}
                   </motion.a>
                 </motion.li>
               );

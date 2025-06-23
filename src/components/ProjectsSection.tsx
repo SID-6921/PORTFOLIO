@@ -85,7 +85,7 @@ export default function ProjectsSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50/50 to-white dark:from-gray-900 dark:via-gray-800/30 dark:to-gray-900" />
       
       <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Section header */}
+        {/* Section header - Fixed gradient text readability */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -93,15 +93,25 @@ export default function ProjectsSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 dark:from-white dark:via-blue-200 dark:to-white bg-clip-text text-transparent mb-4">
-            Featured Projects
-          </h2>
+          <div className="relative inline-block">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 relative">
+              Featured Projects
+              {/* Animated underline instead of gradient */}
+              <motion.div
+                className="absolute -bottom-2 left-1/2 h-1 bg-blue-600 rounded-full"
+                initial={{ width: 0, x: "-50%" }}
+                whileInView={{ width: "80%", x: "-50%" }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
+              />
+            </h2>
+          </div>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Innovative solutions at the intersection of technology and healthcare
           </p>
         </motion.div>
 
-        {/* Category filters */}
+        {/* Category filters - Improved readability */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -117,16 +127,25 @@ export default function ProjectsSection() {
             {categories.map((category) => (
               <motion.button
                 key={category}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 relative overflow-hidden ${
                   selectedCategory === category
                     ? 'bg-blue-600 text-white shadow-lg'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400'
                 }`}
               >
                 {category}
+                {/* Subtle underline animation for active state */}
+                {selectedCategory === category && (
+                  <motion.div
+                    className="absolute bottom-1 left-1/2 h-0.5 bg-white rounded-full"
+                    initial={{ width: 0, x: "-50%" }}
+                    animate={{ width: "60%", x: "-50%" }}
+                    transition={{ duration: 0.3 }}
+                  />
+                )}
               </motion.button>
             ))}
           </div>
@@ -151,7 +170,7 @@ export default function ProjectsSection() {
           ))}
         </motion.div>
 
-        {/* Call to action */}
+        {/* Call to action - Improved button styling */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -164,11 +183,18 @@ export default function ProjectsSection() {
           </p>
           <motion.a
             href="#contact"
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+            className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden"
           >
-            Let's Connect
+            <span className="relative z-10">Let's Connect</span>
+            {/* Subtle shine effect on hover */}
+            <motion.div
+              className="absolute inset-0 bg-white/10"
+              initial={{ x: "-100%" }}
+              whileHover={{ x: "100%" }}
+              transition={{ duration: 0.6 }}
+            />
           </motion.a>
         </motion.div>
       </div>
