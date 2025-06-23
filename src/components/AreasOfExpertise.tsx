@@ -85,7 +85,7 @@ export default function AreasOfExpertise() {
             </h2>
             {/* Animated underline */}
             <motion.div
-              className="absolute -bottom-1 left-1/2 h-1 bg-blue-500 rounded-full"
+              className="absolute -bottom-1 left-1/2 h-1 bg-blue-600 rounded-full"
               initial={{ width: 0, x: "-50%" }}
               whileInView={{ width: "80%", x: "-50%" }}
               viewport={{ once: true }}
@@ -142,7 +142,7 @@ export default function AreasOfExpertise() {
                     {area.title}
                     {/* Animated underline on hover */}
                     <motion.div
-                      className="absolute -bottom-1 left-0 h-0.5 bg-blue-500 rounded-full"
+                      className="absolute -bottom-1 left-0 h-0.5 bg-blue-600 rounded-full"
                       initial={{ width: 0 }}
                       whileHover={{ width: "100%" }}
                       transition={{ duration: 0.3 }}
@@ -155,7 +155,7 @@ export default function AreasOfExpertise() {
                 </div>
 
                 {/* Corner accent */}
-                <div className="absolute top-4 right-4 w-2 h-2 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute top-4 right-4 w-2 h-2 bg-blue-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
             </motion.div>
           ))}

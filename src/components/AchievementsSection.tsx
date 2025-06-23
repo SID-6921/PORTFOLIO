@@ -72,7 +72,7 @@ export default function AchievementsSection() {
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 rounded-full border border-amber-200 dark:border-amber-800 mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-amber-50 dark:bg-amber-900/20 rounded-full border border-amber-200 dark:border-amber-800 mb-6"
           >
             <Medal className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             <span className="text-sm font-medium text-amber-700 dark:text-amber-300">Key Achievements</span>
@@ -104,8 +104,8 @@ export default function AchievementsSection() {
               }}
               className="group"
             >
-              <DashboardCard variant="interactive" className="h-full p-6 relative overflow-hidden">
-                {/* Background gradient */}
+              <DashboardCard variant="interactive" className="h-full p-6 relative overflow-hidden bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/30 shadow-lg hover:shadow-xl transition-all duration-500">
+                {/* Background highlight on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${achievement.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                 
                 {/* Animated sparkles */}
@@ -141,15 +141,23 @@ export default function AchievementsSection() {
                     <motion.div
                       whileHover={{ rotate: 15, scale: 1.1 }}
                       transition={{ type: "spring", stiffness: 300 }}
+                      className="text-blue-600 dark:text-blue-400"
                     >
-                      <achievement.icon className={`w-8 h-8 bg-gradient-to-r ${achievement.color} bg-clip-text text-transparent`} />
+                      <achievement.icon className="w-8 h-8" />
                     </motion.div>
                   </div>
                   
-                  {/* Content */}
+                  {/* Content with solid text colors */}
                   <div className="space-y-3">
-                    <h3 className="font-bold text-xl text-gray-900 dark:text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-gray-900 group-hover:to-blue-600 dark:group-hover:from-white dark:group-hover:to-blue-400 group-hover:bg-clip-text transition-all duration-300">
+                    <h3 className="font-bold text-xl text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 relative">
                       {achievement.title}
+                      {/* Animated underline on hover */}
+                      <motion.div
+                        className="absolute -bottom-1 left-0 h-0.5 bg-blue-600 rounded-full"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: "100%" }}
+                        transition={{ duration: 0.3 }}
+                      />
                     </h3>
                     
                     <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
@@ -159,7 +167,7 @@ export default function AchievementsSection() {
                   
                   {/* Bottom accent */}
                   <motion.div
-                    className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r ${achievement.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                    className="absolute bottom-0 left-0 h-1 bg-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     initial={{ scaleX: 0 }}
                     whileHover={{ scaleX: 1 }}
                     style={{ width: "100%" }}

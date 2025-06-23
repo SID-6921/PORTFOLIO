@@ -43,11 +43,11 @@ export default function PremiumFooter() {
   };
 
   return (
-    <footer className="relative py-16 px-6 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20 border-t border-gray-200/50 dark:border-gray-700/50">
+    <footer className="relative py-16 px-6 bg-white dark:bg-gray-900 border-t border-gray-200/50 dark:border-gray-700/50">
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/10 to-teal-400/10 rounded-full blur-3xl"
+          className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400/5 dark:bg-blue-400/10 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.1, 1],
             opacity: [0.3, 0.5, 0.3]
@@ -70,7 +70,7 @@ export default function PremiumFooter() {
           className="text-center mb-16"
         >
           <motion.div
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-teal-50 dark:from-blue-900/20 dark:to-teal-900/20 rounded-full border border-blue-200/40 dark:border-blue-800/40 mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-full border border-blue-200/40 dark:border-blue-800/40 mb-6"
             whileHover={{ scale: 1.05 }}
           >
             <Heart className="w-4 h-4 text-red-500" fill="currentColor" />
@@ -82,7 +82,7 @@ export default function PremiumFooter() {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
             Ready to innovate at the intersection of 
             <br className="hidden md:block" />
-            <span className="bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
+            <span className="text-blue-600 dark:text-blue-400">
               technology and healthcare?
             </span>
           </h2>
@@ -95,7 +95,7 @@ export default function PremiumFooter() {
             href="mailto:siddhardha.nanda@columbia.edu"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 group"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 group"
           >
             <motion.div
               whileHover={{ rotate: 15, scale: 1.1 }}
@@ -138,7 +138,7 @@ export default function PremiumFooter() {
               transition={{ duration: 0.4, delay: 0.1 * index }}
               whileHover={{ scale: 1.2, y: -3 }}
               whileTap={{ scale: 0.9 }}
-              className={`p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-gray-600 dark:text-gray-400 ${link.color} group`}
+              className={`p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-gray-600 dark:text-gray-400 ${link.color} group`}
             >
               <link.icon className="w-6 h-6" />
               <span className="sr-only">{link.name}</span>
@@ -167,7 +167,7 @@ export default function PremiumFooter() {
             >
               {link.name}
               <motion.div
-                className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-600 to-teal-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
+                className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
               />
             </motion.a>
           ))}
@@ -179,7 +179,7 @@ export default function PremiumFooter() {
           whileInView={{ opacity: 1, scaleX: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent mb-8"
+          className="w-full h-px bg-gray-300 dark:bg-gray-600 mb-8"
         />
 
         {/* Copyright and Scroll to Top */}

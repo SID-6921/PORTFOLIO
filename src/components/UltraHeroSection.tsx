@@ -90,8 +90,8 @@ export default function UltraHeroSection() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <div className="absolute top-4 left-4 w-12 h-1 bg-blue-500 rounded-full" />
-            <div className="absolute top-4 left-4 w-1 h-12 bg-blue-500 rounded-full" />
+            <div className="absolute top-4 left-4 w-12 h-1 bg-blue-600 rounded-full" />
+            <div className="absolute top-4 left-4 w-1 h-12 bg-blue-600 rounded-full" />
           </motion.div>
           
           <motion.div
@@ -100,8 +100,8 @@ export default function UltraHeroSection() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.7, duration: 0.8 }}
           >
-            <div className="absolute top-4 right-4 w-12 h-1 bg-teal-500 rounded-full" />
-            <div className="absolute top-4 right-4 w-1 h-12 bg-teal-500 rounded-full" />
+            <div className="absolute top-4 right-4 w-12 h-1 bg-teal-600 rounded-full" />
+            <div className="absolute top-4 right-4 w-1 h-12 bg-teal-600 rounded-full" />
           </motion.div>
 
           {/* Professional status badge */}
@@ -165,7 +165,7 @@ export default function UltraHeroSection() {
             </motion.div>
           </motion.div>
           
-          {/* Name with animated underline instead of gradient */}
+          {/* Name with solid color and animated underline */}
           <div className="flex flex-col items-center gap-4 mb-6">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -188,7 +188,7 @@ export default function UltraHeroSection() {
                 ))}
                 {/* Animated underline accent */}
                 <motion.div
-                  className="absolute -bottom-2 left-1/2 h-1 bg-blue-500 rounded-full"
+                  className="absolute -bottom-2 left-1/2 h-1 bg-blue-600 rounded-full"
                   initial={{ width: 0, x: "-50%" }}
                   animate={{ width: "60%", x: "-50%" }}
                   transition={{ delay: 1.5, duration: 0.8, ease: "easeOut" }}
@@ -207,7 +207,7 @@ export default function UltraHeroSection() {
             </motion.div>
           </div>
 
-          {/* Title with subtle shimmer effect */}
+          {/* Title - correct tagline with solid color */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -216,12 +216,6 @@ export default function UltraHeroSection() {
           >
             <span className="relative inline-block">
               Engineer. Innovator. Purpose-Driven Technologist.
-              <motion.div
-                className="absolute inset-0 bg-white/20 -skew-x-12"
-                initial={{ x: "-100%" }}
-                animate={{ x: "200%" }}
-                transition={{ delay: 2, duration: 1.5, ease: "easeInOut" }}
-              />
             </span>
           </motion.div>
 
@@ -249,7 +243,7 @@ export default function UltraHeroSection() {
             </div>
           </motion.div>
 
-          {/* Description */}
+          {/* Description - solid color text */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -259,7 +253,7 @@ export default function UltraHeroSection() {
             {content.description}
           </motion.p>
 
-          {/* Enhanced CTA buttons with hover effects */}
+          {/* Enhanced CTA buttons with visible hover effects */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -267,7 +261,7 @@ export default function UltraHeroSection() {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
             <motion.div 
-              whileHover={{ scale: 1.05, y: -2 }} 
+              whileHover={{ scale: 1.05, y: -3 }} 
               whileTap={{ scale: 0.95 }}
               className="relative group"
             >
@@ -297,7 +291,7 @@ export default function UltraHeroSection() {
             </motion.div>
             
             <motion.div 
-              whileHover={{ scale: 1.05, y: -2 }} 
+              whileHover={{ scale: 1.05, y: -3 }} 
               whileTap={{ scale: 0.95 }}
               className="relative group"
             >
@@ -340,7 +334,7 @@ export default function UltraHeroSection() {
               <motion.div
                 animate={{ y: [0, 12, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="w-1 h-3 bg-blue-500 rounded-full mt-2 group-hover:bg-teal-500 transition-colors duration-300"
+                className="w-1 h-3 bg-blue-600 rounded-full mt-2 group-hover:bg-teal-600 transition-colors duration-300"
               />
             </motion.div>
           </motion.div>
