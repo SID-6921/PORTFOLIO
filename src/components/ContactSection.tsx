@@ -18,7 +18,7 @@ export default function ContactSection() {
           <div className="text-center mb-8">
             <h2 className="font-sans text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">Get In Touch</h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
-              Let's discuss how we can innovate together in healthcare technology
+              Let's discuss your next project or collaboration opportunity
             </p>
           </div>
 

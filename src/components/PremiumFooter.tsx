@@ -61,23 +61,19 @@ export default function PremiumFooter() {
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto">
-        {/* Final CTA Section */}
+        {/* Email */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <p className="text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto font-medium">
-            Ready to innovate at the intersection of technology and healthcare? Let's connect and create impact together.
-          </p>
-
           <motion.a
             href="mailto:siddhardha.nanda@columbia.edu"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 group"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 group text-lg"
           >
             <motion.div
               whileHover={{ rotate: 15, scale: 1.1 }}
@@ -87,6 +83,19 @@ export default function PremiumFooter() {
             </motion.div>
             siddhardha.nanda@columbia.edu
           </motion.a>
+        </motion.div>
+
+        {/* Final CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-center mb-12"
+        >
+          <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto font-medium">
+            Ready to innovate at the intersection of technology and healthcare? Let's connect and create impact together.
+          </p>
         </motion.div>
 
         {/* Social Links */}
