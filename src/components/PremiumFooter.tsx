@@ -1,7 +1,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Mail, Linkedin, Github, BookOpen, ArrowUp, Heart } from "lucide-react";
+import { Mail, Linkedin, Github, BookOpen, ArrowUp } from "lucide-react";
 
 const socialLinks = [
   {
@@ -17,16 +17,16 @@ const socialLinks = [
     color: "hover:text-gray-800 dark:hover:text-gray-200"
   },
   {
+    name: "ResearchGate",
+    icon: BookOpen,
+    url: "https://www.researchgate.net/profile/Nanda-Siddhardha",
+    color: "hover:text-teal-600"
+  },
+  {
     name: "Medium",
     icon: BookOpen,
     url: "https://medium.com/@siddhardhananda",
     color: "hover:text-green-600"
-  },
-  {
-    name: "ResearchGate",
-    icon: BookOpen,
-    url: "#",
-    color: "hover:text-teal-600"
   }
 ];
 
@@ -61,34 +61,16 @@ export default function PremiumFooter() {
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto">
-        {/* Main CTA Section */}
+        {/* Final CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <motion.div
-            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-full border border-blue-200/40 dark:border-blue-800/40 mb-6"
-            whileHover={{ scale: 1.05 }}
-          >
-            <Heart className="w-4 h-4 text-red-500" fill="currentColor" />
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Open to opportunities
-            </span>
-          </motion.div>
-          
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-            Ready to innovate at the intersection of 
-            <br className="hidden md:block" />
-            <span className="text-blue-600 dark:text-blue-400">
-              technology and healthcare?
-            </span>
-          </h2>
-          
-          <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
-            Let's connect and create impact together.
+          <p className="text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto font-medium">
+            Ready to innovate at the intersection of technology and healthcare? Let's connect and create impact together.
           </p>
 
           <motion.a
@@ -104,17 +86,6 @@ export default function PremiumFooter() {
               <Mail className="w-5 h-5" />
             </motion.div>
             siddhardha.nanda@columbia.edu
-            <motion.div
-              className="w-2 h-2 bg-white/30 rounded-full group-hover:bg-white/50 transition-colors"
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.7, 1, 0.7]
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity
-              }}
-            />
           </motion.a>
         </motion.div>
 

@@ -2,7 +2,7 @@
 import React from "react";
 import ProfessionalCard from "./ProfessionalCard";
 import { motion } from "framer-motion";
-import { Mail, Send } from "lucide-react";
+import { Send } from "lucide-react";
 
 export default function ContactSection() {
   return (
@@ -15,14 +15,11 @@ export default function ContactSection() {
         transition={{ duration: 0.8, delay: 0.1 }}
       >
         <ProfessionalCard variant="bordered" className="p-10">
-          <div className="flex items-center gap-3 mb-6 justify-center">
-            <Mail className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-            <h2 className="font-sans text-3xl font-bold text-gray-900 dark:text-gray-100">Get In Touch</h2>
-          </div>
-          
-          <div className="text-center text-gray-600 dark:text-gray-400 mb-8">
-            <p className="text-lg">Let's discuss how we can innovate together in</p>
-            <p className="text-lg font-semibold text-blue-600 dark:text-blue-400">healthcare technology</p>
+          <div className="text-center mb-8">
+            <h2 className="font-sans text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">Get In Touch</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400">
+              Let's discuss how we can innovate together in healthcare technology
+            </p>
           </div>
 
           <form
@@ -56,28 +53,14 @@ export default function ContactSection() {
             />
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white font-medium py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hover:scale-105"
             >
               <Send className="w-4 h-4" />
               Send Message
             </button>
           </form>
-
-          <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 text-center">
-            <a
-              href="mailto:siddhardha.nanda@columbia.edu"
-              className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors"
-            >
-              <Mail className="w-4 h-4" />
-              siddhardha.nanda@columbia.edu
-            </a>
-          </div>
         </ProfessionalCard>
       </motion.div>
-
-      <div className="text-xs text-gray-400 mt-8 text-center">
-        © {new Date().getFullYear()} Nanda Siddhardha. All rights reserved.
-      </div>
     </section>
   );
 }
