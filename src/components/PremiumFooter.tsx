@@ -8,7 +8,7 @@ const socialLinks = [
     name: "LinkedIn",
     icon: Linkedin,
     url: "https://linkedin.com/in/siddhardhananda",
-    color: "hover:text-blue-600"
+    color: "hover:text-blue-600 dark:hover:text-blue-400"
   },
   {
     name: "GitHub", 
@@ -20,13 +20,13 @@ const socialLinks = [
     name: "ResearchGate",
     icon: BookOpen,
     url: "https://www.researchgate.net/profile/Nanda-Siddhardha",
-    color: "hover:text-teal-600"
+    color: "hover:text-teal-600 dark:hover:text-teal-400"
   },
   {
     name: "Medium",
     icon: BookOpen,
     url: "https://medium.com/@siddhardhananda",
-    color: "hover:text-green-600"
+    color: "hover:text-green-600 dark:hover:text-green-400"
   }
 ];
 
