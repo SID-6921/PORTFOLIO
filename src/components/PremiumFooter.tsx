@@ -8,25 +8,25 @@ const socialLinks = [
     name: "LinkedIn",
     icon: Linkedin,
     url: "https://linkedin.com/in/siddhardhananda",
-    color: "hover:text-blue-600 dark:hover:text-blue-400"
+    hoverEffect: "hover:text-blue-600 dark:hover:text-blue-400 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]"
   },
   {
     name: "GitHub", 
     icon: Github,
     url: "https://github.com/siddhardhananda",
-    color: "hover:text-gray-800 dark:hover:text-gray-200"
+    hoverEffect: "hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
   },
   {
     name: "ResearchGate",
     icon: BookOpen,
     url: "https://www.researchgate.net/profile/Nanda-Siddhardha",
-    color: "hover:text-teal-600 dark:hover:text-teal-400"
+    hoverEffect: "hover:text-teal-600 dark:hover:text-teal-400 hover:opacity-80"
   },
   {
     name: "Medium",
     icon: BookOpen,
     url: "https://medium.com/@siddhardhananda",
-    color: "hover:text-green-600 dark:hover:text-green-400"
+    hoverEffect: "hover:text-green-600 dark:hover:text-green-400 hover:underline hover:underline-offset-4"
   }
 ];
 
@@ -85,7 +85,7 @@ export default function PremiumFooter() {
           </motion.a>
         </motion.div>
 
-        {/* Final CTA */}
+        {/* CTA Message */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -116,9 +116,9 @@ export default function PremiumFooter() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.1 * index }}
-              whileHover={{ scale: 1.2, y: -3 }}
+              whileHover={{ scale: 1.1, y: -3 }}
               whileTap={{ scale: 0.9 }}
-              className={`p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-gray-600 dark:text-gray-400 ${link.color} group`}
+              className={`p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-gray-600 dark:text-gray-400 ${link.hoverEffect} group`}
             >
               <link.icon className="w-6 h-6" />
               <span className="sr-only">{link.name}</span>
