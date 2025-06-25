@@ -36,7 +36,7 @@ export default function HeroSection() {
     title: "Engineer. Innovator. Human.",
     subtitle: "Looking for opportunities",
     description: "Pioneering at the intersection of med-tech, embedded systems, and digital health. Clinical precision. Creative innovation.",
-    profile_image_url: "https://cdn.secflix.in/nanda.jpeg",
+    profile_image_url: "https://res.cloudinary.com/dae56bvjp/image/upload/v1750852722/nanda_wbgmag.jpg",
     resume_url: "/resume.pdf"
   };
 
