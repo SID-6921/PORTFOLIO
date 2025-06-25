@@ -1,83 +1,54 @@
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import InteractiveProjectCard from "./InteractiveProjectCard";
 import { Filter } from "lucide-react";
-
-const projects = [
-  {
-    title: "AI-Powered Diagnostic Assistant",
-    description: "Machine learning system for early disease detection using medical imaging and patient data analysis.",
-    summary: "Developed a comprehensive AI diagnostic assistant that leverages deep learning algorithms to analyze medical images and patient data for early disease detection. The system achieved 94% accuracy in preliminary testing and has been integrated into clinical workflows for validation.",
-    technologies: ["Python", "TensorFlow", "OpenCV", "Flask", "React", "PostgreSQL"],
-    category: "AI",
-    githubUrl: "#",
-    projectUrl: "#",
-    date: "2024",
-    team: "Solo Project"
-  },
-  {
-    title: "Smart Wearable Health Monitor",
-    description: "IoT-enabled wearable device for continuous vital signs monitoring with real-time alerts.",
-    summary: "Designed and built a comprehensive wearable health monitoring system featuring multiple sensors for heart rate, SpO2, temperature, and activity tracking. The device communicates with a mobile app via Bluetooth and provides real-time health insights and emergency alerts.",
-    technologies: ["Arduino", "ESP32", "React Native", "Firebase", "C++", "Bluetooth LE"],
-    category: "IoT",
-    githubUrl: "#",
-    date: "2023",
-    team: "Team of 3"
-  },
-  {
-    title: "Telemedicine Platform",
-    description: "Comprehensive telehealth solution connecting patients with healthcare providers remotely.",
-    summary: "Built a full-stack telemedicine platform that enables secure video consultations, electronic health records management, and prescription handling. The platform supports multiple user roles and integrates with existing healthcare systems.",
-    technologies: ["React", "Node.js", "WebRTC", "MongoDB", "Socket.io", "AWS"],
-    category: "Web",
-    githubUrl: "#",
-    projectUrl: "#",
-    date: "2023",
-    team: "Team of 4"
-  },
-  {
-    title: "Biomedical Signal Processor",
-    description: "Real-time processing and analysis of ECG, EEG, and other biomedical signals.",
-    summary: "Developed a sophisticated signal processing system for biomedical applications, capable of real-time filtering, feature extraction, and anomaly detection in physiological signals. The system is used in research for cardiac and neurological studies.",
-    technologies: ["MATLAB", "Python", "DSP", "LabVIEW", "C++"],
-    category: "Biomedical",
-    githubUrl: "#",
-    date: "2024",
-    team: "Research Team"
-  },
-  {
-    title: "Mobile Health Tracker",
-    description: "Cross-platform mobile application for comprehensive health and wellness tracking.",
-    summary: "Created a feature-rich mobile health application that tracks various health metrics, provides personalized insights, and connects with wearable devices. The app includes social features for health challenges and community support.",
-    technologies: ["Flutter", "Dart", "Firebase", "REST APIs", "SQLite"],
-    category: "Mobile",
-    githubUrl: "#",
-    projectUrl: "#",
-    date: "2023",
-    team: "Solo Project"
-  },
-  {
-    title: "Medical Image Analysis Tool",
-    description: "Advanced computer vision system for automated medical image analysis and reporting.",
-    summary: "Developed a comprehensive medical image analysis platform using state-of-the-art computer vision techniques. The system can process various types of medical images including X-rays, MRIs, and CT scans, providing automated analysis and detailed reports.",
-    technologies: ["Python", "PyTorch", "OpenCV", "Django", "PostgreSQL", "Docker"],
-    category: "AI",
-    githubUrl: "#",
-    date: "2024",
-    team: "Research Collaboration"
-  }
-];
+import { useSupabaseContent } from "@/hooks/useSupabaseContent";
 
 const categories = ["All", "AI", "IoT", "Biomedical", "Web", "Mobile"];
 
 export default function ProjectsSection() {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const { projects, loading, error } = useSupabaseContent();
 
   const filteredProjects = selectedCategory === "All" 
     ? projects 
-    : projects.filter(project => project.category === selectedCategory);
+    : projects.filter(project => 
+        project.technologies.some(tech => 
+          tech.toLowerCase().includes(selectedCategory.toLowerCase())
+        )
+      );
+
+  if (loading) {
+    return (
+      <section id="projects" className="py-20 px-6 relative">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center">
+            <div className="animate-pulse">
+              <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-64 mx-auto mb-4"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-96 mx-auto mb-8"></div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="bg-gray-200 dark:bg-gray-700 rounded-xl h-64"></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section id="projects" className="py-20 px-6 relative">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-red-600 dark:text-red-400">{error}</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="projects" className="py-20 px-6 relative">
@@ -85,7 +56,7 @@ export default function ProjectsSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50/50 to-white dark:from-gray-900 dark:via-gray-800/30 dark:to-gray-900" />
       
       <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Section header - Fixed gradient text readability */}
+        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -96,7 +67,7 @@ export default function ProjectsSection() {
           <div className="relative inline-block">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 relative">
               Featured Projects
-              {/* Animated underline instead of gradient */}
+              {/* Animated underline */}
               <motion.div
                 className="absolute -bottom-2 left-1/2 h-1 bg-blue-600 rounded-full"
                 initial={{ width: 0, x: "-50%" }}
@@ -111,7 +82,7 @@ export default function ProjectsSection() {
           </p>
         </motion.div>
 
-        {/* Category filters - Improved readability */}
+        {/* Category filters */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -158,19 +129,38 @@ export default function ProjectsSection() {
         >
           {filteredProjects.map((project, index) => (
             <motion.div
-              key={project.title}
+              key={project.id}
               layout
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <InteractiveProjectCard {...project} />
+              <InteractiveProjectCard
+                title={project.title}
+                description={project.description}
+                technologies={project.technologies}
+                category="Project"
+                imageUrl={project.image_url}
+              />
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Call to action - Improved button styling */}
+        {/* Show message if no projects found */}
+        {filteredProjects.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-12"
+          >
+            <p className="text-gray-600 dark:text-gray-400 text-lg">
+              No projects found for the selected category.
+            </p>
+          </motion.div>
+        )}
+
+        {/* Call to action */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
