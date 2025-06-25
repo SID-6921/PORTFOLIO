@@ -32,7 +32,7 @@ export default function UltraHeroSection() {
     title: "Engineer. Innovator. Purpose-Driven Technologist.",
     subtitle: "Looking for opportunities",
     description: "Pioneering at the intersection of med-tech, embedded systems, and digital health. Clinical precision. Creative innovation.",
-    profile_image_url: "/public/lovable-uploads/31b97417-8931-4a4d-859c-4ba132c82167.png",
+    profile_image_url: "https://cdn.secflix.in/nanda.jpeg",
     resume_url: "/resume.pdf"
   };
 
