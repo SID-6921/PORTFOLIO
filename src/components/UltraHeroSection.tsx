@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import DashboardCard from "./DashboardCard";
@@ -182,8 +181,8 @@ export default function UltraHeroSection() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 + index * 0.1, duration: 0.6 }}
                   >
-                    {word}{index === 0 && <br className="md:hidden" />}
-                    {index < content.name.split(' ').length - 1 && ' '}
+                    {word}
+                    {index < content.name.split(' ').length - 1 && <span className="mr-4 md:mr-6">{' '}</span>}
                   </motion.span>
                 ))}
                 {/* Animated underline accent */}
