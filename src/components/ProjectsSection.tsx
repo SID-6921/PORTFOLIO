@@ -4,7 +4,7 @@ import InteractiveProjectCard from "./InteractiveProjectCard";
 import { Filter } from "lucide-react";
 import { useSupabaseContent } from "@/hooks/useSupabaseContent";
 
-const categories = ["All", "AI", "IoT", "Biomedical", "Web", "Mobile"];
+const categories = ["All", "AI", "IoT", "Biomedical", "Web", "Mobile", "Hardware", "Software"];
 
 export default function ProjectsSection() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -13,9 +13,68 @@ export default function ProjectsSection() {
   const filteredProjects = selectedCategory === "All" 
     ? projects 
     : projects.filter(project => 
-        project.technologies.some(tech => 
-          tech.toLowerCase().includes(selectedCategory.toLowerCase())
-        )
+        project.technologies.some(tech => {
+          const techLower = tech.toLowerCase();
+          const categoryLower = selectedCategory.toLowerCase();
+          
+          // More comprehensive matching logic
+          switch (categoryLower) {
+            case 'ai':
+              return techLower.includes('ai') || 
+                     techLower.includes('machine learning') || 
+                     techLower.includes('ml') || 
+                     techLower.includes('neural') || 
+                     techLower.includes('deep learning') ||
+                     techLower.includes('tensorflow') ||
+                     techLower.includes('pytorch');
+            case 'iot':
+              return techLower.includes('iot') || 
+                     techLower.includes('arduino') || 
+                     techLower.includes('raspberry pi') || 
+                     techLower.includes('sensor') ||
+                     techLower.includes('embedded');
+            case 'biomedical':
+              return techLower.includes('biomedical') || 
+                     techLower.includes('medical') || 
+                     techLower.includes('health') || 
+                     techLower.includes('bio') ||
+                     techLower.includes('clinical');
+            case 'web':
+              return techLower.includes('react') || 
+                     techLower.includes('javascript') || 
+                     techLower.includes('html') || 
+                     techLower.includes('css') || 
+                     techLower.includes('web') ||
+                     techLower.includes('frontend') ||
+                     techLower.includes('backend') ||
+                     techLower.includes('node') ||
+                     techLower.includes('express');
+            case 'mobile':
+              return techLower.includes('mobile') || 
+                     techLower.includes('android') || 
+                     techLower.includes('ios') || 
+                     techLower.includes('react native') ||
+                     techLower.includes('flutter') ||
+                     techLower.includes('swift') ||
+                     techLower.includes('kotlin');
+            case 'hardware':
+              return techLower.includes('hardware') || 
+                     techLower.includes('circuit') || 
+                     techLower.includes('pcb') || 
+                     techLower.includes('electronics') ||
+                     techLower.includes('microcontroller') ||
+                     techLower.includes('fpga');
+            case 'software':
+              return techLower.includes('software') || 
+                     techLower.includes('python') || 
+                     techLower.includes('java') || 
+                     techLower.includes('c++') ||
+                     techLower.includes('algorithm') ||
+                     techLower.includes('data structure');
+            default:
+              return techLower.includes(categoryLower);
+          }
+        })
       );
 
   if (loading) {
@@ -92,7 +151,7 @@ export default function ProjectsSection() {
         >
           <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-2">
             <Filter className="w-4 h-4" />
-            <span className="text-sm font-medium">Filter by category:</span>
+            <span className="text-sm font-medium">Filter by technology:</span>
           </div>
           <div className="flex flex-wrap justify-center gap-2">
             {categories.map((category) => (
@@ -140,7 +199,7 @@ export default function ProjectsSection() {
                 title={project.title}
                 description={project.description}
                 technologies={project.technologies}
-                category="Project"
+                category={project.technologies[0] || "Project"} // Use first technology as category
                 imageUrl={project.image_url}
               />
             </motion.div>
