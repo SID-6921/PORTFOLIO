@@ -5,7 +5,39 @@ import type { Database } from './types';
 const SUPABASE_URL = "https://sqaqmpamhihzzxonihcy.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNxYXFtcGFtaGloenp4b25paGN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAzMzcxODYsImV4cCI6MjA2NTkxMzE4Nn0.MwJ7ciDc-8lY6m-JIzq4Rh4CUpJrIwgTi5sjFoZ-8cY";
 
+// Validate environment variables
+if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
+  console.error('Missing Supabase configuration. Please check your environment variables.');
+}
+
+// Log configuration for debugging (remove in production)
+console.log('Supabase URL:', SUPABASE_URL);
+console.log('Supabase Key (first 20 chars):', SUPABASE_PUBLISHABLE_KEY?.substring(0, 20) + '...');
+
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
-export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+  },
+  global: {
+    headers: {
+      'X-Client-Info': 'portfolio-app',
+    },
+  },
+});
+
+// Test connection on initialization
+supabase.from('achievements').select('count').limit(1).then(
+  ({ error }) => {
+    if (error) {
+      console.error('Supabase connection test failed:', error);
+    } else {
+      console.log('Supabase connection successful');
+    }
+  }
+).catch((error) => {
+  console.error('Supabase connection test error:', error);
+});
