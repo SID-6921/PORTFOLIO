@@ -13,6 +13,7 @@ if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
 // Log configuration for debugging (remove in production)
 console.log('Supabase URL:', SUPABASE_URL);
 console.log('Supabase Key (first 20 chars):', SUPABASE_PUBLISHABLE_KEY?.substring(0, 20) + '...');
+console.log('Current origin:', window.location.origin);
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
@@ -27,17 +28,60 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
       'X-Client-Info': 'portfolio-app',
     },
   },
+  // Add additional configuration for better error handling
+  db: {
+    schema: 'public',
+  },
+  realtime: {
+    params: {
+      eventsPerSecond: 10,
+    },
+  },
 });
 
-// Test connection on initialization
-supabase.from('achievements').select('count').limit(1).then(
-  ({ error }) => {
+// Enhanced connection test with better error reporting
+const testConnection = async () => {
+  try {
+    console.log('Initializing Supabase connection test...');
+    const { data, error } = await supabase.from('achievements').select('count').limit(1);
+    
     if (error) {
       console.error('Supabase connection test failed:', error);
+      console.error('Error details:', {
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code
+      });
+      
+      // Provide specific guidance based on error type
+      if (error.message.includes('Failed to fetch')) {
+        console.error(`
+          CORS Configuration Required:
+          1. Go to your Supabase dashboard: https://supabase.com/dashboard/project/${SUPABASE_URL.split('.')[0].split('//')[1]}
+          2. Navigate to Project Settings > API
+          3. Add "${window.location.origin}" to the "Web origins (CORS)" list
+          4. Save the changes and refresh this page
+        `);
+      }
     } else {
       console.log('Supabase connection successful');
     }
+  } catch (error) {
+    console.error('Supabase connection test error:', error);
+    
+    if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+      console.error(`
+        Network Error Detected:
+        - Check your internet connection
+        - Verify CORS settings in Supabase dashboard
+        - Ensure Supabase project is active
+        - Current origin: ${window.location.origin}
+        - Target URL: ${SUPABASE_URL}
+      `);
+    }
   }
-).catch((error) => {
-  console.error('Supabase connection test error:', error);
-});
+};
+
+// Run connection test on initialization
+testConnection();

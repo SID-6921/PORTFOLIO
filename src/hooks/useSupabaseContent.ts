@@ -77,23 +77,44 @@ export const useSupabaseContent = () => {
       setLoading(true);
       setError(null);
 
-      // Test Supabase connection first
+      // Enhanced Supabase connection test with better error handling
       try {
-        const { error: connectionError } = await supabase.from('achievements').select('count').limit(1);
+        console.log('Testing Supabase connection...');
+        const { data, error: connectionError } = await supabase
+          .from('achievements')
+          .select('count')
+          .limit(1);
+        
         if (connectionError) {
           console.error('Supabase connection test failed:', connectionError);
           throw new Error(`Database connection failed: ${connectionError.message}`);
         }
+        
+        console.log('Supabase connection successful');
       } catch (fetchError) {
         console.error('Network connectivity test failed:', fetchError);
+        
         if (fetchError instanceof TypeError && fetchError.message.includes('Failed to fetch')) {
-          throw new Error('Unable to connect to database. Please check your internet connection and Supabase configuration.');
+          const detailedError = `
+            Network connection failed. This could be due to:
+            1. No internet connection
+            2. CORS configuration issue - ensure your development URL (${window.location.origin}) is added to Supabase CORS settings
+            3. Incorrect Supabase URL or API key
+            4. Supabase project is paused or inactive
+            
+            Please check:
+            - Your internet connection
+            - Supabase project status at https://supabase.com/dashboard
+            - CORS settings in your Supabase project (Project Settings > API > Web origins)
+          `;
+          throw new Error(detailedError);
         }
         throw fetchError;
       }
 
-      // Load hero content
+      // Load hero content with improved error handling
       try {
+        console.log('Loading hero content...');
         const { data: heroData, error: heroError } = await supabase
           .from('hero_content')
           .select('*')
@@ -104,14 +125,16 @@ export const useSupabaseContent = () => {
           console.error('Error loading hero content:', heroError);
         } else if (heroData) {
           setHeroContent(heroData);
+          console.log('Hero content loaded successfully');
         }
       } catch (heroFetchError) {
         console.error('Failed to fetch hero content:', heroFetchError);
         // Continue with other content even if hero fails
       }
 
-      // Load projects
+      // Load projects with enhanced error handling
       try {
+        console.log('Loading projects...');
         const { data: projectsData, error: projectsError } = await supabase
           .from('projects')
           .select('*')
@@ -120,6 +143,7 @@ export const useSupabaseContent = () => {
         
         if (projectsError) {
           console.error('Error loading projects:', projectsError);
+          throw new Error(`Failed to load projects: ${projectsError.message}`);
         } else if (projectsData) {
           const transformedProjects: Project[] = projectsData.map(project => ({
             id: project.id,
@@ -135,14 +159,19 @@ export const useSupabaseContent = () => {
             sort_order: project.sort_order || 0
           }));
           setProjects(transformedProjects);
+          console.log(`Loaded ${transformedProjects.length} projects successfully`);
         }
       } catch (projectsFetchError) {
         console.error('Failed to fetch projects:', projectsFetchError);
-        // Continue with other content even if projects fail
+        if (projectsFetchError instanceof TypeError && projectsFetchError.message.includes('Failed to fetch')) {
+          throw new Error('Network error while loading projects. Please check your connection and CORS settings.');
+        }
+        throw projectsFetchError;
       }
 
       // Load achievements with better error handling
       try {
+        console.log('Loading achievements...');
         const { data: achievementsData, error: achievementsError } = await supabase
           .from('achievements')
           .select('*')
@@ -153,17 +182,19 @@ export const useSupabaseContent = () => {
           throw new Error(`Failed to load achievements: ${achievementsError.message}`);
         } else if (achievementsData) {
           setAchievements(achievementsData);
+          console.log(`Loaded ${achievementsData.length} achievements successfully`);
         }
       } catch (achievementsFetchError) {
         console.error('Failed to fetch achievements:', achievementsFetchError);
         if (achievementsFetchError instanceof TypeError && achievementsFetchError.message.includes('Failed to fetch')) {
-          throw new Error('Network error while loading achievements. Please check your connection.');
+          throw new Error('Network error while loading achievements. Please check your connection and CORS settings.');
         }
         throw achievementsFetchError;
       }
 
       // Load published blog articles
       try {
+        console.log('Loading blog articles...');
         const { data: blogData, error: blogError } = await supabase
           .from('blog_articles')
           .select('*')
@@ -174,6 +205,7 @@ export const useSupabaseContent = () => {
           console.error('Error loading blog articles:', blogError);
         } else if (blogData) {
           setBlogArticles(blogData);
+          console.log(`Loaded ${blogData.length} blog articles successfully`);
         }
       } catch (blogFetchError) {
         console.error('Failed to fetch blog articles:', blogFetchError);
@@ -182,6 +214,7 @@ export const useSupabaseContent = () => {
 
       // Load contact info
       try {
+        console.log('Loading contact info...');
         const { data: contactData, error: contactError } = await supabase
           .from('contact_info')
           .select('*')
@@ -192,6 +225,7 @@ export const useSupabaseContent = () => {
           console.error('Error loading contact info:', contactError);
         } else if (contactData) {
           setContactInfo(contactData);
+          console.log('Contact info loaded successfully');
         }
       } catch (contactFetchError) {
         console.error('Failed to fetch contact info:', contactFetchError);
@@ -200,6 +234,7 @@ export const useSupabaseContent = () => {
 
       // Load about content
       try {
+        console.log('Loading about content...');
         const { data: aboutData, error: aboutError } = await supabase
           .from('about_content')
           .select('*')
@@ -210,11 +245,14 @@ export const useSupabaseContent = () => {
           console.error('Error loading about content:', aboutError);
         } else if (aboutData) {
           setAboutContent(aboutData);
+          console.log('About content loaded successfully');
         }
       } catch (aboutFetchError) {
         console.error('Failed to fetch about content:', aboutFetchError);
         // Continue even if about content fails
       }
+
+      console.log('All content loading completed');
 
     } catch (error) {
       console.error('Failed to load content:', error);
