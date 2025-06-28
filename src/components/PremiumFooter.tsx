@@ -6,7 +6,7 @@ const socialLinks = [
   {
     name: "LinkedIn",
     icon: Linkedin,
-    url: "https://linkedin.com/in/nandasiddhardha13",
+    url: "https://linkedin.com/in/nanda-siddhardha",
     hoverEffect: "hover:text-blue-600 dark:hover:text-blue-400 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]",
     bgColor: "hover:bg-blue-50 dark:hover:bg-blue-900/20",
     description: "Professional Network"
