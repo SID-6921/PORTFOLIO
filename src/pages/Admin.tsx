@@ -48,39 +48,6 @@ interface AboutContent {
   skills: any;
 }
 
-const availableTags = [
-  "All",
-  "React",
-  "TypeScript",
-  "JavaScript",
-  "Node.js",
-  "Python",
-  "Java",
-  "C++",
-  "HTML/CSS",
-  "MongoDB",
-  "PostgreSQL",
-  "MySQL",
-  "Firebase",
-  "AWS",
-  "Docker",
-  "Kubernetes",
-  "Git",
-  "REST API",
-  "GraphQL",
-  "Machine Learning",
-  "AI",
-  "Data Science",
-  "Web Development",
-  "Mobile Development",
-  "DevOps",
-  "Cloud Computing",
-  "Microservices",
-  "Blockchain",
-  "IoT",
-  "Cybersecurity"
-];
-
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [adminEmail, setAdminEmail] = useState('');
@@ -140,7 +107,7 @@ const Admin = () => {
     title: '',
     description: '',
     detailed_description: '',
-    technologies: [],
+    technologies: '',
     impact: '',
     image_url: '',
     icon: '',
@@ -274,7 +241,10 @@ const Admin = () => {
     try {
       const { error } = await supabase
         .from('projects')
-        .insert([projectForm]);
+        .insert([{
+          ...projectForm,
+          technologies: JSON.parse(`[${projectForm.technologies.split(',').map(t => `"${t.trim()}"`).join(',')}]`)
+        }]);
 
       if (error) throw error;
       
@@ -286,7 +256,7 @@ const Admin = () => {
         title: '',
         description: '',
         detailed_description: '',
-        technologies: [],
+        technologies: '',
         impact: '',
         image_url: '',
         icon: '',
@@ -644,39 +614,11 @@ const Admin = () => {
                     value={projectForm.detailed_description}
                     onChange={(e) => setProjectForm({...projectForm, detailed_description: e.target.value})}
                   />
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Technologies</label>
-                    <div className="flex flex-wrap gap-2 p-3 border rounded-md bg-gray-50 dark:bg-gray-800 min-h-[100px]">
-                      {availableTags.filter(tag => tag !== "All").map((tag) => (
-                        <div 
-                          key={tag} 
-                          className="flex items-center"
-                        >
-                          <label className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
-                            <input
-                              type="checkbox"
-                              checked={projectForm.technologies.includes(tag)}
-                              onChange={(e) => {
-                                if (e.target.checked) {
-                                  setProjectForm({
-                                    ...projectForm, 
-                                    technologies: [...projectForm.technologies, tag]
-                                  });
-                                } else {
-                                  setProjectForm({
-                                    ...projectForm, 
-                                    technologies: projectForm.technologies.filter(t => t !== tag)
-                                  });
-                                }
-                              }}
-                              className="rounded text-blue-600 focus:ring-blue-500"
-                            />
-                            <span className="text-sm">{tag}</span>
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  <Input
+                    placeholder="Technologies (comma-separated)"
+                    value={projectForm.technologies}
+                    onChange={(e) => setProjectForm({...projectForm, technologies: e.target.value})}
+                  />
                   <Textarea
                     placeholder="Impact"
                     value={projectForm.impact}
@@ -751,38 +693,16 @@ const Admin = () => {
                               setLocalProjects(updatedProjects);
                             }}
                           />
-                          <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Technologies</label>
-                            <div className="flex flex-wrap gap-2 p-3 border rounded-md bg-gray-50 dark:bg-gray-800 min-h-[100px]">
-                              {availableTags.filter(tag => tag !== "All").map((tag) => (
-                                <div 
-                                  key={tag} 
-                                  className="flex items-center"
-                                >
-                                  <label className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
-                                    <input
-                                      type="checkbox"
-                                      checked={project.technologies.includes(tag)}
-                                      onChange={(e) => {
-                                        const updatedProjects = localProjects.map(p => {
-                                          if (p.id === project.id) {
-                                            const updatedTechnologies = e.target.checked
-                                              ? [...p.technologies, tag]
-                                              : p.technologies.filter(t => t !== tag);
-                                            return {...p, technologies: updatedTechnologies};
-                                          }
-                                          return p;
-                                        });
-                                        setLocalProjects(updatedProjects);
-                                      }}
-                                      className="rounded text-blue-600 focus:ring-blue-500"
-                                    />
-                                    <span className="text-sm">{tag}</span>
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
+                          <Input
+                            placeholder="Technologies (comma-separated)"
+                            value={project.technologies.join(', ')}
+                            onChange={(e) => {
+                              const updatedProjects = localProjects.map(p => 
+                                p.id === project.id ? {...p, technologies: e.target.value.split(',').map(t => t.trim())} : p
+                              );
+                              setLocalProjects(updatedProjects);
+                            }}
+                          />
                           <Textarea
                             placeholder="Impact"
                             value={project.impact}

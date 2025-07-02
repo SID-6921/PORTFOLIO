@@ -1,41 +1,80 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import InteractiveProjectCard from "./InteractiveProjectCard";
-import { Filter, Tag } from "lucide-react";
+import { Filter } from "lucide-react";
 import { useSupabaseContent } from "@/hooks/useSupabaseContent";
 
-// Define available technology tags
-const availableTags = [
-  "All",
-  "Python",
-  "TensorFlow",
-  "PyTorch",
-  "React",
-  "JavaScript",
-  "C++",
-  "Arduino",
-  "ESP32",
-  "IoT",
-  "AI",
-  "ML",
-  "DSP",
-  "MATLAB",
-  "Hardware",
-  "Mobile",
-  "Web",
-  "Biomedical"
-];
+const categories = ["All", "AI", "IoT", "Biomedical", "Web", "Mobile", "Hardware", "Software"];
 
 export default function ProjectsSection() {
-  const [selectedTag, setSelectedTag] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const { projects, loading, error } = useSupabaseContent();
 
-  const filteredProjects = selectedTag === "All" 
+  const filteredProjects = selectedCategory === "All" 
     ? projects 
     : projects.filter(project => 
-        project.technologies.some(tech => 
-          tech.toLowerCase() === selectedTag.toLowerCase()
-        )
+        project.technologies.some(tech => {
+          const techLower = tech.toLowerCase();
+          const categoryLower = selectedCategory.toLowerCase();
+          
+          // More comprehensive matching logic
+          switch (categoryLower) {
+            case 'ai':
+              return techLower.includes('ai') || 
+                     techLower.includes('machine learning') || 
+                     techLower.includes('ml') || 
+                     techLower.includes('neural') || 
+                     techLower.includes('deep learning') ||
+                     techLower.includes('tensorflow') ||
+                     techLower.includes('pytorch');
+            case 'iot':
+              return techLower.includes('iot') || 
+                     techLower.includes('arduino') || 
+                     techLower.includes('raspberry pi') || 
+                     techLower.includes('sensor') ||
+                     techLower.includes('embedded');
+            case 'biomedical':
+              return techLower.includes('biomedical') || 
+                     techLower.includes('medical') || 
+                     techLower.includes('health') || 
+                     techLower.includes('bio') ||
+                     techLower.includes('clinical');
+            case 'web':
+              return techLower.includes('react') || 
+                     techLower.includes('javascript') || 
+                     techLower.includes('html') || 
+                     techLower.includes('css') || 
+                     techLower.includes('web') ||
+                     techLower.includes('frontend') ||
+                     techLower.includes('backend') ||
+                     techLower.includes('node') ||
+                     techLower.includes('express');
+            case 'mobile':
+              return techLower.includes('mobile') || 
+                     techLower.includes('android') || 
+                     techLower.includes('ios') || 
+                     techLower.includes('react native') ||
+                     techLower.includes('flutter') ||
+                     techLower.includes('swift') ||
+                     techLower.includes('kotlin');
+            case 'hardware':
+              return techLower.includes('hardware') || 
+                     techLower.includes('circuit') || 
+                     techLower.includes('pcb') || 
+                     techLower.includes('electronics') ||
+                     techLower.includes('microcontroller') ||
+                     techLower.includes('fpga');
+            case 'software':
+              return techLower.includes('software') || 
+                     techLower.includes('python') || 
+                     techLower.includes('java') || 
+                     techLower.includes('c++') ||
+                     techLower.includes('algorithm') ||
+                     techLower.includes('data structure');
+            default:
+              return techLower.includes(categoryLower);
+          }
+        })
       );
 
   if (loading) {
@@ -111,25 +150,25 @@ export default function ProjectsSection() {
           className="flex flex-wrap justify-center gap-3 mb-12"
         >
           <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-2">
-            <Tag className="w-4 h-4" />
-            <span className="text-sm font-medium">Filter by tech stack:</span>
+            <Filter className="w-4 h-4" />
+            <span className="text-sm font-medium">Filter by technology:</span>
           </div>
           <div className="flex flex-wrap justify-center gap-2">
-            {availableTags.map((tag) => (
+            {categories.map((category) => (
               <motion.button
-                key={tag}
+                key={category}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setSelectedTag(tag)}
+                onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 relative overflow-hidden ${
-                  selectedTag === tag
+                  selectedCategory === category
                     ? 'bg-blue-600 text-white shadow-lg'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400'
                 }`}
               >
-                {tag}
+                {category}
                 {/* Subtle underline animation for active state */}
-                {selectedTag === tag && (
+                {selectedCategory === category && (
                   <motion.div
                     className="absolute bottom-1 left-1/2 h-0.5 bg-white rounded-full"
                     initial={{ width: 0, x: "-50%" }}
@@ -160,7 +199,7 @@ export default function ProjectsSection() {
                 title={project.title}
                 description={project.description}
                 technologies={project.technologies}
-                category={project.technologies[0] || "Project"}
+                category={project.technologies[0] || "Project"} // Use first technology as category
                 imageUrl={project.image_url}
                 demoUrl={project.demo_url}
                 githubUrl={project.github_url}
