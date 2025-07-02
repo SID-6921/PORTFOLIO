@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { Trash2, Plus, Edit3, Save, X, LogOut, ExternalLink, Github } from 'lucide-react';
+import { Trash2, Plus, Edit3, Save, X, LogOut, ExternalLink, Github, Mail, Check, MessageSquare } from 'lucide-react';
 import { useSupabaseContent } from '@/hooks/useSupabaseContent';
 import { useToast } from '@/hooks/use-toast';
 import AdminAuth from '@/components/AdminAuth';
@@ -23,6 +23,16 @@ interface Project {
   demo_url?: string;
   github_url?: string;
   sort_order: number;
+}
+
+interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  status: string;
+  created_at: string;
 }
 
 interface Achievement {
@@ -52,6 +62,7 @@ const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [adminEmail, setAdminEmail] = useState('');
   const { heroContent, projects, loading, refetch } = useSupabaseContent();
+  const [contactMessages, setContactMessages] = useState<ContactMessage[]>([]);
   const { toast } = useToast();
   
   // Check authentication status on mount
@@ -142,6 +153,7 @@ const Admin = () => {
   useEffect(() => {
     if (isAuthenticated) {
       loadAllContent();
+      loadContactMessages();
     }
   }, [isAuthenticated]);
 
@@ -161,6 +173,25 @@ const Admin = () => {
   useEffect(() => {
     setLocalProjects(projects);
   }, [projects]);
+
+  const loadContactMessages = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('contact_messages')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      if (data) setContactMessages(data);
+    } catch (error) {
+      console.error('Failed to load contact messages:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load contact messages",
+        variant: "destructive"
+      });
+    }
+  };
 
   const loadAllContent = async () => {
     try {
@@ -205,6 +236,63 @@ const Admin = () => {
       toast({
         title: "Error",
         description: "Failed to load content",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Contact messages management
+  const markMessageAsRead = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .update({ status: 'read' })
+        .eq('id', id);
+
+      if (error) throw error;
+      
+      setContactMessages(prevMessages => 
+        prevMessages.map(msg => 
+          msg.id === id ? { ...msg, status: 'read' } : msg
+        )
+      );
+      
+      toast({
+        title: "Success",
+        description: "Message marked as read"
+      });
+    } catch (error) {
+      console.error('Error updating message status:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update message status",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const deleteMessage = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      
+      setContactMessages(prevMessages => 
+        prevMessages.filter(msg => msg.id !== id)
+      );
+      
+      toast({
+        title: "Success",
+        description: "Message deleted successfully"
+      });
+    } catch (error) {
+      console.error('Error deleting message:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete message",
         variant: "destructive"
       });
     }
@@ -513,11 +601,29 @@ const Admin = () => {
       <div className="max-w-6xl mx-auto p-8">
         <Tabs defaultValue="hero" className="space-y-6">
           <TabsList className="grid w-full grid-cols-5 bg-white shadow-sm">
-            <TabsTrigger value="hero">Hero</TabsTrigger>
-            <TabsTrigger value="projects">Projects</TabsTrigger>
-            <TabsTrigger value="achievements">Achievements</TabsTrigger>
-            <TabsTrigger value="about">About</TabsTrigger>
-            <TabsTrigger value="contact">Contact</TabsTrigger>
+            <TabsTrigger value="hero">
+              Hero
+            </TabsTrigger>
+            <TabsTrigger value="projects">
+              Projects
+            </TabsTrigger>
+            <TabsTrigger value="achievements">
+              Achievements
+            </TabsTrigger>
+            <TabsTrigger value="about">
+              About
+            </TabsTrigger>
+            <TabsTrigger value="contact">
+              Contact
+            </TabsTrigger>
+            <TabsTrigger value="messages" className="relative">
+              Messages
+              {contactMessages.filter(msg => msg.status === 'unread').length > 0 && (
+                <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                  {contactMessages.filter(msg => msg.status === 'unread').length}
+                </span>
+              )}
+            </TabsTrigger>
           </TabsList>
 
           {/* Hero Content Management */}
@@ -1084,6 +1190,111 @@ const Admin = () => {
                       Edit Contact Info
                     </Button>
                   </>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Contact Messages Management */}
+          <TabsContent value="messages">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MessageSquare className="h-5 w-5" />
+                  Contact Form Messages
+                </CardTitle>
+                <CardDescription>
+                  View and manage messages submitted through the contact form
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {contactMessages.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500">
+                    <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-20" />
+                    <p>No messages received yet</p>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {contactMessages.map((message) => (
+                      <div 
+                        key={message.id} 
+                        className={`border rounded-lg p-6 ${
+                          message.status === 'unread' 
+                            ? 'bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800/50' 
+                            : 'bg-white border-gray-200 dark:bg-gray-800 dark:border-gray-700'
+                        }`}
+                      >
+                        <div className="flex justify-between items-start mb-4">
+                          <div>
+                            <h3 className="text-lg font-semibold flex items-center gap-2">
+                              {message.subject}
+                              {message.status === 'unread' && (
+                                <Badge variant="secondary" className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                  New
+                                </Badge>
+                              )}
+                            </h3>
+                            <div className="flex items-center gap-2 text-sm text-gray-500 mt-1">
+                              <span className="font-medium">{message.name}</span>
+                              <span>•</span>
+                              <a 
+                                href={`mailto:${message.email}`} 
+                                className="text-blue-600 hover:underline flex items-center gap-1"
+                              >
+                                <Mail className="h-3 w-3" />
+                                {message.email}
+                              </a>
+                            </div>
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            {new Date(message.created_at).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </div>
+                        </div>
+                        
+                        <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-md mb-4 whitespace-pre-wrap">
+                          {message.message}
+                        </div>
+                        
+                        <div className="flex justify-end gap-2">
+                          {message.status === 'unread' && (
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => markMessageAsRead(message.id)}
+                              className="flex items-center gap-1"
+                            >
+                              <Check className="h-4 w-4" />
+                              Mark as Read
+                            </Button>
+                          )}
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => window.open(`mailto:${message.email}?subject=Re: ${message.subject}`)}
+                            className="flex items-center gap-1"
+                          >
+                            <Mail className="h-4 w-4" />
+                            Reply
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => deleteMessage(message.id)}
+                            className="flex items-center gap-1 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                            Delete
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </CardContent>
             </Card>

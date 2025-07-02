@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface FormData {
   name: string;
@@ -71,8 +72,23 @@ const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate form submission (replace with actual API call)
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Submit form data to Supabase
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            subject: formData.subject,
+            message: formData.message,
+            status: 'unread'
+          }
+        ]);
+      
+      if (error) {
+        console.error('Error submitting contact form:', error);
+        throw new Error('Failed to send message. Please try again.');
+      }
       
       // Create mailto link as fallback
       const mailtoLink = `mailto:siddhardha.nanda@columbia.edu?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
@@ -83,8 +99,8 @@ const ContactForm = () => {
       
       setIsSubmitted(true);
       toast({
-        title: "Message Sent!",
-        description: "Thank you for your message. I'll get back to you soon!",
+        title: "Message Sent Successfully!",
+        description: "Thank you for your message. I'll get back to you as soon as possible.",
       });
       
       // Reset form
@@ -93,7 +109,7 @@ const ContactForm = () => {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to send message. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to send message. Please try again.",
         variant: "destructive"
       });
     } finally {
