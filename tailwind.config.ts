@@ -82,53 +82,52 @@ export default {
 				bounceSubtle: {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-4px)' }
-				},
 				}
-			},
-			typography: {
-				DEFAULT: {
-					css: {
-						maxWidth: 'none',
+			}
+		},
+		typography: {
+			DEFAULT: {
+				css: {
+					maxWidth: 'none',
+					color: 'inherit',
+					a: {
 						color: 'inherit',
-						a: {
-							color: 'inherit',
-							textDecoration: 'none',
-							fontWeight: '500',
-						},
-						'[class~="lead"]': {
-							color: 'inherit',
-						},
-						strong: {
-							color: 'inherit',
-							fontWeight: '600',
-						},
-						'ol[type="A"]': {
-							'--list-counter-style': 'upper-alpha',
-						},
-						'ol[type="a"]': {
-							'--list-counter-style': 'lower-alpha',
-						},
-						'ol[type="A" s]': {
-							'--list-counter-style': 'upper-alpha',
-						},
-						'ol[type="a" s]': {
-							'--list-counter-style': 'lower-alpha',
-						},
-						'ol[type="I"]': {
-							'--list-counter-style': 'upper-roman',
-						},
-						'ol[type="i"]': {
-							'--list-counter-style': 'lower-roman',
-						},
-						'ol[type="I" s]': {
-							'--list-counter-style': 'upper-roman',
-						},
-						'ol[type="i" s]': {
-							'--list-counter-style': 'lower-roman',
-						},
-						'ol[type="1"]': {
-							'--list-counter-style': 'decimal',
-						},
+						textDecoration: 'none',
+						fontWeight: '500',
+					},
+					'[class~="lead"]': {
+						color: 'inherit',
+					},
+					strong: {
+						color: 'inherit',
+						fontWeight: '600',
+					},
+					'ol[type="A"]': {
+						'--list-counter-style': 'upper-alpha',
+					},
+					'ol[type="a"]': {
+						'--list-counter-style': 'lower-alpha',
+					},
+					'ol[type="A" s]': {
+						'--list-counter-style': 'upper-alpha',
+					},
+					'ol[type="a" s]': {
+						'--list-counter-style': 'lower-alpha',
+					},
+					'ol[type="I"]': {
+						'--list-counter-style': 'upper-roman',
+					},
+					'ol[type="i"]': {
+						'--list-counter-style': 'lower-roman',
+					},
+					'ol[type="I" s]': {
+						'--list-counter-style': 'upper-roman',
+					},
+					'ol[type="i" s]': {
+						'--list-counter-style': 'lower-roman',
+					},
+					'ol[type="1"]': {
+						'--list-counter-style': 'decimal',
 					},
 				},
 			},
