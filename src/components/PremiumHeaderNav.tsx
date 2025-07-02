@@ -6,11 +6,11 @@ import ThemeToggle from "./ThemeToggle";
 import MobileNav from "./MobileNav";
 
 const navLinks = [
-  { label: "Home", href: "#hero" },
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Achievements", href: "#achievements" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/#hero" },
+  { label: "About", href: "/#about" },
+  { label: "Projects", href: "/#projects" },
+  { label: "Achievements", href: "/#achievements" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function PremiumHeaderNav() {

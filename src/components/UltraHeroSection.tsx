@@ -32,7 +32,7 @@ export default function UltraHeroSection() {
     subtitle: "Looking for opportunities",
     description: "Pioneering at the intersection of med-tech, embedded systems, and digital health. Clinical precision. Creative innovation.",
     profile_image_url: "https://res.cloudinary.com/dae56bvjp/image/upload/v1750852722/nanda_wbgmag.jpg",
-    resume_url: "/resume.pdf"
+    resume_url: "https://drive.google.com/file/d/your-resume-file-id/view"
   };
 
   const content = heroContent || fallbackContent;

@@ -32,18 +32,6 @@ interface Achievement {
   sort_order: number;
 }
 
-interface BlogArticle {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  image_url: string;
-  published_url: string;
-  published_date: string;
-  status: string;
-  sort_order: number;
-}
-
 interface ContactInfo {
   id: string;
   email: string;
@@ -93,14 +81,12 @@ const Admin = () => {
 
   // State for different content types
   const [achievements, setAchievements] = useState<Achievement[]>([]);
-  const [blogArticles, setBlogArticles] = useState<BlogArticle[]>([]);
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
   const [aboutContent, setAboutContent] = useState<AboutContent | null>(null);
   
   // Edit states
   const [editingProject, setEditingProject] = useState<string | null>(null);
   const [editingAchievement, setEditingAchievement] = useState<string | null>(null);
-  const [editingBlog, setEditingBlog] = useState<string | null>(null);
   const [editingHero, setEditingHero] = useState(false);
   const [editingContact, setEditingContact] = useState(false);
   const [editingAbout, setEditingAbout] = useState(false);
@@ -134,17 +120,6 @@ const Admin = () => {
     sort_order: 0
   });
 
-  const [blogForm, setBlogForm] = useState({
-    title: '',
-    excerpt: '',
-    content: '',
-    image_url: '',
-    published_url: '',
-    published_date: '',
-    status: 'draft',
-    sort_order: 0
-  });
-
   const [contactForm, setContactForm] = useState({
     email: '',
     phone: '',
@@ -156,6 +131,9 @@ const Admin = () => {
     content: '',
     skills: '{}'
   });
+
+  // Local state for projects to handle editing
+  const [localProjects, setLocalProjects] = useState<Project[]>([]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -176,6 +154,10 @@ const Admin = () => {
     }
   }, [heroContent]);
 
+  useEffect(() => {
+    setLocalProjects(projects);
+  }, [projects]);
+
   const loadAllContent = async () => {
     try {
       // Load achievements
@@ -184,13 +166,6 @@ const Admin = () => {
         .select('*')
         .order('sort_order');
       if (achievementsData) setAchievements(achievementsData);
-
-      // Load blog articles
-      const { data: blogData } = await supabase
-        .from('blog_articles')
-        .select('*')
-        .order('sort_order');
-      if (blogData) setBlogArticles(blogData);
 
       // Load contact info
       const { data: contactData } = await supabase
@@ -432,89 +407,6 @@ const Admin = () => {
     }
   };
 
-  // Blog management
-  const addBlogArticle = async () => {
-    try {
-      const { error } = await supabase
-        .from('blog_articles')
-        .insert([blogForm]);
-
-      if (error) throw error;
-      
-      toast({
-        title: "Success",
-        description: "Blog article added successfully"
-      });
-      setBlogForm({
-        title: '',
-        excerpt: '',
-        content: '',
-        image_url: '',
-        published_url: '',
-        published_date: '',
-        status: 'draft',
-        sort_order: 0
-      });
-      loadAllContent();
-    } catch (error) {
-      console.error('Error adding blog article:', error);
-      toast({
-        title: "Error",
-        description: "Failed to add blog article",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const updateBlogArticle = async (article: BlogArticle) => {
-    try {
-      const { error } = await supabase
-        .from('blog_articles')
-        .update(article)
-        .eq('id', article.id);
-
-      if (error) throw error;
-      
-      toast({
-        title: "Success",
-        description: "Blog article updated successfully"
-      });
-      setEditingBlog(null);
-      loadAllContent();
-    } catch (error) {
-      console.error('Error updating blog article:', error);
-      toast({
-        title: "Error",
-        description: "Failed to update blog article",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const deleteBlogArticle = async (id: string) => {
-    try {
-      const { error } = await supabase
-        .from('blog_articles')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
-      
-      toast({
-        title: "Success",
-        description: "Blog article deleted successfully"
-      });
-      loadAllContent();
-    } catch (error) {
-      console.error('Error deleting blog article:', error);
-      toast({
-        title: "Error",
-        description: "Failed to delete blog article",
-        variant: "destructive"
-      });
-    }
-  };
-
   // Contact info management
   const updateContactInfo = async () => {
     try {
@@ -612,11 +504,10 @@ const Admin = () => {
 
       <div className="max-w-6xl mx-auto p-8">
         <Tabs defaultValue="hero" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6 bg-white shadow-sm">
+          <TabsList className="grid w-full grid-cols-5 bg-white shadow-sm">
             <TabsTrigger value="hero">Hero</TabsTrigger>
             <TabsTrigger value="projects">Projects</TabsTrigger>
             <TabsTrigger value="achievements">Achievements</TabsTrigger>
-            <TabsTrigger value="blog">Blog</TabsTrigger>
             <TabsTrigger value="about">About</TabsTrigger>
             <TabsTrigger value="contact">Contact</TabsTrigger>
           </TabsList>
@@ -679,6 +570,8 @@ const Admin = () => {
                       <p><strong>Title:</strong> {heroContent?.title}</p>
                       <p><strong>Subtitle:</strong> {heroContent?.subtitle}</p>
                       <p><strong>Description:</strong> {heroContent?.description}</p>
+                      <p><strong>Profile Image:</strong> {heroContent?.profile_image_url}</p>
+                      <p><strong>Resume URL:</strong> {heroContent?.resume_url}</p>
                     </div>
                     <Button onClick={() => setEditingHero(true)}>
                       <Edit3 className="h-4 w-4 mr-2" />
@@ -747,21 +640,92 @@ const Admin = () => {
               </Card>
 
               <div className="grid gap-4">
-                {projects.map((project) => (
+                {localProjects.map((project) => (
                   <Card key={project.id}>
                     <CardContent className="pt-6">
                       {editingProject === project.id ? (
                         <div className="space-y-4">
                           <Input
+                            placeholder="Project Title"
                             value={project.title}
                             onChange={(e) => {
-                              const updatedProjects = projects.map(p => 
+                              const updatedProjects = localProjects.map(p => 
                                 p.id === project.id ? {...p, title: e.target.value} : p
                               );
-                              // Update local state for immediate UI feedback
+                              setLocalProjects(updatedProjects);
                             }}
                           />
-                          {/* Add more editable fields as needed */}
+                          <Textarea
+                            placeholder="Project Description"
+                            value={project.description}
+                            onChange={(e) => {
+                              const updatedProjects = localProjects.map(p => 
+                                p.id === project.id ? {...p, description: e.target.value} : p
+                              );
+                              setLocalProjects(updatedProjects);
+                            }}
+                          />
+                          <Textarea
+                            placeholder="Detailed Description"
+                            value={project.detailed_description}
+                            onChange={(e) => {
+                              const updatedProjects = localProjects.map(p => 
+                                p.id === project.id ? {...p, detailed_description: e.target.value} : p
+                              );
+                              setLocalProjects(updatedProjects);
+                            }}
+                          />
+                          <Input
+                            placeholder="Technologies (comma-separated)"
+                            value={project.technologies.join(', ')}
+                            onChange={(e) => {
+                              const updatedProjects = localProjects.map(p => 
+                                p.id === project.id ? {...p, technologies: e.target.value.split(',').map(t => t.trim())} : p
+                              );
+                              setLocalProjects(updatedProjects);
+                            }}
+                          />
+                          <Textarea
+                            placeholder="Impact"
+                            value={project.impact}
+                            onChange={(e) => {
+                              const updatedProjects = localProjects.map(p => 
+                                p.id === project.id ? {...p, impact: e.target.value} : p
+                              );
+                              setLocalProjects(updatedProjects);
+                            }}
+                          />
+                          <Input
+                            placeholder="Image URL"
+                            value={project.image_url}
+                            onChange={(e) => {
+                              const updatedProjects = localProjects.map(p => 
+                                p.id === project.id ? {...p, image_url: e.target.value} : p
+                              );
+                              setLocalProjects(updatedProjects);
+                            }}
+                          />
+                          <Input
+                            placeholder="Icon"
+                            value={project.icon}
+                            onChange={(e) => {
+                              const updatedProjects = localProjects.map(p => 
+                                p.id === project.id ? {...p, icon: e.target.value} : p
+                              );
+                              setLocalProjects(updatedProjects);
+                            }}
+                          />
+                          <Input
+                            type="number"
+                            placeholder="Sort Order"
+                            value={project.sort_order}
+                            onChange={(e) => {
+                              const updatedProjects = localProjects.map(p => 
+                                p.id === project.id ? {...p, sort_order: parseInt(e.target.value)} : p
+                              );
+                              setLocalProjects(updatedProjects);
+                            }}
+                          />
                           <div className="flex gap-2">
                             <Button onClick={() => updateProject(project)}>
                               <Save className="h-4 w-4 mr-2" />
@@ -855,125 +819,99 @@ const Admin = () => {
                 {achievements.map((achievement) => (
                   <Card key={achievement.id}>
                     <CardContent className="pt-6">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="text-lg font-semibold">{achievement.title}</h3>
-                          <p className="text-gray-600 mb-2">{achievement.description}</p>
-                          <div className="flex gap-4 text-sm text-gray-500">
-                            <span>Date: {achievement.date}</span>
-                            <span>Category: {achievement.category}</span>
+                      {editingAchievement === achievement.id ? (
+                        <div className="space-y-4">
+                          <Input
+                            placeholder="Achievement Title"
+                            value={achievement.title}
+                            onChange={(e) => {
+                              const updatedAchievements = achievements.map(a => 
+                                a.id === achievement.id ? {...a, title: e.target.value} : a
+                              );
+                              setAchievements(updatedAchievements);
+                            }}
+                          />
+                          <Textarea
+                            placeholder="Achievement Description"
+                            value={achievement.description}
+                            onChange={(e) => {
+                              const updatedAchievements = achievements.map(a => 
+                                a.id === achievement.id ? {...a, description: e.target.value} : a
+                              );
+                              setAchievements(updatedAchievements);
+                            }}
+                          />
+                          <Input
+                            type="date"
+                            placeholder="Date"
+                            value={achievement.date}
+                            onChange={(e) => {
+                              const updatedAchievements = achievements.map(a => 
+                                a.id === achievement.id ? {...a, date: e.target.value} : a
+                              );
+                              setAchievements(updatedAchievements);
+                            }}
+                          />
+                          <Input
+                            placeholder="Category"
+                            value={achievement.category}
+                            onChange={(e) => {
+                              const updatedAchievements = achievements.map(a => 
+                                a.id === achievement.id ? {...a, category: e.target.value} : a
+                              );
+                              setAchievements(updatedAchievements);
+                            }}
+                          />
+                          <Input
+                            type="number"
+                            placeholder="Sort Order"
+                            value={achievement.sort_order}
+                            onChange={(e) => {
+                              const updatedAchievements = achievements.map(a => 
+                                a.id === achievement.id ? {...a, sort_order: parseInt(e.target.value)} : a
+                              );
+                              setAchievements(updatedAchievements);
+                            }}
+                          />
+                          <div className="flex gap-2">
+                            <Button onClick={() => updateAchievement(achievement)}>
+                              <Save className="h-4 w-4 mr-2" />
+                              Save
+                            </Button>
+                            <Button variant="outline" onClick={() => setEditingAchievement(null)}>
+                              <X className="h-4 w-4 mr-2" />
+                              Cancel
+                            </Button>
                           </div>
                         </div>
-                        <div className="flex gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setEditingAchievement(achievement.id)}
-                          >
-                            <Edit3 className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => deleteAchievement(achievement.id)}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </TabsContent>
-
-          {/* Blog Management */}
-          <TabsContent value="blog">
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Add New Blog Article</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <Input
-                    placeholder="Article Title"
-                    value={blogForm.title}
-                    onChange={(e) => setBlogForm({...blogForm, title: e.target.value})}
-                  />
-                  <Textarea
-                    placeholder="Article Excerpt"
-                    value={blogForm.excerpt}
-                    onChange={(e) => setBlogForm({...blogForm, excerpt: e.target.value})}
-                  />
-                  <Textarea
-                    placeholder="Article Content"
-                    value={blogForm.content}
-                    onChange={(e) => setBlogForm({...blogForm, content: e.target.value})}
-                  />
-                  <Input
-                    placeholder="Image URL"
-                    value={blogForm.image_url}
-                    onChange={(e) => setBlogForm({...blogForm, image_url: e.target.value})}
-                  />
-                  <Input
-                    placeholder="Published URL"
-                    value={blogForm.published_url}
-                    onChange={(e) => setBlogForm({...blogForm, published_url: e.target.value})}
-                  />
-                  <Input
-                    type="date"
-                    placeholder="Published Date"
-                    value={blogForm.published_date}
-                    onChange={(e) => setBlogForm({...blogForm, published_date: e.target.value})}
-                  />
-                  <select
-                    value={blogForm.status}
-                    onChange={(e) => setBlogForm({...blogForm, status: e.target.value})}
-                    className="w-full p-2 border rounded"
-                  >
-                    <option value="draft">Draft</option>
-                    <option value="published">Published</option>
-                  </select>
-                  <Button onClick={addBlogArticle}>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Article
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <div className="grid gap-4">
-                {blogArticles.map((article) => (
-                  <Card key={article.id}>
-                    <CardContent className="pt-6">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="text-lg font-semibold">{article.title}</h3>
-                          <p className="text-gray-600 mb-2">{article.excerpt}</p>
-                          <div className="flex gap-4 text-sm text-gray-500">
-                            <Badge variant={article.status === 'published' ? 'default' : 'secondary'}>
-                              {article.status}
-                            </Badge>
-                            <span>Date: {article.published_date}</span>
+                      ) : (
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h3 className="text-lg font-semibold">{achievement.title}</h3>
+                            <p className="text-gray-600 mb-2">{achievement.description}</p>
+                            <div className="flex gap-4 text-sm text-gray-500">
+                              <span>Date: {achievement.date}</span>
+                              <span>Category: {achievement.category}</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setEditingAchievement(achievement.id)}
+                            >
+                              <Edit3 className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => deleteAchievement(achievement.id)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
                           </div>
                         </div>
-                        <div className="flex gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setEditingBlog(article.id)}
-                          >
-                            <Edit3 className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => deleteBlogArticle(article.id)}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
+                      )}
                     </CardContent>
                   </Card>
                 ))}

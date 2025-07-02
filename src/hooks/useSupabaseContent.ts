@@ -259,8 +259,8 @@ export const useSupabaseContent = () => {
       const errorMessage = error instanceof Error ? error.message : 'Failed to load content. Please try again later.';
       setError(errorMessage);
     } finally {
-      setLoading(false);
-    }
+    profile_image_url: "https://res.cloudinary.com/dae56bvjp/image/upload/v1750852722/nanda_wbgmag.jpg",
+    resume_url: "https://drive.google.com/file/d/your-resume-file-id/view"
   };
 
   return {
