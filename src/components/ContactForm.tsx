@@ -159,25 +159,25 @@ const ContactForm = () => {
 
   return (
     <motion.form
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit} 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
-      className="space-y-6 bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700"
+      className="space-y-4 sm:space-y-6 bg-white dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700"
     >
       <div className="text-center mb-6">
-        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
           Let's Connect
         </h3>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">
           Have a project in mind? Let's discuss how we can work together.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-2">
             Full Name *
           </label>
           <input
@@ -187,7 +187,7 @@ const ContactForm = () => {
             value={formData.name}
             onChange={handleChange}
             className={`w-full px-4 py-3 rounded-lg border ${
-              errors.name 
+              errors.name  
                 ? 'border-red-500 focus:ring-red-500' 
                 : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500'
             } bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:border-transparent transition-all`}
@@ -206,7 +206,7 @@ const ContactForm = () => {
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-2">
             Email Address *
           </label>
           <input
@@ -236,7 +236,7 @@ const ContactForm = () => {
       </div>
 
       <div>
-        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label htmlFor="subject" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-2">
           Subject *
         </label>
         <input
@@ -265,7 +265,7 @@ const ContactForm = () => {
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label htmlFor="message" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-2">
           Message *
         </label>
         <textarea
@@ -275,7 +275,7 @@ const ContactForm = () => {
           value={formData.message}
           onChange={handleChange}
           className={`w-full px-4 py-3 rounded-lg border ${
-            errors.message 
+            errors.message  
               ? 'border-red-500 focus:ring-red-500' 
               : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500'
           } bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:border-transparent transition-all resize-none`}
@@ -297,8 +297,8 @@ const ContactForm = () => {
         type="submit"
         disabled={isSubmitting}
         whileHover={{ scale: 1.02, y: -2 }}
-        whileTap={{ scale: 0.98 }}
-        className="w-full flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-4 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        whileTap={{ scale: 0.98 }} 
+        className="w-full flex items-center justify-center gap-2 sm:gap-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-sm sm:text-base"
       >
         {isSubmitting ? (
           <>
@@ -313,7 +313,7 @@ const ContactForm = () => {
         )}
       </motion.button>
 
-      <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+      <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-2">
         * Required fields. Your information will be kept confidential.
       </p>
     </motion.form>

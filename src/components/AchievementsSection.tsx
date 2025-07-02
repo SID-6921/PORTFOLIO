@@ -65,7 +65,7 @@ export default function AchievementsSection() {
 
   if (loading) {
     return (
-      <section id="achievements" className="relative py-20 bg-transparent">
+      <section id="achievements" className="relative py-12 sm:py-16 md:py-20 bg-transparent">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
             <div className="animate-pulse">
@@ -87,7 +87,7 @@ export default function AchievementsSection() {
 
   if (error) {
     return (
-      <section id="achievements" className="relative py-20 bg-transparent">
+      <section id="achievements" className="relative py-12 sm:py-16 md:py-20 bg-transparent">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <p className="text-red-600 dark:text-red-400">{error}</p>
         </div>
@@ -96,8 +96,8 @@ export default function AchievementsSection() {
   }
 
   return (
-    <section id="achievements" className="relative py-20 bg-transparent">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="achievements" className="relative py-12 sm:py-16 md:py-20 bg-transparent">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
@@ -110,7 +110,7 @@ export default function AchievementsSection() {
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-amber-50 dark:bg-amber-900/20 rounded-full border border-amber-200 dark:border-amber-800 mb-6"
+            className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-amber-50 dark:bg-amber-900/20 rounded-full border border-amber-200 dark:border-amber-800 mb-4 sm:mb-6 text-xs sm:text-sm"
           >
             <Medal className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             <span className="text-sm font-medium text-amber-700 dark:text-amber-300">Key Achievements</span>
@@ -118,10 +118,10 @@ export default function AchievementsSection() {
           
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">
             🏆 Recognition & Impact
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+          </h2> 
+          <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-2xl mx-auto px-2">
             Celebrating milestones in innovation, research, and leadership
-          </p>
+          </p> 
         </motion.div>
 
         <motion.div
@@ -130,7 +130,7 @@ export default function AchievementsSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-        >
+        > 
           {achievements.map((achievement, index) => {
             const IconComponent = iconMap[achievement.category as keyof typeof iconMap] || iconMap.default;
             const colors = colorMap[achievement.category as keyof typeof colorMap] || colorMap.default;
@@ -145,7 +145,7 @@ export default function AchievementsSection() {
                   rotateY: 5
                 }}
                 className="group"
-              >
+              > 
                 <DashboardCard variant="interactive" className="h-full p-6 relative overflow-hidden bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/30 shadow-lg hover:shadow-xl transition-all duration-500">
                   {/* Background highlight on hover */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${colors.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -178,7 +178,7 @@ export default function AchievementsSection() {
                     {/* Category badge */}
                     <div className="flex items-center justify-between mb-4">
                       <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-medium rounded-full">
-                        {achievement.category}
+                        {achievement.category} 
                       </span>
                       <motion.div
                         whileHover={{ rotate: 15, scale: 1.1 }}
@@ -191,7 +191,7 @@ export default function AchievementsSection() {
                     
                     {/* Content with solid text colors */}
                     <div className="space-y-3">
-                      <h3 className="font-bold text-xl text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 relative">
+                      <h3 className="font-bold text-lg sm:text-xl text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 relative">
                         {achievement.title}
                         {/* Animated underline on hover */}
                         <motion.div
@@ -202,7 +202,7 @@ export default function AchievementsSection() {
                         />
                       </h3>
                       
-                      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
+                      <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
                         {achievement.description}
                       </p>
 

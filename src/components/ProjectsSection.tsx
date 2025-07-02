@@ -8,7 +8,7 @@ const categories = ["All", "AI", "IoT", "Biomedical", "Web", "Mobile", "Hardware
 
 export default function ProjectsSection() {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const { projects, loading, error } = useSupabaseContent();
+  const { projects, loading, error } = useSupabaseContent(); 
 
   const filteredProjects = selectedCategory === "All" 
     ? projects 
@@ -79,7 +79,7 @@ export default function ProjectsSection() {
 
   if (loading) {
     return (
-      <section id="projects" className="py-20 px-6 relative">
+      <section id="projects" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 relative">
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
             <div className="animate-pulse">
@@ -101,7 +101,7 @@ export default function ProjectsSection() {
 
   if (error) {
     return (
-      <section id="projects" className="py-20 px-6 relative">
+      <section id="projects" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 relative">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-red-600 dark:text-red-400">{error}</p>
         </div>
@@ -110,7 +110,7 @@ export default function ProjectsSection() {
   }
 
   return (
-    <section id="projects" className="py-20 px-6 relative">
+    <section id="projects" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 relative">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50/50 to-white dark:from-gray-900 dark:via-gray-800/30 dark:to-gray-900" />
       
@@ -120,11 +120,11 @@ export default function ProjectsSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8 }} 
           className="text-center mb-16"
         >
           <div className="relative inline-block">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 relative">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 relative">
               Featured Projects
               {/* Animated underline */}
               <motion.div
@@ -136,7 +136,7 @@ export default function ProjectsSection() {
               />
             </h2>
           </div>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto px-2">
             Innovative solutions at the intersection of technology and healthcare
           </p>
         </motion.div>
@@ -146,21 +146,21 @@ export default function ProjectsSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          transition={{ duration: 0.6, delay: 0.2 }} 
+          className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12"
         >
-          <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-2">
+          <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-2 w-full justify-center">
             <Filter className="w-4 h-4" />
             <span className="text-sm font-medium">Filter by technology:</span>
           </div>
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap justify-center gap-2 px-1">
             {categories.map((category) => (
               <motion.button
                 key={category}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 relative overflow-hidden ${
+                className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 relative overflow-hidden ${
                   selectedCategory === category
                     ? 'bg-blue-600 text-white shadow-lg'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400'
@@ -184,7 +184,7 @@ export default function ProjectsSection() {
         {/* Projects grid */}
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
         >
           {filteredProjects.map((project, index) => (
             <motion.div
@@ -199,6 +199,8 @@ export default function ProjectsSection() {
                 title={project.title}
                 description={project.description}
                 technologies={project.technologies}
+                demoUrl={project.demo_url}
+                githubUrl={project.github_url}
                 category={project.technologies[0] || "Project"} // Use first technology as category
                 imageUrl={project.image_url}
                 demoUrl={project.demo_url}
@@ -226,17 +228,17 @@ export default function ProjectsSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.4 }} 
           className="text-center mt-16"
         >
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
+          <p className="text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 px-2 text-sm sm:text-base">
             Interested in collaborating or learning more about these projects?
           </p>
           <motion.a
             href="/#contact"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+            className="inline-flex items-center px-6 py-3 sm:px-8 sm:py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden text-sm sm:text-base"
           >
             <span className="relative z-10">Let's Connect</span>
             {/* Subtle shine effect on hover */}

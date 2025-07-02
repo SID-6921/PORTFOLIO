@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
 
-const navLinks = [
+const navLinks = [ 
   { label: "Home", href: "/#hero" },
   { label: "About", href: "/#about" },
   { label: "Projects", href: "/#projects" },
@@ -13,18 +14,26 @@ const navLinks = [
 
 export default function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
+  
+  // Prevent hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  if (!mounted) return null;
 
   return (
     <>
       <button
         onClick={toggleMenu}
-        className="flex items-center justify-center w-10 h-10 text-gray-800 dark:text-gray-100 hover:text-columbiablue dark:hover:text-blue-300 transition-colors"
+        className="flex items-center justify-center w-9 h-9 text-gray-800 dark:text-gray-100 hover:text-columbiablue dark:hover:text-blue-300 transition-colors"
         aria-label="Toggle mobile menu"
       >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
+        {isOpen ? <X size={22} /> : <Menu size={22} />}
       </button>
 
       <AnimatePresence>
@@ -34,7 +43,7 @@ export default function MobileNav() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.2 }} 
               className="fixed inset-0 bg-black/20 dark:bg-black/40 z-40"
               onClick={closeMenu}
             />
@@ -44,7 +53,7 @@ export default function MobileNav() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed top-0 right-0 h-full w-72 bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-xl z-50 border-l border-gray-200/50 dark:border-gray-700/50"
+              className="fixed top-0 right-0 h-full w-64 sm:w-72 bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-xl z-50 border-l border-gray-200/50 dark:border-gray-700/50"
             >
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between p-6 border-b border-gray-200/50 dark:border-gray-700/50">
@@ -52,7 +61,7 @@ export default function MobileNav() {
                   <button
                     onClick={closeMenu}
                     className="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors"
-                    aria-label="Close menu"
+                    aria-label="Close menu" 
                   >
                     <X size={20} />
                   </button>
@@ -65,7 +74,7 @@ export default function MobileNav() {
                         <a
                           href={link.href}
                           onClick={closeMenu}
-                          className="block py-3 px-4 text-lg font-ibm font-medium text-gray-700 dark:text-gray-200 hover:text-columbiablue dark:hover:text-blue-300 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-all"
+                          className="block py-2.5 px-4 text-base sm:text-lg font-ibm font-medium text-gray-700 dark:text-gray-200 hover:text-columbiablue dark:hover:text-blue-300 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-all" 
                         >
                           {link.label}
                         </a>
@@ -73,6 +82,11 @@ export default function MobileNav() {
                     ))}
                   </ul>
                 </nav>
+              </div>
+              
+              {/* Theme toggle in mobile menu */}
+              <div className="mt-auto border-t border-gray-200 dark:border-gray-700 p-4 flex justify-center">
+                <ThemeToggle />
               </div>
             </motion.div>
           </>

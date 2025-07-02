@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import AnimatedLogo from "./AnimatedLogo";
 import ThemeToggle from "./ThemeToggle";
-import MobileNav from "./MobileNav";
+import MobileNav from "./MobileNav"; 
 
 const navLinks = [
   { label: "Home", href: "/#hero" },
@@ -76,13 +76,12 @@ export default function PremiumHeaderNav() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.5, delay: 0.2 }} 
+            className="hidden md:flex items-center"
           >
             <AnimatedLogo />
           </motion.div>
-
-          <motion.ul 
+          <div className="md:hidden flex items-center">
             className="hidden md:flex gap-8 text-sm font-semibold"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}

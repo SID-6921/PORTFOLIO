@@ -13,7 +13,7 @@ const stats = [
 
 export default function PremiumAboutSection() {
   return (
-    <section id="about" className="py-20 px-6 relative">
+    <section id="about" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 relative">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/30 to-white dark:from-gray-900 dark:via-blue-900/10 dark:to-gray-900" />
       
@@ -23,8 +23,8 @@ export default function PremiumAboutSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20"
+          transition={{ duration: 0.8 }} 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16 md:mb-20"
         >
           {stats.map((stat, index) => (
             <motion.div
@@ -66,9 +66,9 @@ export default function PremiumAboutSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.2 }} 
         >
-          <DashboardCard variant="elevated" className="p-12 relative overflow-hidden">
+          <DashboardCard variant="elevated" className="p-6 sm:p-8 md:p-12 relative overflow-hidden">
             <motion.div
               className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-teal-500/10 rounded-full blur-3xl"
               animate={{
@@ -83,8 +83,8 @@ export default function PremiumAboutSection() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="text-4xl md:text-5xl font-bold text-center mb-8 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 dark:from-white dark:via-blue-200 dark:to-white bg-clip-text text-transparent"
+                transition={{ duration: 0.6 }} 
+                className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-6 sm:mb-8 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 dark:from-white dark:via-blue-200 dark:to-white bg-clip-text text-transparent"
               >
                 About Me
               </motion.h2>
@@ -94,16 +94,16 @@ export default function PremiumAboutSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="prose prose-lg dark:prose-invert max-w-4xl mx-auto text-center"
+                className="prose sm:prose-lg dark:prose-invert max-w-4xl mx-auto text-center px-2"
               >
-                <p className="text-xl leading-relaxed text-gray-700 dark:text-gray-300 mb-6">
+                <p className="text-base sm:text-lg md:text-xl leading-relaxed text-gray-700 dark:text-gray-300 mb-4 sm:mb-6">
                   As a Biomedical Engineering graduate student at Columbia University, I'm passionate about 
                   bridging the gap between cutting-edge technology and healthcare innovation. My journey spans 
                   across AI-driven medical solutions, embedded systems for health monitoring, and translational 
                   research that makes a real impact on patient care.
                 </p>
                 
-                <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-400">
+                <p className="text-sm sm:text-base md:text-lg leading-relaxed text-gray-600 dark:text-gray-400">
                   With a strong foundation in both engineering principles and clinical applications, I strive 
                   to develop solutions that are not only technically sound but also meaningful in improving 
                   human health outcomes. My work focuses on the convergence of artificial intelligence, 

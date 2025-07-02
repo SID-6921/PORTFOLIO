@@ -36,9 +36,9 @@ export default function ThemeToggle() {
   }, []);
 
   return (
-    <div className="fixed top-5 right-6 z-[9999] flex items-center gap-1 select-none bg-white/70 dark:bg-ultramarine/80 backdrop-blur px-3 py-1.5 rounded-full shadow-md">
+    <div className="flex items-center gap-1 select-none bg-white/70 dark:bg-ultramarine/80 backdrop-blur px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md">
       <Sun
-        size={18}
+        size={16}
         className={`mr-1 ${!isDark ? "text-yellow-400" : "text-gray-400"} transition-colors`}
       />
       <Switch
@@ -48,7 +48,7 @@ export default function ThemeToggle() {
         className="data-[state=checked]:bg-ultramarine data-[state=unchecked]:bg-columbiablue"
       />
       <Moon
-        size={17}
+        size={15}
         className={`ml-1 ${isDark ? "text-blue-200" : "text-gray-400"} transition-colors`}
       />
     </div>

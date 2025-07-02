@@ -66,7 +66,7 @@ const cardVariants = {
 
 export default function AreasOfExpertise() {
   return (
-    <section className="py-20 px-6 relative overflow-hidden">
+    <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 relative overflow-hidden">
       {/* Clean background with subtle texture */}
       <div className="absolute inset-0 bg-slate-50/80 dark:bg-gray-900/80" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(59,130,246,0.03),transparent_70%),radial-gradient(circle_at_80%_20%,rgba(20,184,166,0.03),transparent_70%)]" />
@@ -76,11 +76,11 @@ export default function AreasOfExpertise() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8 }} 
           className="text-center mb-16"
         >
           <div className="relative inline-block">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
               Areas of Expertise
             </h2>
             {/* Animated underline */}
@@ -92,7 +92,7 @@ export default function AreasOfExpertise() {
               transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
             />
           </div>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mt-6">
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mt-4 sm:mt-6 px-2">
             Specialized in the convergence of technology and healthcare
           </p>
         </motion.div>
@@ -102,7 +102,7 @@ export default function AreasOfExpertise() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
         >
           {expertiseAreas.map((area, index) => (
             <motion.div
@@ -116,7 +116,7 @@ export default function AreasOfExpertise() {
               className="group relative"
             >
               {/* Clean glassmorphism card */}
-              <div className="relative h-full p-8 rounded-2xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/30 shadow-lg hover:shadow-xl transition-all duration-500">
+              <div className="relative h-full p-6 sm:p-8 rounded-2xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/30 shadow-lg hover:shadow-xl transition-all duration-500">
                 {/* Subtle glow effect on hover */}
                 <motion.div
                   className="absolute inset-0 rounded-2xl bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -136,9 +136,9 @@ export default function AreasOfExpertise() {
                     }}
                   >
                     {area.emoji}
-                  </motion.div>
+                  </motion.div> 
                   
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 relative">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 relative">
                     {area.title}
                     {/* Animated underline on hover */}
                     <motion.div
@@ -149,7 +149,7 @@ export default function AreasOfExpertise() {
                     />
                   </h3>
                   
-                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                  <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
                     {area.description}
                   </p>
                 </div>

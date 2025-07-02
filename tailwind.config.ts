@@ -13,8 +13,16 @@ export default {
 	theme: {
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: {
+				DEFAULT: '1rem',
+				sm: '1.5rem',
+				md: '2rem',
+			},
 			screens: {
+				sm: '640px',
+				md: '768px',
+				lg: '1024px',
+				xl: '1280px',
 				'2xl': '1400px'
 			}
 		},
@@ -49,6 +57,9 @@ export default {
 				'18': '4.5rem',
 				'88': '22rem',
 			},
+			screens: {
+				'xs': '480px',
+			},
 			animation: {
 				'fade-in': 'fadeIn 0.8s ease-out',
 				'slide-up': 'slideUp 1s ease-out',
@@ -71,6 +82,7 @@ export default {
 				bounceSubtle: {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-4px)' }
+				},
 				}
 			},
 			typography: {

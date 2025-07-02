@@ -17,8 +17,8 @@ export default function EnhancedHeaderNav() {
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
   
-  const headerOpacity = useTransform(scrollY, [0, 100], [0.8, 0.95]);
-  const headerPadding = useTransform(scrollY, [0, 100], [24, 16]);
+  const headerOpacity = useTransform(scrollY, [0, 100], [0.85, 0.95]);
+  const headerPadding = useTransform(scrollY, [0, 100], [20, 12]);
 
   useEffect(() => {
     const unsubscribe = scrollY.onChange((latest) => {
@@ -29,7 +29,7 @@ export default function EnhancedHeaderNav() {
 
   return (
     <motion.header 
-      className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl border-b border-white/10 dark:border-gray-800/50 transition-all duration-300"
+      className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl border-b border-white/10 dark:border-gray-800/50 transition-all duration-300 px-4 md:px-6"
       style={{
         backgroundColor: `rgba(255, 255, 255, ${headerOpacity.get()})`,
       }}
@@ -40,7 +40,7 @@ export default function EnhancedHeaderNav() {
       />
       
       <motion.nav 
-        className="relative max-w-7xl mx-auto flex items-center justify-between px-6 transition-all duration-300"
+        className="relative max-w-7xl mx-auto flex items-center justify-between transition-all duration-300"
         style={{ paddingTop: headerPadding, paddingBottom: headerPadding }}
       >
         <motion.div
@@ -52,7 +52,7 @@ export default function EnhancedHeaderNav() {
         </motion.div>
 
         <motion.ul 
-          className="hidden md:flex gap-8 text-sm font-medium"
+          className="hidden md:flex gap-4 lg:gap-8 text-sm font-medium"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -66,7 +66,7 @@ export default function EnhancedHeaderNav() {
             >
               <a
                 href={link.href}
-                className="relative text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 group"
+                className="relative text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 group whitespace-nowrap"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 transition-all duration-300 group-hover:w-full" />
@@ -79,13 +79,12 @@ export default function EnhancedHeaderNav() {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="hidden md:block"
+            transition={{ duration: 0.5, delay: 0.2 }} 
+            className="hidden md:flex items-center"
           >
             <ThemeToggle />
           </motion.div>
-          <div className="md:hidden flex items-center gap-2">
-            <ThemeToggle />
+          <div className="md:hidden flex items-center">
             <MobileNav />
           </div>
         </div>

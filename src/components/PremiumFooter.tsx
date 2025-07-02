@@ -47,11 +47,11 @@ const navigationLinks = [
 
 export default function PremiumFooter() {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
   };
 
   return (
-    <footer className="relative py-16 px-6 bg-white dark:bg-gray-900 border-t border-gray-200/50 dark:border-gray-700/50">
+    <footer className="relative py-12 sm:py-16 px-4 sm:px-6 bg-white dark:bg-gray-900 border-t border-gray-200/50 dark:border-gray-700/50">
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -74,14 +74,14 @@ export default function PremiumFooter() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8 }} 
           className="text-center mb-8"
         >
           <motion.a
             href="mailto:siddhardha.nanda@columbia.edu"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 group text-lg"
+            className="inline-flex items-center gap-2 sm:gap-3 px-6 py-3 sm:px-8 sm:py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 group text-sm sm:text-base md:text-lg"
           >
             <motion.div
               whileHover={{ rotate: 15, scale: 1.1 }}
@@ -98,7 +98,7 @@ export default function PremiumFooter() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.1 }} 
           className="text-center mb-12"
         >
           <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto font-medium">
@@ -111,8 +111,8 @@ export default function PremiumFooter() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex justify-center gap-6 mb-12"
+          transition={{ duration: 0.6, delay: 0.2 }} 
+          className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-8 sm:mb-12"
         >
           {socialLinks.map((link, index) => (
             <motion.div
@@ -124,12 +124,12 @@ export default function PremiumFooter() {
               className="group relative"
             >
               <motion.a
-                href={link.url}
+                href={link.url} 
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, y: -3 }}
                 whileTap={{ scale: 0.9 }}
-                className={`relative flex flex-col items-center p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-gray-600 dark:text-gray-400 ${link.hoverEffect} ${link.bgColor} group min-w-[120px]`}
+                className={`relative flex flex-col items-center p-4 sm:p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-gray-600 dark:text-gray-400 ${link.hoverEffect} ${link.bgColor} group min-w-[100px] sm:min-w-[120px]`}
               >
                 {/* Icon with enhanced styling */}
                 <motion.div
@@ -147,7 +147,7 @@ export default function PremiumFooter() {
                 </motion.div>
                 
                 {/* Platform name */}
-                <span className="font-semibold text-sm mb-1 group-hover:text-current transition-colors duration-300">
+                <span className="font-semibold text-xs sm:text-sm mb-1 group-hover:text-current transition-colors duration-300">
                   {link.name}
                 </span>
                 
@@ -189,7 +189,7 @@ export default function PremiumFooter() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.3 }} 
           className="flex justify-center gap-8 mb-12"
         >
           {navigationLinks.map((link, index) => (
@@ -216,7 +216,7 @@ export default function PremiumFooter() {
           initial={{ opacity: 0, scaleX: 0 }}
           whileInView={{ opacity: 1, scaleX: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.4 }} 
           className="w-full h-px bg-gray-300 dark:bg-gray-600 mb-8"
         />
 
@@ -225,10 +225,10 @@ export default function PremiumFooter() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex flex-col sm:flex-row items-center justify-between gap-4"
+          transition={{ duration: 0.6, delay: 0.5 }} 
+          className="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left"
         >
-          <p className="text-gray-500 dark:text-gray-400 text-sm">
+          <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
             © 2025 Nanda Siddhardha · All rights reserved.
           </p>
           
@@ -236,7 +236,7 @@ export default function PremiumFooter() {
             onClick={scrollToTop}
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.9 }}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 group"
+            className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 group text-xs sm:text-sm"
           >
             <motion.div
               animate={{ y: [0, -2, 0] }}

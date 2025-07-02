@@ -36,7 +36,7 @@ const contactInfo = [
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="relative py-24 px-6">
+    <section id="contact" className="relative py-16 sm:py-20 md:py-24 px-4 sm:px-6">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50/50 to-white dark:from-gray-900 dark:via-gray-800/30 dark:to-gray-900" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(59,130,246,0.05),transparent_50%),radial-gradient(circle_at_70%_30%,rgba(20,184,166,0.05),transparent_50%)]" />
@@ -47,11 +47,11 @@ export default function ContactSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8 }} 
           className="text-center mb-16"
         >
           <div className="relative inline-block">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 relative">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 relative">
               Let's Connect
               <motion.div
                 className="absolute -bottom-2 left-1/2 h-1 bg-blue-600 rounded-full"
@@ -62,12 +62,12 @@ export default function ContactSection() {
               />
             </h2>
           </div>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mt-6">
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mt-4 sm:mt-6 px-2">
             Ready to collaborate on innovative healthcare solutions? Let's discuss how we can work together to make a meaningful impact.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-start">
           {/* Contact Information */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -77,10 +77,10 @@ export default function ContactSection() {
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
                 Get in Touch
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-8">
+              <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg leading-relaxed mb-6 sm:mb-8">
                 Whether you're interested in collaboration, have questions about my research, 
                 or want to discuss potential opportunities, I'd love to hear from you.
               </p>
@@ -120,12 +120,12 @@ export default function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200/50 dark:border-blue-800/30"
+              className="bg-blue-50 dark:bg-blue-900/20 p-4 sm:p-6 rounded-xl border border-blue-200/50 dark:border-blue-800/30"
             >
-              <h4 className="font-semibold text-blue-900 dark:text-blue-200 mb-3">
+              <h4 className="font-semibold text-blue-900 dark:text-blue-200 mb-2 sm:mb-3 text-sm sm:text-base">
                 Open to Opportunities
               </h4>
-              <p className="text-blue-800 dark:text-blue-300 text-sm leading-relaxed">
+              <p className="text-blue-800 dark:text-blue-300 text-xs sm:text-sm leading-relaxed">
                 I'm actively seeking opportunities in biomedical engineering, medical device development, 
                 and healthcare technology. If you have an exciting project or position that aligns with 
                 my expertise, let's connect!
