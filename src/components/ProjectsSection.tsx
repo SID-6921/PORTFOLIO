@@ -201,6 +201,8 @@ export default function ProjectsSection() {
                 technologies={project.technologies}
                 category={project.technologies[0] || "Project"} // Use first technology as category
                 imageUrl={project.image_url}
+                demoUrl={project.demo_url}
+                githubUrl={project.github_url}
               />
             </motion.div>
           ))}

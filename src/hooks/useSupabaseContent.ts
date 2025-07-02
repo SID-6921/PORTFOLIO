@@ -20,6 +20,8 @@ interface Project {
   impact: string;
   image_url: string;
   icon: string;
+  demo_url?: string;
+  github_url?: string;
   sort_order: number;
 }
 
@@ -179,6 +181,8 @@ export const useSupabaseContent = () => {
             impact: project.impact || '',
             image_url: project.image_url || '',
             icon: project.icon || '',
+            demo_url: project.demo_url || '',
+            github_url: project.github_url || '',
             sort_order: project.sort_order || 0
           }));
           setProjects(transformedProjects);

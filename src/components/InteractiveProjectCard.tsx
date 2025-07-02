@@ -1,6 +1,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { ExternalLink, Github } from "lucide-react";
 
 interface ProjectCardProps {
   title: string;
@@ -8,7 +9,7 @@ interface ProjectCardProps {
   technologies: string[];
   category: string;
   imageUrl?: string;
-  projectUrl?: string;
+  demoUrl?: string;
   githubUrl?: string;
 }
 
@@ -18,7 +19,7 @@ export default function InteractiveProjectCard({
   technologies,
   category,
   imageUrl,
-  projectUrl,
+  demoUrl,
   githubUrl
 }: ProjectCardProps) {
   return (
@@ -107,15 +108,16 @@ export default function InteractiveProjectCard({
 
         {/* Action buttons */}
         <div className="flex gap-3">
-          {projectUrl && (
+          {demoUrl && (
             <motion.a
-              href={projectUrl}
+              href={demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
+              <ExternalLink className="w-4 h-4" />
               View Project
             </motion.a>
           )}
@@ -125,10 +127,11 @@ export default function InteractiveProjectCard({
               href={githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 text-sm font-medium rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 text-sm font-medium rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
+              <Github className="w-4 h-4" />
               GitHub
             </motion.a>
           )}
