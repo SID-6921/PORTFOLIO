@@ -295,7 +295,7 @@ export default function UltraHeroSection() {
               className="relative group"
             >
               <EnhancedButton
-                href="#contact"
+                href="/#contact"
                 variant="secondary"
                 size="lg"
                 className="min-w-[220px] shadow-lg hover:shadow-xl relative z-10 overflow-hidden"

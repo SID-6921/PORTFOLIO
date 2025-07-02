@@ -231,7 +231,7 @@ export default function ProjectsSection() {
             Interested in collaborating or learning more about these projects?
           </p>
           <motion.a
-            href="#contact"
+            href="/#contact"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden"
