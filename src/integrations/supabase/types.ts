@@ -219,6 +219,8 @@ export type Database = {
           id: string
           image_url: string | null
           impact: string | null
+          demo_url: string | null
+          github_url: string | null
           sort_order: number | null
           status: string | null
           technologies: Json
@@ -233,6 +235,8 @@ export type Database = {
           id?: string
           image_url?: string | null
           impact?: string | null
+          demo_url?: string | null
+          github_url?: string | null
           sort_order?: number | null
           status?: string | null
           technologies: Json
@@ -247,6 +251,8 @@ export type Database = {
           id?: string
           image_url?: string | null
           impact?: string | null
+          demo_url?: string | null
+          github_url?: string | null
           sort_order?: number | null
           status?: string | null
           technologies?: Json

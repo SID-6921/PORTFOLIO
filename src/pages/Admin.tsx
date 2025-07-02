@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { Trash2, Plus, Edit3, Save, X, LogOut } from 'lucide-react';
+import { Trash2, Plus, Edit3, Save, X, LogOut, ExternalLink, Github } from 'lucide-react';
 import { useSupabaseContent } from '@/hooks/useSupabaseContent';
 import { useToast } from '@/hooks/use-toast';
 import AdminAuth from '@/components/AdminAuth';
