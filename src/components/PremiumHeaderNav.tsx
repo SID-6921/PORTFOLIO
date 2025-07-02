@@ -82,6 +82,10 @@ export default function PremiumHeaderNav() {
             <AnimatedLogo />
           </motion.div>
           <div className="md:hidden flex items-center">
+            <AnimatedLogo />
+          </div>
+
+          <motion.ul
             className="hidden md:flex gap-8 text-sm font-semibold"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
