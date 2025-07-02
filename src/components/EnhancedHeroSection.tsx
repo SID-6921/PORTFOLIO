@@ -198,7 +198,7 @@ export default function EnhancedHeroSection() {
               </EnhancedButton>
               
               <EnhancedButton
-                href="#contact"
+                href="/#contact"
                 variant="secondary"
                 size="lg"
                 className="min-w-[200px] shadow-md hover:shadow-lg"

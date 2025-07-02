@@ -38,11 +38,11 @@ const socialLinks = [
 ];
 
 const navigationLinks = [
-  { name: "Home", href: "#hero" },
-  { name: "About", href: "#about" },
-  { name: "Projects", href: "#projects" },
-  { name: "Achievements", href: "#achievements" },
-  { name: "Contact", href: "#contact" }
+  { name: "Home", href: "/#hero" },
+  { name: "About", href: "/#about" },
+  { name: "Projects", href: "/#projects" },
+  { name: "Achievements", href: "/#achievements" },
+  { name: "Contact", href: "/#contact" }
 ];
 
 export default function PremiumFooter() {

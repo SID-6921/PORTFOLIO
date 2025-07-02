@@ -261,8 +261,6 @@ export const useSupabaseContent = () => {
     } finally {
       setLoading(false);
     }
-  };
-
   return {
     heroContent,
     projects,
