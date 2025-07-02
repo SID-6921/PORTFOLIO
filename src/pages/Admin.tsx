@@ -20,6 +20,8 @@ interface Project {
   impact: string;
   image_url: string;
   icon: string;
+  demo_url?: string;
+  github_url?: string;
   sort_order: number;
 }
 
@@ -109,6 +111,8 @@ const Admin = () => {
     impact: '',
     image_url: '',
     icon: '',
+    demo_url: '',
+    github_url: '',
     sort_order: 0
   });
 
@@ -256,6 +260,8 @@ const Admin = () => {
         impact: '',
         image_url: '',
         icon: '',
+        demo_url: '',
+        github_url: '',
         sort_order: 0
       });
       refetch();
@@ -279,6 +285,8 @@ const Admin = () => {
           detailed_description: project.detailed_description,
           technologies: project.technologies,
           impact: project.impact,
+          demo_url: project.demo_url,
+          github_url: project.github_url,
           image_url: project.image_url,
           icon: project.icon,
           sort_order: project.sort_order
@@ -627,6 +635,16 @@ const Admin = () => {
                     onChange={(e) => setProjectForm({...projectForm, icon: e.target.value})}
                   />
                   <Input
+                    placeholder="Demo URL (e.g., https://example.com)"
+                    value={projectForm.demo_url}
+                    onChange={(e) => setProjectForm({...projectForm, demo_url: e.target.value})}
+                  />
+                  <Input
+                    placeholder="GitHub URL (e.g., https://github.com/username/repo)"
+                    value={projectForm.github_url}
+                    onChange={(e) => setProjectForm({...projectForm, github_url: e.target.value})}
+                  />
+                  <Input
                     type="number"
                     placeholder="Sort Order"
                     value={projectForm.sort_order}
@@ -716,6 +734,26 @@ const Admin = () => {
                             }}
                           />
                           <Input
+                            placeholder="Demo URL (e.g., https://example.com)"
+                            value={project.demo_url || ''}
+                            onChange={(e) => {
+                              const updatedProjects = localProjects.map(p => 
+                                p.id === project.id ? {...p, demo_url: e.target.value} : p
+                              );
+                              setLocalProjects(updatedProjects);
+                            }}
+                          />
+                          <Input
+                            placeholder="GitHub URL (e.g., https://github.com/username/repo)"
+                            value={project.github_url || ''}
+                            onChange={(e) => {
+                              const updatedProjects = localProjects.map(p => 
+                                p.id === project.id ? {...p, github_url: e.target.value} : p
+                              );
+                              setLocalProjects(updatedProjects);
+                            }}
+                          />
+                          <Input
                             type="number"
                             placeholder="Sort Order"
                             value={project.sort_order}
@@ -744,8 +782,32 @@ const Admin = () => {
                             <p className="text-gray-600 mb-2">{project.description}</p>
                             <div className="flex flex-wrap gap-1 mb-2">
                               {project.technologies.map((tech, index) => (
-                                <Badge key={index} variant="secondary">{tech}</Badge>
+                                <Badge key={index} variant="secondary" className="mb-1">{tech}</Badge>
                               ))}
+                            </div>
+                            <div className="flex flex-wrap gap-4 mt-3 text-sm text-gray-500">
+                              {project.demo_url && (
+                                <a 
+                                  href={project.demo_url} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-1 text-blue-600 hover:text-blue-800 hover:underline"
+                                >
+                                  <ExternalLink className="w-3.5 h-3.5" />
+                                  Demo
+                                </a>
+                              )}
+                              {project.github_url && (
+                                <a 
+                                  href={project.github_url} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-1 text-gray-700 hover:text-gray-900 hover:underline"
+                                >
+                                  <Github className="w-3.5 h-3.5" />
+                                  GitHub
+                                </a>
+                              )}
                             </div>
                           </div>
                           <div className="flex gap-2">
