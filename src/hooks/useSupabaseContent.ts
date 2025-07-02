@@ -123,13 +123,36 @@ export const useSupabaseContent = () => {
         
         if (heroError && heroError.code !== 'PGRST116') {
           console.error('Error loading hero content:', heroError);
+          // Use fallback content if database fails
+          setHeroContent({
+            id: 'fallback',
+            name: 'Siddhardha Nanda',
+            title: 'Engineer. Innovator. Purpose-Driven Technologist.',
+            subtitle: 'Looking for opportunities',
+            description: 'Pioneering at the intersection of med-tech, embedded systems, and digital health. Clinical precision. Creative innovation.',
+            profile_image_url: 'https://res.cloudinary.com/dae56bvjp/image/upload/v1750852722/nanda_wbgmag.jpg',
+            resume_url: 'https://drive.google.com/file/d/your-resume-file-id/view'
+          });
         } else if (heroData) {
+          // Ensure the image URL is properly set
+          if (!heroData.profile_image_url || heroData.profile_image_url.includes('/public/lovable-uploads/')) {
+            heroData.profile_image_url = 'https://res.cloudinary.com/dae56bvjp/image/upload/v1750852722/nanda_wbgmag.jpg';
+          }
           setHeroContent(heroData);
           console.log('Hero content loaded successfully');
         }
       } catch (heroFetchError) {
         console.error('Failed to fetch hero content:', heroFetchError);
-        // Continue with other content even if hero fails
+        // Set fallback content if fetch fails
+        setHeroContent({
+          id: 'fallback',
+          name: 'Siddhardha Nanda',
+          title: 'Engineer. Innovator. Purpose-Driven Technologist.',
+          subtitle: 'Looking for opportunities',
+          description: 'Pioneering at the intersection of med-tech, embedded systems, and digital health. Clinical precision. Creative innovation.',
+          profile_image_url: 'https://res.cloudinary.com/dae56bvjp/image/upload/v1750852722/nanda_wbgmag.jpg',
+          resume_url: 'https://drive.google.com/file/d/your-resume-file-id/view'
+        });
       }
 
       // Load projects with enhanced error handling

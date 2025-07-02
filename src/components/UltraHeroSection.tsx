@@ -146,10 +146,12 @@ export default function UltraHeroSection() {
               {/* Main image */}
               <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-white/90 dark:border-gray-700/70 shadow-2xl backdrop-blur-sm">
                 <OptimizedImage
-                  src={content.profile_image_url}
+                  src={content.profile_image_url || "https://res.cloudinary.com/dae56bvjp/image/upload/v1750852722/nanda_wbgmag.jpg"}
                   alt={content.name}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   priority
+                  width={160}
+                  height={160}
                 />
               </div>
               

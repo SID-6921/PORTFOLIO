@@ -74,15 +74,24 @@ export default function OptimizedImage({
   const generateSrcSet = (originalSrc: string) => {
     // If it's a Cloudinary URL, generate optimized versions
     if (originalSrc.includes('cloudinary.com')) {
-      const baseUrl = originalSrc.split('/upload/')[0] + '/upload/';
-      const imagePath = originalSrc.split('/upload/')[1];
+      try {
+        const baseUrl = originalSrc.split('/upload/')[0] + '/upload/';
+        const imagePath = originalSrc.split('/upload/')[1];
+        
+        if (!imagePath) {
+          return originalSrc;
+        }
       
-      return [
-        `${baseUrl}w_400,f_webp,q_${quality}/${imagePath} 400w`,
-        `${baseUrl}w_800,f_webp,q_${quality}/${imagePath} 800w`,
-        `${baseUrl}w_1200,f_webp,q_${quality}/${imagePath} 1200w`,
-        `${baseUrl}w_1600,f_webp,q_${quality}/${imagePath} 1600w`
-      ].join(', ');
+        return [
+          `${baseUrl}w_400,f_webp,q_${quality}/${imagePath} 400w`,
+          `${baseUrl}w_800,f_webp,q_${quality}/${imagePath} 800w`,
+          `${baseUrl}w_1200,f_webp,q_${quality}/${imagePath} 1200w`,
+          `${baseUrl}w_1600,f_webp,q_${quality}/${imagePath} 1600w`
+        ].join(', ');
+      } catch (error) {
+        console.warn('Error generating Cloudinary srcSet:', error);
+        return originalSrc;
+      }
     }
     
     return originalSrc;
@@ -90,15 +99,24 @@ export default function OptimizedImage({
 
   const generateFallbackSrcSet = (originalSrc: string) => {
     if (originalSrc.includes('cloudinary.com')) {
-      const baseUrl = originalSrc.split('/upload/')[0] + '/upload/';
-      const imagePath = originalSrc.split('/upload/')[1];
+      try {
+        const baseUrl = originalSrc.split('/upload/')[0] + '/upload/';
+        const imagePath = originalSrc.split('/upload/')[1];
+        
+        if (!imagePath) {
+          return originalSrc;
+        }
       
-      return [
-        `${baseUrl}w_400,q_${quality}/${imagePath} 400w`,
-        `${baseUrl}w_800,q_${quality}/${imagePath} 800w`,
-        `${baseUrl}w_1200,q_${quality}/${imagePath} 1200w`,
-        `${baseUrl}w_1600,q_${quality}/${imagePath} 1600w`
-      ].join(', ');
+        return [
+          `${baseUrl}w_400,q_${quality}/${imagePath} 400w`,
+          `${baseUrl}w_800,q_${quality}/${imagePath} 800w`,
+          `${baseUrl}w_1200,q_${quality}/${imagePath} 1200w`,
+          `${baseUrl}w_1600,q_${quality}/${imagePath} 1600w`
+        ].join(', ');
+      } catch (error) {
+        console.warn('Error generating Cloudinary fallback srcSet:', error);
+        return originalSrc;
+      }
     }
     
     return originalSrc;
@@ -139,7 +157,7 @@ export default function OptimizedImage({
           
           {/* Main image element */}
           <img
-            src={hasError ? "/placeholder.svg" : src}
+            src={hasError ? "https://via.placeholder.com/400x400/e5e7eb/6b7280?text=Profile+Image" : src}
             alt={alt}
             width={width}
             height={height}
@@ -163,8 +181,8 @@ export default function OptimizedImage({
       {hasError && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800">
           <div className="text-center text-gray-500 dark:text-gray-400">
-            <div className="text-2xl mb-2">📷</div>
-            <div className="text-sm">Image not available</div>
+            <div className="text-4xl mb-2">👤</div>
+            <div className="text-sm">Profile Image</div>
           </div>
         </div>
       )}
