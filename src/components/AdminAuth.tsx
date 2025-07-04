@@ -18,7 +18,7 @@ const AdminAuth = ({ onLogin }: AdminAuthProps) => {
   const [authMethod, setAuthMethod] = useState<'google' | 'email'>('google');
   const { toast } = useToast();
 
-  const AUTHORIZED_EMAIL = 'elonmuskharrypotter@gmail.com';
+  const AUTHORIZED_EMAIL = 'sn3199@columbia.edu';
 
   useEffect(() => {
     // Check if user is already logged in
