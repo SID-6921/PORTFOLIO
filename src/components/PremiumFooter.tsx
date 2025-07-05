@@ -78,7 +78,7 @@ export default function PremiumFooter() {
           className="text-center mb-8"
         >
           <motion.a
-            href="mailto:siddhardha.nanda@columbia.edu"
+            href="mailto:sn3199@columbia.edu"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             className="inline-flex items-center gap-2 sm:gap-3 px-6 py-3 sm:px-8 sm:py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 group text-sm sm:text-base md:text-lg"
