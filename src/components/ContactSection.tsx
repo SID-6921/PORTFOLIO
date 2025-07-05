@@ -161,7 +161,7 @@ const ContactInfoCard = ({ info }: { info: any }) => (
       <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
         {info.label}
       </h4>
-      <p className="text-gray-600 dark:text-gray-400 text-sm">
+      <p className="text-gray-700 dark:text-gray-300 text-sm font-medium">
         {info.value}
       </p>
     </div>
