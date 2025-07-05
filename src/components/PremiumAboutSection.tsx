@@ -6,9 +6,9 @@ import { GraduationCap, Award, Heart, Lightbulb } from "lucide-react";
 
 const stats = [
   { icon: GraduationCap, label: "Columbia University", value: "MS Biomedical Engineering" },
-  { icon: Award, label: "Research Projects", value: "10+" },
+  { icon: Award, label: "Research Projects", value: "5+" },
   { icon: Heart, label: "Focus Area", value: "Med-Tech Innovation" },
-  { icon: Lightbulb, label: "Publications", value: "5+" }
+  { icon: Lightbulb, label: "Publications", value: "3" }
 ];
 
 export default function PremiumAboutSection() {
