@@ -32,7 +32,7 @@ export default function HeroSection() {
 
   // Fallback data while loading or if no content
   const fallbackContent = {
-    name: "Siddhardha  Nanda",
+    name: "Siddhardha Nanda",
     title: "Engineer. Innovator. Human.",
     subtitle: "Looking for opportunities",
     description: "Pioneering at the intersection of med-tech, embedded systems, and digital health. Clinical precision. Creative innovation.",
