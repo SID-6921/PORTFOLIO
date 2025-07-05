@@ -32,17 +32,17 @@ export default function UltraHeroSection() {
     subtitle: "Looking for opportunities",
     description: "Pioneering at the intersection of med-tech, embedded systems, and digital health. Clinical precision. Creative innovation.",
     profile_image_url: "https://res.cloudinary.com/dae56bvjp/image/upload/v1750852722/nanda_wbgmag.jpg",
-    resume_url: "https://drive.google.com/file/d/your-resume-file-id/view"
+    resume_url: "/resume.pdf"
   };
 
   const content = heroContent || fallbackContent;
 
   return (
     <motion.section 
-      ref={heroRef} 
-      id="hero"
-      className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 py-20 overflow-hidden"
-      style={{ y, opacity }} 
+      ref={heroRef}
+      id="hero" 
+      className="relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden"
+      style={{ y, opacity }}
     >
       {/* Clean modern background with subtle texture */}
       <div className="absolute inset-0">
@@ -76,12 +76,12 @@ export default function UltraHeroSection() {
 
       {/* Main content */}
       <motion.div
-        className="relative z-10 max-w-5xl w-full px-2 sm:px-4"
+        className="relative z-10 max-w-5xl w-full"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
       >
-        <DashboardCard variant="elevated" className="p-6 sm:p-8 md:p-12 text-center relative overflow-hidden backdrop-blur-xl bg-white/95 dark:bg-gray-800/95 border border-gray-200/50 dark:border-gray-700/50">
+        <DashboardCard variant="elevated" className="p-12 text-center relative overflow-hidden backdrop-blur-xl bg-white/95 dark:bg-gray-800/95 border border-gray-200/50 dark:border-gray-700/50">
           {/* Clean corner accents */}
           <motion.div
             className="absolute top-0 left-0 w-20 h-20"
@@ -108,7 +108,7 @@ export default function UltraHeroSection() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="mb-6 sm:mb-8 flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-8 py-2 sm:py-4 bg-white/80 dark:bg-gray-800/80 border border-blue-200/60 dark:border-blue-800/50 rounded-full shadow-lg backdrop-blur-sm text-xs sm:text-sm"
+            className="mb-8 flex items-center justify-center gap-3 px-8 py-4 bg-white/80 dark:bg-gray-800/80 border border-blue-200/60 dark:border-blue-800/50 rounded-full shadow-lg backdrop-blur-sm"
           >
             <motion.div 
               className="w-3 h-3 bg-emerald-500 rounded-full"
@@ -116,7 +116,7 @@ export default function UltraHeroSection() {
               transition={{ duration: 2, repeat: Infinity }}
             />
             <span className="text-sm font-semibold text-blue-700 dark:text-blue-300 tracking-wide">
-              <span className="hidden sm:inline">Columbia University —</span> Biomedical Engineering
+              Columbia University — Biomedical Engineering
             </span>
             <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           </motion.div>
@@ -126,7 +126,7 @@ export default function UltraHeroSection() {
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8, type: "spring", bounce: 0.3 }}
-            className="mb-6 sm:mb-8 flex justify-center"
+            className="mb-8 flex justify-center"
           >
             <motion.div
               className="relative group cursor-pointer"
@@ -135,44 +135,42 @@ export default function UltraHeroSection() {
             >
               {/* Subtle rotating ring */}
               <motion.div
-                className="absolute inset-0 w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full border-2 border-blue-400/20"
+                className="absolute inset-0 w-44 h-44 rounded-full border-2 border-blue-400/20"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               />
               
               {/* Glassmorphism glow effect */}
-              <div className="absolute inset-0 w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full bg-blue-500/10 blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 w-44 h-44 rounded-full bg-blue-500/10 blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               {/* Main image */}
-              <div className="relative w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white/90 dark:border-gray-700/70 shadow-2xl backdrop-blur-sm">
+              <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-white/90 dark:border-gray-700/70 shadow-2xl backdrop-blur-sm">
                 <OptimizedImage
-                  src={content.profile_image_url || "https://res.cloudinary.com/dae56bvjp/image/upload/v1750852722/nanda_wbgmag.jpg"}
+                  src={content.profile_image_url}
                   alt={content.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   priority
-                  width={160}
-                  height={160}
                 />
               </div>
               
               {/* Clean pulse indicator */}
               <motion.div
-                className="absolute -bottom-2 -right-2 w-6 h-6 sm:w-8 sm:h-8 bg-emerald-500 rounded-full border-3 sm:border-4 border-white dark:border-gray-800 shadow-lg flex items-center justify-center"
+                className="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-500 rounded-full border-4 border-white dark:border-gray-800 shadow-lg flex items-center justify-center"
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="white" />
+                <Heart className="w-4 h-4 text-white" fill="white" />
               </motion.div>
             </motion.div>
           </motion.div>
           
-          {/* Name with solid color and animated underline */}
+          {/* Name with proper spacing - FIXED */}
           <div className="flex flex-col items-center gap-4 mb-6">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.8 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white relative group"
+              className="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 dark:text-white relative group"
             >
               <span className="relative">
                 {content.name.split(' ').map((word, index) => (
@@ -182,9 +180,9 @@ export default function UltraHeroSection() {
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 + index * 0.1, duration: 0.6 }}
-                  > 
+                  >
                     {word}
-                    {index < content.name.split(' ').length - 1 && <span className="mr-4 md:mr-6">{' '}</span>}
+                    {index < content.name.split(' ').length - 1 && <span className="mr-3 md:mr-4">{' '}</span>}
                   </motion.span>
                 ))}
                 {/* Animated underline accent */}
@@ -213,7 +211,7 @@ export default function UltraHeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 0.6 }}
-            className="mb-4 text-xl sm:text-2xl md:text-3xl font-semibold text-blue-600 dark:text-blue-400 relative"
+            className="mb-4 text-2xl md:text-3xl font-semibold text-blue-600 dark:text-blue-400 relative"
           >
             <span className="relative inline-block">
               Engineer. Innovator. Purpose-Driven Technologist.
@@ -225,9 +223,9 @@ export default function UltraHeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.5, duration: 0.6 }}
-            className="mb-4 sm:mb-6 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4"
+            className="mb-6 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-2 bg-teal-50/80 dark:bg-teal-900/30 rounded-full border border-teal-200/40 dark:border-teal-800/40 shadow-sm backdrop-blur-sm text-xs sm:text-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-teal-50/80 dark:bg-teal-900/30 rounded-full border border-teal-200/40 dark:border-teal-800/40 shadow-sm backdrop-blur-sm">
               <motion.div 
                 className="w-2 h-2 bg-emerald-500 rounded-full"
                 animate={{ scale: [1, 1.2, 1] }}
@@ -238,7 +236,7 @@ export default function UltraHeroSection() {
               </span>
             </div>
             
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300">
+            <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300">
               <MapPin className="w-4 h-4" />
               <span className="text-sm font-medium">New York, NY</span>
             </div>
@@ -249,7 +247,7 @@ export default function UltraHeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.8, duration: 0.8 }}
-            className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl mx-auto mb-6 sm:mb-10 px-2"
+            className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl mx-auto mb-10"
           >
             {content.description}
           </motion.p>
@@ -259,7 +257,7 @@ export default function UltraHeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.1, duration: 0.8 }}
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
             <motion.div 
               whileHover={{ scale: 1.05, y: -3 }} 
@@ -271,7 +269,7 @@ export default function UltraHeroSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 download
-                variant="primary" 
+                variant="primary"
                 size="lg"
                 className="min-w-[220px] shadow-xl hover:shadow-2xl relative z-10 overflow-hidden"
               >
@@ -297,7 +295,7 @@ export default function UltraHeroSection() {
               className="relative group"
             >
               <EnhancedButton
-                href="/#contact"
+                href="#contact"
                 variant="secondary"
                 size="lg"
                 className="min-w-[220px] shadow-lg hover:shadow-xl relative z-10 overflow-hidden"
@@ -324,7 +322,7 @@ export default function UltraHeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2.5, duration: 0.8 }}
-            className="mt-8 sm:mt-12 md:mt-16 flex flex-col items-center text-gray-500 dark:text-gray-400"
+            className="mt-16 flex flex-col items-center text-gray-500 dark:text-gray-400"
           >
             <span className="text-sm font-medium mb-4 tracking-wider">Explore Portfolio</span>
             <motion.div
