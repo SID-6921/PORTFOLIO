@@ -91,7 +91,7 @@ const ContactForm = () => {
       }
       
       // Create mailto link as fallback
-      const mailtoLink = `mailto:siddhardha.nanda@columbia.edu?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
+      const mailtoLink = `mailto:sn3199@columbia.edu?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
         `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
       )}`;
       

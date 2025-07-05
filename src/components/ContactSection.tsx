@@ -7,8 +7,8 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "siddhardha.nanda@columbia.edu",
-    href: "mailto:siddhardha.nanda@columbia.edu",
+    value: "sn3199@columbia.edu",
+    href: "mailto:sn3199@columbia.edu",
     color: "from-blue-500 to-indigo-500"
   },
   {

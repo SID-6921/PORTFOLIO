@@ -47,7 +47,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       "IoT Devices",
       "Healthcare Innovation"
     ],
-    "email": "siddhardha.nanda@columbia.edu",
+    "email": "sn3199@columbia.edu",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "New York",

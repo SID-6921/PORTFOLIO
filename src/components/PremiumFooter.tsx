@@ -89,7 +89,7 @@ export default function PremiumFooter() {
             >
               <Mail className="w-5 h-5" />
             </motion.div>
-            siddhardha.nanda@columbia.edu
+            sn3199@columbia.edu
           </motion.a>
         </motion.div>
 
