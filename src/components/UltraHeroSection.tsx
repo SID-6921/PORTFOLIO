@@ -27,7 +27,7 @@ export default function UltraHeroSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   const fallbackContent = {
-    name: "SiddhardhaNanda",
+    name: "Siddhardha Nanda",
     title: "Engineer. Innovator. Purpose-Driven Technologist.",
     subtitle: "Looking for opportunities",
     description: "Pioneering at the intersection of med-tech, embedded systems, and digital health. Clinical precision. Creative innovation.",
