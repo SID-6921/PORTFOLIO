@@ -1,10 +1,10 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import DashboardCard from "./DashboardCard";
 import EnhancedButton from "./EnhancedButton";
 import OptimizedImage from "./OptimizedImage";
 import AnimatedHeartbeat from "./AnimatedHeartbeat";
-import { Download, Sparkles, MapPin, Zap, Heart } from "lucide-react";
+import { Download, Sparkles, MapPin, Heart } from "lucide-react";
 import { useSupabaseContent } from "@/hooks/useSupabaseContent";
 
 const floatingElements = [
@@ -16,7 +16,7 @@ const floatingElements = [
 ];
 
 export default function UltraHeroSection() {
-  const { heroContent, loading } = useSupabaseContent();
+  const { heroContent } = useSupabaseContent();
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -44,7 +44,7 @@ export default function UltraHeroSection() {
       className="relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden"
       style={{ y, opacity }}
     >
-      {/* Clean modern background with subtle texture */}
+      {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-slate-50/95 dark:bg-gray-900/95" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.05),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(20,184,166,0.05),transparent_50%)]" />
@@ -82,28 +82,8 @@ export default function UltraHeroSection() {
         transition={{ duration: 1, ease: "easeOut" }}
       >
         <DashboardCard variant="elevated" className="p-12 text-center relative overflow-hidden backdrop-blur-xl bg-white/95 dark:bg-gray-800/95 border border-gray-200/50 dark:border-gray-700/50">
-          {/* Clean corner accents */}
-          <motion.div
-            className="absolute top-0 left-0 w-20 h-20"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-          >
-            <div className="absolute top-4 left-4 w-12 h-1 bg-blue-600 rounded-full" />
-            <div className="absolute top-4 left-4 w-1 h-12 bg-blue-600 rounded-full" />
-          </motion.div>
-          
-          <motion.div
-            className="absolute top-0 right-0 w-20 h-20"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-          >
-            <div className="absolute top-4 right-4 w-12 h-1 bg-teal-600 rounded-full" />
-            <div className="absolute top-4 right-4 w-1 h-12 bg-teal-600 rounded-full" />
-          </motion.div>
 
-          {/* Professional status badge */}
+          {/* Status Badge */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -121,7 +101,7 @@ export default function UltraHeroSection() {
             <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           </motion.div>
 
-          {/* Clean profile image */}
+          {/* Profile Image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -133,17 +113,12 @@ export default function UltraHeroSection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {/* Subtle rotating ring */}
               <motion.div
                 className="absolute inset-0 w-44 h-44 rounded-full border-2 border-blue-400/20"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               />
-              
-              {/* Glassmorphism glow effect */}
               <div className="absolute inset-0 w-44 h-44 rounded-full bg-blue-500/10 blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              {/* Main image */}
               <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-white/90 dark:border-gray-700/70 shadow-2xl backdrop-blur-sm">
                 <OptimizedImage
                   src={content.profile_image_url}
@@ -152,8 +127,6 @@ export default function UltraHeroSection() {
                   priority
                 />
               </div>
-              
-              {/* Clean pulse indicator */}
               <motion.div
                 className="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-500 rounded-full border-4 border-white dark:border-gray-800 shadow-lg flex items-center justify-center"
                 animate={{ scale: [1, 1.1, 1] }}
@@ -163,8 +136,8 @@ export default function UltraHeroSection() {
               </motion.div>
             </motion.div>
           </motion.div>
-          
-          {/* Name with proper spacing - FIXED */}
+
+          {/* Name */}
           <div className="flex flex-col items-center gap-4 mb-6">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -185,7 +158,6 @@ export default function UltraHeroSection() {
                     {index < content.name.split(' ').length - 1 && <span className="mr-3 md:mr-4">{' '}</span>}
                   </motion.span>
                 ))}
-                {/* Animated underline accent */}
                 <motion.div
                   className="absolute -bottom-2 left-1/2 h-1 bg-blue-600 rounded-full"
                   initial={{ width: 0, x: "-50%" }}
@@ -194,8 +166,7 @@ export default function UltraHeroSection() {
                 />
               </span>
             </motion.h1>
-            
-            {/* Enhanced heartbeat animation */}
+
             <motion.div
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -206,19 +177,17 @@ export default function UltraHeroSection() {
             </motion.div>
           </div>
 
-          {/* Title - correct tagline with solid color */}
+          {/* Title */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 0.6 }}
-            className="mb-4 text-2xl md:text-3xl font-semibold text-blue-600 dark:text-blue-400 relative"
+            className="mb-4 text-2xl md:text-3xl font-semibold text-blue-600 dark:text-blue-400"
           >
-            <span className="relative inline-block">
-              Engineer. Innovator. Purpose-Driven Technologist.
-            </span>
+            {content.title}
           </motion.div>
 
-          {/* Status with location */}
+          {/* Subtitle & Location */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -235,14 +204,13 @@ export default function UltraHeroSection() {
                 {content.subtitle}
               </span>
             </div>
-            
             <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300">
               <MapPin className="w-4 h-4" />
               <span className="text-sm font-medium">New York, NY</span>
             </div>
           </motion.div>
 
-          {/* Description - solid color text */}
+          {/* Description */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -252,12 +220,12 @@ export default function UltraHeroSection() {
             {content.description}
           </motion.p>
 
-          {/* Enhanced CTA buttons with visible hover effects */}
+          {/* ✅ Download Resume button ONLY (centered) */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.1, duration: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex justify-center"
           >
             <motion.div 
               whileHover={{ scale: 1.05, y: -3 }} 
@@ -288,36 +256,9 @@ export default function UltraHeroSection() {
                 </motion.div>
               </EnhancedButton>
             </motion.div>
-            
-            <motion.div 
-              whileHover={{ scale: 1.05, y: -3 }} 
-              whileTap={{ scale: 0.95 }}
-              className="relative group"
-            >
-              <EnhancedButton
-                href="#contact"
-                variant="secondary"
-                size="lg"
-                className="min-w-[220px] shadow-lg hover:shadow-xl relative z-10 overflow-hidden"
-              >
-                <motion.div
-                  className="flex items-center gap-2"
-                  whileHover={{ x: 2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <motion.div
-                    whileHover={{ rotate: 15, scale: 1.1 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Zap className="w-5 h-5" />
-                  </motion.div>
-                  Get In Touch
-                </motion.div>
-              </EnhancedButton>
-            </motion.div>
           </motion.div>
 
-          {/* Clean scroll indicator */}
+          {/* Scroll Indicator */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -342,3 +283,4 @@ export default function UltraHeroSection() {
     </motion.section>
   );
 }
+
