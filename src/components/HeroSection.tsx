@@ -37,7 +37,7 @@ export default function HeroSection() {
     subtitle: "Looking for opportunities",
     description: "Pioneering at the intersection of med-tech, embedded systems, and digital health. Clinical precision. Creative innovation.",
     profile_image_url: "https://res.cloudinary.com/dae56bvjp/image/upload/v1750852722/nanda_wbgmag.jpg",
-    resume_url: "/resume.pdf"
+    resume_url: "https://drive.google.com/file/d/1vI1YJ1b7lb0qu8PJZ4h7UK4INZXSmHZ_/view?usp=sharing"
   };
 
   const content = heroContent || fallbackContent;
