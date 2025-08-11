@@ -8,7 +8,7 @@ const stats = [
   { icon: GraduationCap, label: "Columbia University", value: "MS Biomedical Engineering" },
   { icon: Award, label: "Research Projects", value: "5+" },
   { icon: Heart, label: "Focus Area", value: "Med-Tech Innovation" },
-  { icon: Lightbulb, label: "Publications", value: "3" }
+  { icon: Lightbulb, label: "Publications", value: "3+" }
 ];
 
 export default function PremiumAboutSection() {
